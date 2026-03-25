@@ -16,27 +16,37 @@ export function Button({
   className = "",
 }: ButtonProps) {
   const base =
-    "inline-flex items-center justify-center rounded-full px-6 py-3 text-sm font-medium transition-all duration-300 ease-smooth";
+    "group relative inline-flex items-center justify-center overflow-hidden px-7 py-3.5 text-[13px] font-medium uppercase tracking-[0.1em] transition-all duration-500";
 
   const variants = {
-    primary: "bg-foreground text-background hover:bg-foreground/90",
+    primary:
+      "bg-foreground text-background hover:bg-foreground/90",
     secondary:
-      "border border-border text-foreground hover:bg-foreground hover:text-background",
+      "border border-foreground/20 text-foreground hover:text-background",
   };
+
+  const inner = variant === "secondary" ? (
+    <>
+      <span className="absolute inset-0 -translate-y-full bg-foreground transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-y-0" />
+      <span className="relative">{children}</span>
+    </>
+  ) : (
+    <span className="relative">{children}</span>
+  );
 
   const classes = `${base} ${variants[variant]} ${className}`;
 
   if (external) {
     return (
       <a href={href} target="_blank" rel="noopener noreferrer" className={classes}>
-        {children}
+        {inner}
       </a>
     );
   }
 
   return (
     <Link href={href} className={classes}>
-      {children}
+      {inner}
     </Link>
   );
 }

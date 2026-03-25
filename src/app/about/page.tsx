@@ -9,31 +9,61 @@ export const metadata: Metadata = {
     "Learn about Hauwa Yusuf — a product designer and Framer developer with 4+ years of experience helping startups build better products.",
 };
 
+const experience = [
+  { label: "Years of experience", value: "4+" },
+  { label: "Projects completed", value: "30+" },
+  { label: "Based in", value: "Abuja, Nigeria" },
+  { label: "Focus", value: "Product Design & Framer" },
+];
+
 export default function AboutPage() {
   return (
     <PageTransition>
-      <main className="mx-auto max-w-4xl px-6 pb-24 pt-12">
-        <div className="grid gap-16 md:grid-cols-[1fr_2fr]">
-          {/* Photo column */}
-          <ScrollReveal>
-            <div className="relative aspect-[3/4] overflow-hidden rounded-2xl bg-surface">
-              {/* Profile photo placeholder — replace with actual image */}
-              <div className="flex h-full items-center justify-center text-sm text-muted">
-                Photo
-              </div>
-            </div>
-          </ScrollReveal>
+      <main className="mx-auto max-w-7xl px-6 pb-28 pt-12 lg:px-8">
+        {/* Header */}
+        <ScrollReveal>
+          <p className="text-[13px] uppercase tracking-[0.2em] text-muted">
+            About
+          </p>
+          <h1 className="mt-3 font-display text-5xl tracking-tight md:text-7xl">
+            Hi, I&apos;m Hauwa<span className="text-accent">.</span>
+          </h1>
+        </ScrollReveal>
 
-          {/* Bio column */}
-          <div className="space-y-8">
+        {/* Two-column layout */}
+        <div className="mt-16 grid gap-16 md:grid-cols-[1fr_1.4fr] md:gap-20">
+          {/* Left — Photo + stats */}
+          <div className="space-y-10">
             <ScrollReveal>
-              <h1 className="font-display text-4xl font-semibold tracking-tight md:text-5xl">
-                Hi, I&apos;m Hauwa
-              </h1>
+              <div className="relative aspect-[3/4] overflow-hidden bg-surface">
+                {/* Profile photo placeholder */}
+                <div className="flex h-full items-center justify-center">
+                  <div className="text-center">
+                    <div className="mx-auto mb-3 h-16 w-16 bg-border" />
+                    <p className="text-sm text-muted">Profile photo</p>
+                  </div>
+                </div>
+              </div>
             </ScrollReveal>
 
             <ScrollReveal delay={0.1}>
-              <div className="space-y-5 text-base leading-relaxed text-muted">
+              <div className="grid grid-cols-2 gap-6">
+                {experience.map((item) => (
+                  <div key={item.label}>
+                    <p className="font-display text-2xl tracking-tight">
+                      {item.value}
+                    </p>
+                    <p className="mt-1 text-[13px] text-muted">{item.label}</p>
+                  </div>
+                ))}
+              </div>
+            </ScrollReveal>
+          </div>
+
+          {/* Right — Bio */}
+          <div className="space-y-10">
+            <ScrollReveal delay={0.1}>
+              <div className="space-y-6 text-lg leading-[1.8] text-muted">
                 <p>
                   I&apos;m a product designer and Framer developer based in
                   Abuja, Nigeria. For the past 4+ years, I&apos;ve been helping
@@ -62,31 +92,33 @@ export default function AboutPage() {
             </ScrollReveal>
 
             <ScrollReveal delay={0.2}>
-              <div className="space-y-4">
-                <h2 className="font-display text-xl font-semibold">
+              <div className="border border-border bg-surface/50 p-8">
+                <p className="text-[13px] uppercase tracking-[0.2em] text-accent">
                   Currently
-                </h2>
-                <ul className="space-y-2 text-base text-muted">
-                  <li>Open to freelance, contract, and full-time roles</li>
-                  <li>Available for product design and Framer development</li>
-                  <li>Based in Abuja, Nigeria (GMT+1)</li>
+                </p>
+                <ul className="mt-4 space-y-3 text-[15px] text-muted">
+                  <li className="flex items-start gap-3">
+                    <span className="mt-2 h-1.5 w-1.5 shrink-0 bg-emerald-500" />
+                    Open to freelance, contract, and full-time roles
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <span className="mt-2 h-1.5 w-1.5 shrink-0 bg-emerald-500" />
+                    Available for product design and Framer development
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <span className="mt-2 h-1.5 w-1.5 shrink-0 bg-emerald-500" />
+                    Based in Abuja, Nigeria (GMT+1)
+                  </li>
                 </ul>
               </div>
             </ScrollReveal>
 
             <ScrollReveal delay={0.3}>
               <div className="flex flex-wrap gap-4">
-                <Button
-                  href="https://cal.com/hauwa-yusuf"
-                  external
-                >
+                <Button href="https://cal.com/hauwa-yusuf" external>
                   Book a call
                 </Button>
-                <Button
-                  href="#"
-                  variant="secondary"
-                  external
-                >
+                <Button href="#" variant="secondary" external>
                   Download resume
                 </Button>
               </div>

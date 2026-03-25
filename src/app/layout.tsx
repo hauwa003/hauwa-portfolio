@@ -1,18 +1,31 @@
 import type { Metadata } from "next";
-import { Playfair_Display, Inter } from "next/font/google";
-import { Navbar } from "@/components/layout/Navbar";
-import { Footer } from "@/components/layout/Footer";
+import { Instrument_Serif, Caveat } from "next/font/google";
+import localFont from "next/font/local";
+import { LayoutShell } from "@/components/layout/LayoutShell";
 import "./globals.css";
 
-const playfair = Playfair_Display({
-  variable: "--font-playfair-display",
+const instrumentSerif = Instrument_Serif({
+  variable: "--font-instrument-serif",
+  subsets: ["latin"],
+  weight: "400",
+  display: "swap",
+});
+
+const caveat = Caveat({
+  variable: "--font-caveat",
   subsets: ["latin"],
   display: "swap",
 });
 
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
+const tomatoGrotesk = localFont({
+  src: [
+    { path: "../../public/fonts/TomatoGrotesk-Light.otf", weight: "300" },
+    { path: "../../public/fonts/TomatoGrotesk-Regular.otf", weight: "400" },
+    { path: "../../public/fonts/TomatoGrotesk-Medium.otf", weight: "500" },
+    { path: "../../public/fonts/TomatoGrotesk-SemiBold.otf", weight: "600" },
+    { path: "../../public/fonts/TomatoGrotesk-Bold.otf", weight: "700" },
+  ],
+  variable: "--font-tomato-grotesk",
   display: "swap",
 });
 
@@ -43,12 +56,10 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${playfair.variable} ${inter.variable} h-full antialiased`}
+      className={`${instrumentSerif.variable} ${tomatoGrotesk.variable} ${caveat.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col bg-background text-foreground">
-        <Navbar />
-        <div className="flex-1">{children}</div>
-        <Footer />
+        <LayoutShell>{children}</LayoutShell>
       </body>
     </html>
   );

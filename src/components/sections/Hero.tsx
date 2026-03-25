@@ -2,52 +2,44 @@
 
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/Button";
-import { AnimatedText } from "@/components/ui/AnimatedText";
 
 export function Hero() {
   return (
-    <section className="mx-auto max-w-6xl px-6 pb-24 pt-20 md:pb-32 md:pt-28">
-      <div className="max-w-3xl">
-        <motion.p
-          className="mb-4 text-sm font-medium text-accent"
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-        >
-          Product Designer & Framer Developer
-        </motion.p>
+    <section className="mx-auto max-w-7xl px-6 pb-28 pt-16 md:pb-40 md:pt-24 lg:px-8">
+      {/* Hook — one bold line */}
+      <motion.h1
+        className="max-w-4xl font-display text-[clamp(2rem,5vw,4.5rem)] leading-[1.15] tracking-tight"
+        initial={{ opacity: 0, y: 40 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, delay: 0.1, ease: [0.22, 1, 0.36, 1] as const }}
+      >
+        I turn complex ideas into products people actually enjoy using.
+      </motion.h1>
 
-        <AnimatedText
-          text="I design products that people actually enjoy using."
-          as="h1"
-          className="font-display text-4xl font-semibold leading-tight tracking-tight md:text-6xl md:leading-[1.1]"
-          delay={0.1}
-        />
+      {/* Sub-copy + CTAs — offset right */}
+      <motion.div
+        className="mt-10 flex flex-col gap-8 md:ml-auto md:mt-14 md:max-w-lg"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.7, delay: 0.4, ease: [0.22, 1, 0.36, 1] as const }}
+      >
+        <p className="text-lg leading-relaxed text-muted">
+          Product designer and Framer developer with 4+ years helping startups
+          and enterprises ship digital products that work beautifully.
+        </p>
 
-        <motion.p
-          className="mt-6 max-w-xl text-lg leading-relaxed text-muted md:text-xl"
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{
-            duration: 0.6,
-            delay: 0.4,
-            ease: [0.22, 1, 0.36, 1],
-          }}
-        >
-          I help startups and enterprises turn messy ideas and confusing systems
-          into products people actually enjoy using.
-        </motion.p>
+        {/* Availability badge */}
+        <div className="inline-flex w-fit items-center gap-2.5 border border-border bg-surface-elevated px-4 py-2">
+          <span className="relative flex h-2 w-2">
+            <span className="absolute inline-flex h-full w-full animate-ping bg-emerald-400 opacity-75" />
+            <span className="relative inline-flex h-2 w-2 bg-emerald-500" />
+          </span>
+          <span className="text-[13px] tracking-wide text-muted">
+            Available for new projects
+          </span>
+        </div>
 
-        <motion.div
-          className="mt-8 flex flex-wrap gap-4"
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{
-            duration: 0.6,
-            delay: 0.55,
-            ease: [0.22, 1, 0.36, 1],
-          }}
-        >
+        <div className="flex flex-wrap gap-4">
           <Button href="#work">See my work</Button>
           <Button
             href="https://cal.com/hauwa-yusuf"
@@ -56,8 +48,17 @@ export function Hero() {
           >
             Book a call
           </Button>
-        </motion.div>
-      </div>
+        </div>
+      </motion.div>
+
+      {/* Decorative bottom line */}
+      <motion.div
+        className="mt-20 h-px bg-border md:mt-28"
+        initial={{ scaleX: 0 }}
+        animate={{ scaleX: 1 }}
+        transition={{ duration: 1.2, delay: 0.7, ease: [0.22, 1, 0.36, 1] as const }}
+        style={{ transformOrigin: "left" }}
+      />
     </section>
   );
 }
