@@ -6,6 +6,8 @@ export type ProjectCategory =
   | "SaaS"
   | "Edtech";
 
+export type ProjectType = "Mobile App" | "Web" | "Dashboard" | "Branding";
+
 export interface ProcessSection {
   heading: string;
   body: string;
@@ -17,12 +19,15 @@ export interface Project {
   title: string;
   tagline: string;
   category: ProjectCategory;
+  type: ProjectType;
   year: string;
   coverImage: string;
   heroImage: string;
   role: string;
   tools: string[];
   duration: string;
+  scope: string;
+  notes: string;
   overview: string;
   problem: string;
   process: ProcessSection[];

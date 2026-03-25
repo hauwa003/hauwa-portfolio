@@ -6,12 +6,15 @@ export const projects: Project[] = [
     title: "MedTrack",
     tagline: "Simplifying hospital inventory management for healthcare teams",
     category: "Healthcare",
+    type: "Dashboard",
     year: "2024",
     coverImage: "/images/projects/medtrack-cover.jpg",
     heroImage: "/images/projects/medtrack-hero.jpg",
     role: "Product Designer",
     tools: ["Figma", "FigJam"],
     duration: "6 weeks",
+    scope: "Dashboard redesign, UX research, visual design",
+    notes: "Reduced inventory errors by 40% in first month",
     overview:
       "MedTrack is a healthcare dashboard redesign aimed at streamlining hospital inventory management. The existing system was outdated, hard to navigate, and led to frequent stock errors that impacted patient care.",
     problem:
@@ -43,12 +46,15 @@ export const projects: Project[] = [
     title: "Budgio",
     tagline: "Helping freelancers manage money with irregular income",
     category: "Fintech",
+    type: "Mobile App",
     year: "2024",
     coverImage: "/images/projects/budgio-cover.jpg",
     heroImage: "/images/projects/budgio-hero.jpg",
     role: "Product Designer",
     tools: ["Figma"],
     duration: "4 weeks",
+    scope: "0→1, mobile app design, user research, prototyping",
+    notes: "95% task completion rate in user testing",
     overview:
       "Budgio is a budgeting app designed specifically for freelancers and gig workers who deal with irregular income. It helps users plan around variable earnings rather than fixed monthly salaries.",
     problem:
@@ -80,12 +86,15 @@ export const projects: Project[] = [
     title: "CoSpace",
     tagline: "A smarter way to find apartments and roommates",
     category: "Real Estate",
+    type: "Web",
     year: "2024",
     coverImage: "/images/projects/cospace-cover.jpg",
     heroImage: "/images/projects/cospace-hero.jpg",
     role: "Product Designer",
     tools: ["Figma"],
     duration: "4 weeks",
+    scope: "0→1, web platform, UX/UI design, roommate matching",
+    notes: "Dual-search concept validated with 15 users",
     overview:
       "CoSpace is a platform that helps young professionals find apartments and compatible roommates in one place. It combines property listings with roommate matching based on lifestyle preferences.",
     problem:

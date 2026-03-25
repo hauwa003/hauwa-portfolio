@@ -62,20 +62,26 @@ const processSteps = [
 const tools = [
   { category: "Design", items: ["Figma", "FigJam", "Adobe Creative Suite"] },
   { category: "Prototyping", items: ["Figma Prototyping", "Framer"] },
-  { category: "Development", items: ["Next.js", "React", "Tailwind CSS", "TypeScript"] },
+  {
+    category: "Development",
+    items: ["Next.js", "React", "Tailwind CSS", "TypeScript"],
+  },
   { category: "Collaboration", items: ["Notion", "Slack", "Linear", "Loom"] },
 ];
 
 export default function ProcessPage() {
   return (
     <PageTransition>
-      <main className="mx-auto max-w-4xl px-6 pb-24 pt-12">
+      <main className="mx-auto max-w-7xl px-6 pb-28 pt-12 lg:px-8">
         {/* Intro */}
         <ScrollReveal>
-          <h1 className="font-display text-4xl font-semibold tracking-tight md:text-5xl">
-            How I work
+          <p className="text-[13px] uppercase tracking-[0.2em] text-muted">
+            Process
+          </p>
+          <h1 className="mt-3 max-w-3xl font-display text-5xl tracking-tight md:text-7xl">
+            How I work<span className="text-accent">.</span>
           </h1>
-          <p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted">
+          <p className="mt-8 max-w-2xl text-lg leading-[1.8] text-muted">
             Every project is different, but my approach stays consistent. I
             follow a structured yet flexible process that ensures clarity at
             every stage — from understanding the problem to shipping the
@@ -83,26 +89,35 @@ export default function ProcessPage() {
           </p>
         </ScrollReveal>
 
+        <div className="mt-6 h-px bg-border" />
+
         {/* Process steps */}
-        <div className="mt-20 space-y-20">
+        <div className="mt-20 space-y-0">
           {processSteps.map((step, i) => (
             <ScrollReveal key={step.number} delay={i * 0.05}>
-              <div className="grid gap-8 md:grid-cols-[auto_1fr]">
-                <span className="font-display text-5xl font-semibold text-accent">
+              <div className="grid gap-8 border-b border-border py-14 md:grid-cols-[120px_1fr_1.2fr] md:gap-12">
+                {/* Number */}
+                <span className="font-display text-6xl tracking-tight text-border md:text-7xl">
                   {step.number}
                 </span>
-                <div className="space-y-4">
-                  <h2 className="font-display text-2xl font-semibold">
+
+                {/* Title */}
+                <div>
+                  <h2 className="font-display text-3xl tracking-tight">
                     {step.title}
                   </h2>
-                  <p className="text-base leading-relaxed text-muted">
+                </div>
+
+                {/* Description + deliverables */}
+                <div className="space-y-6">
+                  <p className="text-[15px] leading-[1.8] text-muted">
                     {step.description}
                   </p>
-                  <div className="flex flex-wrap gap-2 pt-2">
+                  <div className="flex flex-wrap gap-2">
                     {step.deliverables.map((d) => (
                       <span
                         key={d}
-                        className="rounded-full bg-surface px-3 py-1 text-xs font-medium text-muted"
+                        className="border border-border px-3 py-1.5 text-xs text-muted"
                       >
                         {d}
                       </span>
@@ -117,18 +132,24 @@ export default function ProcessPage() {
         {/* Tools */}
         <ScrollReveal>
           <div className="mt-24">
-            <h2 className="font-display text-3xl font-semibold tracking-tight">
+            <p className="text-[13px] uppercase tracking-[0.2em] text-muted">
+              Toolkit
+            </p>
+            <h2 className="mt-3 font-display text-4xl tracking-tight md:text-5xl">
               Tools & methods
             </h2>
-            <div className="mt-10 grid gap-8 sm:grid-cols-2">
+            <div className="mt-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
               {tools.map((group) => (
                 <div key={group.category}>
-                  <p className="text-xs font-medium uppercase tracking-widest text-muted">
+                  <p className="text-[11px] uppercase tracking-[0.2em] text-accent">
                     {group.category}
                   </p>
-                  <ul className="mt-3 space-y-2">
+                  <ul className="mt-4 space-y-3">
                     {group.items.map((item) => (
-                      <li key={item} className="text-base">
+                      <li
+                        key={item}
+                        className="text-[15px] text-foreground"
+                      >
                         {item}
                       </li>
                     ))}
@@ -141,11 +162,14 @@ export default function ProcessPage() {
 
         {/* What to expect */}
         <ScrollReveal>
-          <div className="mt-24 rounded-2xl bg-surface p-8 md:p-12">
-            <h2 className="font-display text-2xl font-semibold">
+          <div className="mt-24 bg-foreground p-10 text-background md:p-16">
+            <p className="text-[13px] uppercase tracking-[0.2em] text-background/50">
+              Working Together
+            </p>
+            <h2 className="mt-3 font-display text-3xl tracking-tight md:text-4xl">
               What to expect
             </h2>
-            <div className="mt-6 space-y-4 text-base leading-relaxed text-muted">
+            <div className="mt-8 max-w-2xl space-y-5 text-[15px] leading-[1.8] text-background/70">
               <p>
                 When we work together, you can expect clear communication,
                 consistent updates, and a collaborative process. I don&apos;t

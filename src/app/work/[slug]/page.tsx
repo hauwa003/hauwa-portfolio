@@ -1,10 +1,15 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { projects, getProjectBySlug, getAdjacentProjects } from "@/lib/projects";
+import {
+  projects,
+  getProjectBySlug,
+  getAdjacentProjects,
+} from "@/lib/projects";
 import { CaseStudyHero } from "@/components/work/CaseStudyHero";
 import { CaseStudyBody } from "@/components/work/CaseStudyBody";
-import { ProjectNav } from "@/components/work/ProjectNav";
-import { PageTransition } from "@/components/layout/PageTransition";
+import { CaseStudySidebar } from "@/components/work/CaseStudySidebar";
+import { MobileCaseStudyHeader } from "@/components/work/MobileCaseStudyHeader";
+import { WipeTransition } from "@/components/layout/WipeTransition";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -16,7 +21,9 @@ export async function generateStaticParams() {
   }));
 }
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
   const { slug } = await params;
   const project = getProjectBySlug(slug);
   if (!project) return {};
@@ -43,12 +50,25 @@ export default async function CaseStudyPage({ params }: PageProps) {
   const { prev, next } = getAdjacentProjects(slug);
 
   return (
-    <PageTransition>
+    <WipeTransition>
       <main>
-        <CaseStudyHero project={project} />
-        <CaseStudyBody project={project} />
-        <ProjectNav prev={prev} next={next} />
+        {/* Fixed sidebar — desktop only */}
+        <CaseStudySidebar
+          project={project}
+          prev={prev}
+          next={next}
+          allProjects={projects}
+        />
+
+        {/* Mobile header */}
+        <MobileCaseStudyHeader project={project} prev={prev} next={next} />
+
+        {/* Main content — offset on desktop to account for fixed sidebar */}
+        <div className="lg:ml-[360px]">
+          <CaseStudyHero project={project} />
+          <CaseStudyBody project={project} />
+        </div>
       </main>
-    </PageTransition>
+    </WipeTransition>
   );
 }

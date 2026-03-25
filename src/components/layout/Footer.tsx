@@ -2,87 +2,80 @@ import Link from "next/link";
 
 export function Footer() {
   return (
-    <footer className="border-t border-border">
-      <div className="mx-auto max-w-6xl px-6 py-12">
-        <div className="flex flex-col gap-8 md:flex-row md:items-start md:justify-between">
+    <footer className="border-t border-border bg-surface/50">
+      <div className="mx-auto max-w-7xl px-6 py-16 lg:px-8">
+        <div className="flex flex-col gap-12 md:flex-row md:items-start md:justify-between">
           {/* Left */}
-          <div className="space-y-3">
+          <div className="space-y-4">
             <Link
               href="/"
-              className="font-display text-lg font-semibold tracking-tight"
+              className="font-display text-xl tracking-tight transition-opacity duration-300 hover:opacity-60"
             >
-              hauwa.design
+              hauwa<span className="text-accent">.</span>design
             </Link>
-            <p className="text-sm text-muted">
+            <p className="max-w-xs text-sm leading-relaxed text-muted">
               Product Designer & Framer Developer
+              <br />
+              Abuja, Nigeria
             </p>
-            <p className="text-sm text-muted">Abuja, Nigeria</p>
           </div>
 
-          {/* Navigation */}
-          <div className="flex gap-12">
-            <div className="space-y-3">
-              <p className="text-xs font-medium uppercase tracking-widest text-muted">
+          {/* Navigation columns */}
+          <div className="flex gap-16 md:gap-20">
+            <div className="space-y-4">
+              <p className="text-[11px] uppercase tracking-[0.2em] text-muted">
                 Pages
               </p>
-              <nav className="flex flex-col gap-2">
-                <Link
-                  href="/#work"
-                  className="text-sm text-foreground hover:text-accent transition-colors"
-                >
-                  Work
-                </Link>
-                <Link
-                  href="/process"
-                  className="text-sm text-foreground hover:text-accent transition-colors"
-                >
-                  Process
-                </Link>
-                <Link
-                  href="/about"
-                  className="text-sm text-foreground hover:text-accent transition-colors"
-                >
-                  About
-                </Link>
+              <nav className="flex flex-col gap-3">
+                {[
+                  { href: "/#work", label: "Work" },
+                  { href: "/process", label: "Process" },
+                  { href: "/about", label: "About" },
+                ].map((link) => (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    className="link-underline w-fit text-sm text-foreground transition-colors duration-300 hover:text-accent"
+                  >
+                    {link.label}
+                  </Link>
+                ))}
               </nav>
             </div>
 
-            <div className="space-y-3">
-              <p className="text-xs font-medium uppercase tracking-widest text-muted">
+            <div className="space-y-4">
+              <p className="text-[11px] uppercase tracking-[0.2em] text-muted">
                 Connect
               </p>
-              <nav className="flex flex-col gap-2">
-                <a
-                  href="mailto:hauwayusuf003@gmail.com"
-                  className="text-sm text-foreground hover:text-accent transition-colors"
-                >
-                  Email
-                </a>
-                <a
-                  href="https://wa.me/2349025722393"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-sm text-foreground hover:text-accent transition-colors"
-                >
-                  WhatsApp
-                </a>
-                <a
-                  href="https://cal.com/hauwa-yusuf"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-sm text-foreground hover:text-accent transition-colors"
-                >
-                  Book a call
-                </a>
+              <nav className="flex flex-col gap-3">
+                {[
+                  { href: "mailto:hauwayusuf003@gmail.com", label: "Email", external: false },
+                  { href: "https://wa.me/2349025722393", label: "WhatsApp", external: true },
+                  { href: "https://cal.com/hauwa-yusuf", label: "Book a call", external: true },
+                ].map((link) => (
+                  <a
+                    key={link.label}
+                    href={link.href}
+                    target={link.external ? "_blank" : undefined}
+                    rel={link.external ? "noopener noreferrer" : undefined}
+                    className="link-underline w-fit text-sm text-foreground transition-colors duration-300 hover:text-accent"
+                  >
+                    {link.label}
+                  </a>
+                ))}
               </nav>
             </div>
           </div>
         </div>
 
         {/* Bottom bar */}
-        <div className="mt-12 flex flex-col items-center justify-between gap-2 border-t border-border pt-6 text-xs text-muted md:flex-row">
-          <p>&copy; {new Date().getFullYear()} Hauwa Yusuf. All rights reserved.</p>
-          <p>Built with Next.js</p>
+        <div className="mt-16 flex flex-col items-center justify-between gap-3 border-t border-border pt-8 md:flex-row">
+          <p className="text-[12px] tracking-wide text-muted">
+            &copy; {new Date().getFullYear()} Hauwa Yusuf
+          </p>
+          <p className="text-[12px] tracking-wide text-muted">
+            Built with Next.js &middot; Designed with care
+          </p>
         </div>
       </div>
     </footer>
