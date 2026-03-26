@@ -7,11 +7,18 @@ import { useRef } from "react";
 export function Testimonial() {
   const [hydrated, setHydrated] = useState(false);
   const ref = useRef(null);
+  const wasInView = useRef(false);
   const isInView = useInView(ref, { once: true, margin: "-5%" });
 
-  useEffect(() => setHydrated(true), []);
+  useEffect(() => {
+    if (ref.current) {
+      const rect = (ref.current as HTMLElement).getBoundingClientRect();
+      wasInView.current = rect.top < window.innerHeight && rect.bottom > 0;
+    }
+    setHydrated(true);
+  }, []);
 
-  const shouldAnimate = hydrated && isInView;
+  const shouldAnimate = hydrated && (isInView || wasInView.current);
 
   return (
     <section ref={ref} className="relative overflow-hidden bg-foreground text-background">
@@ -26,7 +33,7 @@ export function Testimonial() {
         <div className="relative">
           {hydrated ? (
             <motion.blockquote
-              initial={{ opacity: 0, y: 32 }}
+              initial={wasInView.current ? false : { opacity: 0, y: 32 }}
               animate={shouldAnimate ? { opacity: 1, y: 0 } : { opacity: 0, y: 32 }}
               transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
             >
@@ -49,9 +56,9 @@ export function Testimonial() {
           {hydrated ? (
             <motion.footer
               className="mt-10 flex items-center gap-4"
-              initial={{ opacity: 0, y: 16 }}
+              initial={wasInView.current ? false : { opacity: 0, y: 16 }}
               animate={shouldAnimate ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
-              transition={{ duration: 0.6, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ duration: 0.6, delay: wasInView.current ? 0 : 0.3, ease: [0.22, 1, 0.36, 1] }}
             >
               <div className="h-px w-8 bg-background/30" />
               <div>

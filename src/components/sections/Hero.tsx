@@ -1,26 +1,35 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
 export function Hero() {
   const [hydrated, setHydrated] = useState(false);
-  useEffect(() => setHydrated(true), []);
+  const heroRef = useRef<HTMLElement>(null);
+  const wasInView = useRef(false);
+
+  useEffect(() => {
+    if (heroRef.current) {
+      const rect = heroRef.current.getBoundingClientRect();
+      wasInView.current = rect.top < window.innerHeight && rect.bottom > 0;
+    }
+    setHydrated(true);
+  }, []);
 
   // Wrapper that only adds framer-motion after hydration
   const M = hydrated ? motion.div : "div";
   const MH1 = hydrated ? motion.h1 : "h1";
 
   return (
-    <section className="mx-auto max-w-7xl px-6 pb-16 pt-16 md:pb-20 md:pt-24 lg:px-8">
+    <section ref={heroRef} className="mx-auto max-w-7xl px-6 pb-16 pt-16 md:pb-20 md:pt-24 lg:px-8">
       <MH1
         className="font-display text-[clamp(3.5rem,10vw,8rem)] leading-[1] tracking-tight"
         {...(hydrated && {
-          initial: { opacity: 0, y: 40 },
+          initial: wasInView.current ? false : { opacity: 0, y: 40 },
           animate: { opacity: 1, y: 0 },
-          transition: { duration: 0.8, delay: 0.1, ease },
+          transition: { duration: 0.8, delay: wasInView.current ? 0 : 0.1, ease },
         })}
       >
         Hauwa
@@ -29,9 +38,9 @@ export function Hero() {
       <M
         className="mt-6 flex items-center justify-between"
         {...(hydrated && {
-          initial: { opacity: 0, y: 20 },
+          initial: wasInView.current ? false : { opacity: 0, y: 20 },
           animate: { opacity: 1, y: 0 },
-          transition: { duration: 0.7, delay: 0.3, ease },
+          transition: { duration: 0.7, delay: wasInView.current ? 0 : 0.3, ease },
         })}
       >
         <p className="text-base text-foreground md:text-lg">
@@ -46,9 +55,9 @@ export function Hero() {
       <M
         className="mt-10 h-px bg-border md:mt-14"
         {...(hydrated && {
-          initial: { scaleX: 0 },
+          initial: wasInView.current ? false : { scaleX: 0 },
           animate: { scaleX: 1 },
-          transition: { duration: 1.2, delay: 0.5, ease },
+          transition: { duration: 1.2, delay: wasInView.current ? 0 : 0.5, ease },
           style: { transformOrigin: "left" },
         })}
       />
@@ -56,9 +65,9 @@ export function Hero() {
       <M
         className="mt-10 max-w-3xl space-y-6 text-lg leading-relaxed text-foreground md:mt-14 md:text-xl md:leading-relaxed"
         {...(hydrated && {
-          initial: { opacity: 0, y: 20 },
+          initial: wasInView.current ? false : { opacity: 0, y: 20 },
           animate: { opacity: 1, y: 0 },
-          transition: { duration: 0.7, delay: 0.6, ease },
+          transition: { duration: 0.7, delay: wasInView.current ? 0 : 0.6, ease },
         })}
       >
         <p>

@@ -7,12 +7,12 @@ import { ExitMessage } from "./ExitMessage";
 
 export function LayoutShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const isWork = pathname === "/work";
   const isCaseStudy = pathname.startsWith("/work/");
+  const isExplorations = pathname === "/explorations";
   const isGallery = pathname === "/gallery";
   const isAbout = pathname === "/about";
   const isProcess = pathname === "/process";
-  const hasSidebar = isWork || isCaseStudy || isGallery || isAbout || isProcess;
+  const hasSidebar = isCaseStudy || isExplorations || isGallery || isAbout || isProcess;
 
   return (
     <>

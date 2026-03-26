@@ -27,11 +27,18 @@ const contactLinks = [
 export function ContactSection() {
   const [hydrated, setHydrated] = useState(false);
   const ref = useRef(null);
+  const wasInView = useRef(false);
   const isInView = useInView(ref, { once: true, margin: "-5%" });
 
-  useEffect(() => setHydrated(true), []);
+  useEffect(() => {
+    if (ref.current) {
+      const rect = (ref.current as HTMLElement).getBoundingClientRect();
+      wasInView.current = rect.top < window.innerHeight && rect.bottom > 0;
+    }
+    setHydrated(true);
+  }, []);
 
-  const shouldAnimate = hydrated && isInView;
+  const shouldAnimate = hydrated && (isInView || wasInView.current);
 
   return (
     <section ref={ref} id="contact" className="relative border-t border-border">
@@ -39,7 +46,7 @@ export function ContactSection() {
         <div className="grid gap-16 md:grid-cols-[1.5fr_1fr] md:gap-20">
           {hydrated ? (
             <motion.div
-              initial={{ opacity: 0, y: 32 }}
+              initial={wasInView.current ? false : { opacity: 0, y: 32 }}
               animate={shouldAnimate ? { opacity: 1, y: 0 } : { opacity: 0, y: 32 }}
               transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
             >
@@ -76,9 +83,9 @@ export function ContactSection() {
           {hydrated ? (
             <motion.div
               className="flex flex-col justify-end space-y-8"
-              initial={{ opacity: 0, y: 24 }}
+              initial={wasInView.current ? false : { opacity: 0, y: 24 }}
               animate={shouldAnimate ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
-              transition={{ duration: 0.7, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ duration: 0.7, delay: wasInView.current ? 0 : 0.2, ease: [0.22, 1, 0.36, 1] }}
             >
               {contactLinks.map((link) => (
                 <div key={link.label} className="group">
