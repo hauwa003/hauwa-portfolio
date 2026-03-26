@@ -23,7 +23,7 @@ export function CaseStudyBody({ project }: CaseStudyBodyProps) {
 
       {/* Overview */}
       <ScrollReveal>
-        <div className="mt-14 max-w-2xl space-y-4">
+        <div id="overview" className="mt-14 max-w-2xl space-y-4 scroll-mt-8">
           <p className="text-[12px] uppercase tracking-[0.15em] text-muted">
             Overview
           </p>
@@ -35,7 +35,7 @@ export function CaseStudyBody({ project }: CaseStudyBodyProps) {
 
       {/* Problem */}
       <ScrollReveal>
-        <div className="mt-14 max-w-2xl space-y-4">
+        <div id="the-problem" className="mt-14 max-w-2xl space-y-4 scroll-mt-8">
           <p className="text-[12px] uppercase tracking-[0.15em] text-muted">
             The Problem
           </p>
@@ -48,7 +48,7 @@ export function CaseStudyBody({ project }: CaseStudyBodyProps) {
       {/* Process sections */}
       {project.process.map((section, i) => (
         <ScrollReveal key={i}>
-          <div className="mt-14 space-y-4">
+          <div id={`process-${i}`} className="mt-14 space-y-4 scroll-mt-8">
             <div className="flex items-center gap-3">
               <span className="text-[12px] tabular-nums text-muted">
                 {String(i + 1).padStart(2, "0")}
@@ -66,15 +66,11 @@ export function CaseStudyBody({ project }: CaseStudyBodyProps) {
                 {section.images.map((img, j) => (
                   <div
                     key={j}
-                    className="relative aspect-[16/10] overflow-hidden bg-surface"
+                    className="relative aspect-[16/10] overflow-hidden bg-surface flex items-center justify-center"
                   >
-                    <Image
-                      src={img}
-                      alt={`${section.heading} - image ${j + 1}`}
-                      fill
-                      className="object-cover"
-                      sizes="(max-width: 1024px) 100vw, 60vw"
-                    />
+                    <span className="text-[13px] text-muted">
+                      Image placeholder
+                    </span>
                   </div>
                 ))}
               </div>
@@ -85,7 +81,7 @@ export function CaseStudyBody({ project }: CaseStudyBodyProps) {
 
       {/* Outcome */}
       <ScrollReveal>
-        <div className="mt-20 bg-surface p-8 lg:p-10">
+        <div id="outcome" className="mt-20 bg-surface p-8 lg:p-10 scroll-mt-8">
           <p className="text-[12px] uppercase tracking-[0.15em] text-muted">
             Outcome
           </p>

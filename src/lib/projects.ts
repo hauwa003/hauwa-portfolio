@@ -4,7 +4,8 @@ export const projects: Project[] = [
   {
     slug: "medtrack",
     title: "MedTrack",
-    tagline: "Simplifying hospital inventory management for healthcare teams",
+    tagline:
+      "A SaaS dashboard redesign for retail pharmacies to manage daily operations faster and with fewer errors",
     category: "Healthcare",
     type: "Dashboard",
     year: "2024",
@@ -13,32 +14,47 @@ export const projects: Project[] = [
     role: "Product Designer",
     tools: ["Figma", "FigJam"],
     duration: "6 weeks",
-    scope: "Dashboard redesign, UX research, visual design",
-    notes: "Reduced inventory errors by 40% in first month",
+    scope: "Dashboard redesign, UX research, user flows, visual design",
+    notes:
+      "41% faster workflow navigation after redesign",
     overview:
-      "MedTrack is a healthcare dashboard redesign aimed at streamlining hospital inventory management. The existing system was outdated, hard to navigate, and led to frequent stock errors that impacted patient care.",
+      "MedTrack is a SaaS dashboard built for retail pharmacies to manage day-to-day operations in one place. It covers inventory, expiry date tracking, purchasing, suppliers, returns, reporting, and staff activity across multiple user roles. This redesign focuses on reducing daily friction — the existing experience was creating unnecessary complexity, simple tasks took too long, and mistakes increased under pressure. The goal was to make MedTrack easier to navigate and quicker to use.",
     problem:
-      "Hospital staff struggled with a legacy inventory system that was slow, confusing, and error-prone. Critical supplies were frequently over- or under-stocked, leading to waste and shortages.",
+      "Our users are struggling with the current dashboard because it feels confusing and hard to use. Everyday tasks like tracking expiry dates and managing purchases take too many steps, which wastes time and increases mistakes. We need a redesign that makes the whole experience faster, clearer, and easier to manage.",
     process: [
       {
-        heading: "Research & Discovery",
-        body: "Conducted stakeholder interviews with hospital administrators and nurses to understand pain points. Mapped existing workflows and identified key friction areas in the inventory tracking process.",
+        heading: "UX Research & Discovery",
+        body: "Through user interviews, we uncovered key pain points that shaped the redesign. Users couldn't tell what needed attention first, so they ended up clicking across pages just to start their day. Buying stock took more steps than it should, making a routine task feel unnecessarily complicated. Alerts for items close to expiry were easy to miss, and by the time someone noticed, stock had already gone to waste. Many users knew exactly what they needed to do — but finding it on the dashboard was the hard part.",
+        images: ["/images/projects/medtrack/research.jpg"],
       },
       {
-        heading: "Information Architecture",
-        body: "Restructured the dashboard navigation to prioritize the most-used actions: checking stock levels, placing orders, and viewing alerts. Reduced the number of clicks to complete core tasks by 60%.",
+        heading: "Building the Right Solution",
+        body: "Before jumping into design, we mapped out the user flow to understand exactly where the experience was breaking down and why. We identified the core actions users needed: seeing medication stock counts, toggling between drug categories, opening restock flows for low stock items, reviewing pending orders, and getting AI-powered context-aware answers from inventory data. Each of these had to be reachable with minimal effort.",
+        images: ["/images/projects/medtrack/user-flow.jpg"],
       },
       {
-        heading: "Visual Design",
-        body: "Created a clean, scannable interface with clear data hierarchy. Used color coding for stock status (critical, low, adequate) and designed mobile-responsive views for on-the-go checks.",
+        heading: "Designing for Real Users",
+        body: "We designed around two key personas. The Superintendent Pharmacist who wants one place that shows what needs attention today — trusted numbers, quick exports, and a clear audit trail of who did what. And the Inventory Manager who needs to get ahead of low stock before it becomes an emergency, follow an order from request to arrival, and verify that what was delivered matches what was ordered.",
+        images: ["/images/projects/medtrack/personas.jpg"],
+      },
+      {
+        heading: "Aligning Design with Business Goals",
+        body: "The UX strategy focused on three key challenges. First, the overview was showing a lot of numbers but not telling users what to do next — I redesigned it to surface what actually needed attention so users could act the moment they logged in. Second, the most common tasks were taking too many steps — I stripped them back so users could go from spotting a problem to fixing it without losing momentum. Third, the page had too much information competing for attention — I restructured the hierarchy so urgent items were impossible to miss and everything else stayed out of the way.",
+        images: ["/images/projects/medtrack/dashboard.jpg"],
+      },
+      {
+        heading: "Challenges & Solutions",
+        body: "Simplifying the dashboard without losing important information was tricky — I reworked the hierarchy so urgent items stood out and secondary details stopped fighting for attention. Users were spending time looking for actions that should have been immediately reachable, so I introduced a 'New' button in the navbar that brought everything into one place. The old activity feed made it hard to tell what actually mattered, so I cleaned up the structure, added context to each entry, and built in hover interactions on user names so managers could get to the right person without digging around. One of the biggest frustrations was not knowing where to start — we fixed that by adding a 'Today's Priorities' section that surfaces the most urgent tasks the moment users open the dashboard.",
+        images: ["/images/projects/medtrack/final.jpg"],
       },
     ],
     outcome:
-      "The redesigned dashboard reduced inventory errors by 40% in the first month and cut the average time to complete a stock check from 12 minutes to under 4 minutes.",
+      "The final design introduced a stronger visual hierarchy that surfaces urgent items first, keeps key context easy to scan, and makes important actions easier to find. To validate the redesign, I built a prototype and tested it with real users — their feedback showed where things still felt off, and I used that to make the final round of improvements. The redesign resulted in 41% faster workflow navigation, giving healthcare teams a reliable tool for managing day-to-day pharmacy operations.",
     metrics: [
-      "40% reduction in inventory errors",
-      "3x faster stock checks",
-      "92% user satisfaction score",
+      "41% faster workflow navigation",
+      "Faster task completion — users moved through key workflows quicker after urgent items and actions were made easier to find",
+      "Improved action discoverability — bringing key actions under one entry point meant users stopped searching and started doing",
+      "Better update scanability — a clearer activity feed meant users could tell what changed, who did it, and when, at a glance",
     ],
   },
   {
@@ -84,42 +100,95 @@ export const projects: Project[] = [
   {
     slug: "cospace",
     title: "CoSpace",
-    tagline: "A smarter way to find apartments and roommates",
+    tagline:
+      "Making the house hunting journey less complicated for renters in Lagos",
     category: "Real Estate",
     type: "Web",
-    year: "2024",
+    year: "2025",
     coverImage: "/images/projects/cospace-cover.jpg",
     heroImage: "/images/projects/cospace-hero.jpg",
     role: "Product Designer",
     tools: ["Figma"],
     duration: "4 weeks",
-    scope: "0→1, web platform, UX/UI design, roommate matching",
-    notes: "Dual-search concept validated with 15 users",
+    scope: "0→1, web platform, UX/UI design, user research",
+    notes: "150+ pre-launch waitlist signups",
     overview:
-      "CoSpace is a platform that helps young professionals find apartments and compatible roommates in one place. It combines property listings with roommate matching based on lifestyle preferences.",
+      "I designed CoSpace to make finding a home in Lagos less stressful and less costly. Renters often rely on agents, fragmented listings, and repeated inspections — paying fees without any guarantee of securing a home. CoSpace enables direct connections between renters, homeowners, and potential roommates, reducing friction and helping people make clearer housing decisions.",
     problem:
-      "Finding an apartment is stressful enough — finding a compatible roommate at the same time makes it worse. Existing platforms handle one or the other, forcing users to juggle multiple apps and risk bad matches.",
+      "Finding a place to rent and possible roommates to rent with is stressful. Repeated inspection fees and agent dependency only make it worse. Renters move between different agents and apartments with no guarantee of success, often losing money before they ever move in.",
     process: [
       {
-        heading: "Competitive Analysis",
-        body: "Analyzed 6 competing platforms across real estate and roommate matching categories. Identified a clear gap: no single product handled both apartment search and roommate compatibility well.",
+        heading: "Research & Discovery",
+        body: "I spoke with renters in Lagos to understand their experiences finding a place to live. These conversations revealed recurring frustrations: inspection fee fatigue from repeated fees that rarely led to securing an apartment, trust and safety concerns from past experiences with scams and fake listings, and poor filtering systems that made it difficult to narrow down options. With a clear understanding of user needs and pain points, I translated those insights into user flows.",
+        images: ["/images/projects/cospace/research.jpg"],
       },
       {
-        heading: "User Flows & Wireframes",
-        body: "Mapped the dual journey of apartment hunting and roommate matching. Designed flows that let users search for spaces first, then find compatible people — or vice versa.",
+        heading: "Designing for Real Users",
+        body: "I created two personas based on research. Kunle, a 34-year-old business development manager who needs a reliable replacement flatmate quickly without dealing with agents. And Amaka, a 28-year-old junior content strategist who is a budget-conscious first-time renter nervous about navigating the Lagos rental market without getting taken advantage of. Both share a common need: find a place faster, with less stress and no agent fees.",
+        images: ["/images/projects/cospace/personas.jpg"],
+      },
+      {
+        heading: "Wireframing the Experience",
+        body: "I used wireframes to map a clear, low-friction renting journey, focusing on discovery, understanding listings, and initiating contact. This stage helped validate flows early and ensured the experience directly addressed user pain points before moving into high-fidelity design.",
+        images: ["/images/projects/cospace/wireframes.jpg"],
       },
       {
         heading: "High-Fidelity Design",
-        body: "Created a modern, trustworthy visual design with verification badges, lifestyle tags, and compatibility scores. Designed both mobile and desktop experiences.",
+        body: "I allowed users to access the home screen without signing up to support exploration before commitment. I introduced identity verification requiring all listers to upload a valid government-issued ID before their listing goes live. I designed a robust filtering system with key filters immediately visible to support quick decision-making. I added a simple way for users to report suspicious listings, making safety a shared responsibility. And I standardised listing details to surface essential information upfront, improving transparency and reducing uncertainty.",
+        images: ["/images/projects/cospace/hifi.jpg"],
+      },
+      {
+        heading: "Designing for Trust",
+        body: "Working on CoSpace highlighted that trust must be reinforced across the entire experience. Verification steps, consistent listing information, and the ability to report suspicious content were designed to reduce anxiety and increase perceived platform credibility. Moving forward, I plan to design trust cues more intentionally at key decision points rather than relying on isolated features.",
+        images: ["/images/projects/cospace/trust.jpg"],
       },
     ],
     outcome:
-      "The design was validated with 15 target users. The dual-search concept tested strongly, with users particularly appreciating the lifestyle compatibility scoring feature.",
+      "CoSpace addressed key renting challenges by removing agent-led friction and enabling direct connections between renters and homeowners. Early validation through user research and pre-launch waitlist signups demonstrated strong demand for a calmer, more transparent renting experience. The result is a focused solution that prioritises clarity, trust, and real-world renting behaviour.",
     metrics: [
-      "15 user validation sessions",
-      "88% found the dual-search intuitive",
-      "Compatibility scoring rated most valuable feature",
+      "90% task completion confidence — participants completed key tasks without confusion or external help",
+      "Increased trust in listings — visible verification steps and reporting reduced anxiety",
+      "150+ pre-launch waitlist signups — confirming demand for a transparent approach to renting in Lagos",
     ],
+  },
+  {
+    slug: "mira",
+    title: "Mira",
+    tagline:
+      "A therapy matching platform built exclusively for women, connecting them with licensed female therapists",
+    category: "Healthcare",
+    type: "Web",
+    year: "2026",
+    coverImage: "/images/projects/mira-cover.jpg",
+    heroImage: "/images/projects/mira-hero.jpg",
+    role: "Framer Developer, UI/UX Designer",
+    tools: ["Figma", "Framer", "Lummi"],
+    duration: "2 weeks",
+    scope: "End-to-end UI/UX, Framer development",
+    notes: "Designed and built in 2 weeks",
+    overview:
+      "Mira is a therapy matching platform built exclusively for women, connecting them with licensed female therapists who specialise in the challenges women actually face. I designed the end-to-end UI/UX with one goal: make women feel genuinely welcome.",
+    problem:
+      "Women seeking mental health support are often already carrying a lot before they even open a browser. They may have been dismissed by a doctor, talked themselves out of it a dozen times, or simply never felt like existing platforms were built with them in mind. Mira started from a different question: what would it take for a woman to feel genuinely welcome here, from the very first word on the page?",
+    process: [
+      {
+        heading: "Visual Language & Tone",
+        body: "The colour palette centres on deep forest green and warm cream. Green was a considered choice — it carries associations of calm and growth, two things that feel genuinely relevant to a woman beginning a mental health journey. The cream ground keeps it warm and approachable rather than corporate. Together they create a visual environment that feels safe to spend time in, which matters when the content itself asks something emotionally significant of the user.",
+        images: ["/images/projects/mira/visual.jpg"],
+      },
+      {
+        heading: "Typography",
+        body: "The type system pairs a soft italic serif for display and emotional emphasis with a clean, highly legible body font for everything informational. The serif was chosen for its softness: rounded, considered, a little warm. It gives headlines and key phrases like 'tailored for women' a quality that feels personal rather than broadcast. The body font then does the practical work of making longer content easy to read without fatigue.",
+        images: ["/images/projects/mira/typography.jpg"],
+      },
+      {
+        heading: "Trust-Building Design",
+        body: "Every section earns the next click rather than demanding it. The hero opens with a social proof pill showing real faces alongside 'Join 20k+ women'. The CTA is immediately followed by 'No credit card required. Free 20min consultation' because nobody should have to wonder if there is a catch. Therapist profiles lead with faces and lived specialisations rather than a list of credentials, because the user needs to feel a connection before they feel reassured by a qualification.",
+        images: ["/images/projects/mira/trust.jpg"],
+      },
+    ],
+    outcome:
+      "The Mira website came together in 2 weeks. Every visual and interaction decision points back to the same goal: that women deserve mental health platforms designed with the same care and intention they are being asked to bring to their own healing. Mira is what that looks like.",
   },
 ];
 

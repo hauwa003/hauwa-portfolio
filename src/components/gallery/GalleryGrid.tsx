@@ -1,9 +1,12 @@
 "use client";
 
 import { useRef } from "react";
+import Link from "next/link";
 import Image from "next/image";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { galleryItems, type GalleryItem } from "@/lib/gallery";
+
+const ease = [0.22, 1, 0.36, 1] as const;
 
 function GalleryTile({ tile, index }: { tile: GalleryItem; index: number }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -34,14 +37,14 @@ function GalleryTile({ tile, index }: { tile: GalleryItem; index: number }) {
 
   return (
     <motion.div
-      className="mb-5 break-inside-avoid"
+      className="w-full"
       initial={{ opacity: 0, y: 32 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-5%" }}
       transition={{
         duration: 0.7,
-        delay: (index % 4) * 0.06,
-        ease: [0.22, 1, 0.36, 1],
+        delay: (index % 3) * 0.06,
+        ease,
       }}
     >
       <motion.div
@@ -52,7 +55,7 @@ function GalleryTile({ tile, index }: { tile: GalleryItem; index: number }) {
           ...(isTilt ? { rotateX, rotateY } : {}),
         }}
         whileHover={isLift ? { y: -6, scale: 1.015 } : undefined}
-        transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+        transition={{ duration: 0.4, ease }}
         onMouseMove={isTilt ? handleMouse : undefined}
         onMouseLeave={isTilt ? handleLeave : undefined}
       >
@@ -62,7 +65,7 @@ function GalleryTile({ tile, index }: { tile: GalleryItem; index: number }) {
           width={tile.width}
           height={tile.height}
           className="block h-auto w-full transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.03]"
-          sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+          sizes="(max-width: 1024px) 100vw, calc(100vw - 360px)"
         />
 
         {isReveal ? (
@@ -93,36 +96,134 @@ function GalleryTile({ tile, index }: { tile: GalleryItem; index: number }) {
   );
 }
 
+/* ── Sidebar (desktop only) ── */
+function GallerySidebar() {
+  return (
+    <aside className="hidden lg:fixed lg:left-0 lg:top-0 lg:flex lg:h-screen lg:w-[360px] lg:flex-col lg:border-r lg:border-border lg:bg-background lg:z-40">
+      <motion.div
+        className="flex flex-1 flex-col px-8 pt-8 pb-8 overflow-y-auto"
+        initial={{ opacity: 0, x: -16 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.6, delay: 0.5, ease }}
+      >
+        {/* Gallery metadata */}
+        <div className="space-y-8">
+          <div>
+            <p className="text-[12px] uppercase tracking-[0.15em] text-muted">
+              Section
+            </p>
+            <p className="mt-1.5 text-[15px] font-medium">UI Gallery</p>
+          </div>
+
+          <div>
+            <p className="text-[12px] uppercase tracking-[0.15em] text-muted">
+              About
+            </p>
+            <p className="mt-1.5 text-[15px] leading-relaxed">
+              A curated collection of screens, interfaces, and design details
+              from various projects.
+            </p>
+          </div>
+
+          <div>
+            <p className="text-[12px] uppercase tracking-[0.15em] text-muted">
+              Total Pieces
+            </p>
+            <p className="mt-1.5 text-[15px]">{galleryItems.length}</p>
+          </div>
+
+          <div>
+            <p className="text-[12px] uppercase tracking-[0.15em] text-muted">
+              Categories
+            </p>
+            <p className="mt-1.5 text-[15px]">
+              {[...new Set(galleryItems.map((g) => g.project))].join(", ")}
+            </p>
+          </div>
+        </div>
+      </motion.div>
+
+      {/* Bottom nav links */}
+      <motion.div
+        className="shrink-0 border-t border-border px-8 py-6"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.7, duration: 0.5 }}
+      >
+        <div className="flex items-center gap-3">
+          <Link
+            href="/"
+            className="border border-border px-5 py-2.5 text-[13px] transition-colors hover:bg-surface"
+          >
+            Home
+          </Link>
+          <Link
+            href="/work"
+            className="border border-border px-5 py-2.5 text-[13px] transition-colors hover:bg-surface"
+          >
+            Work
+          </Link>
+          <Link
+            href="/#contact"
+            className="bg-foreground px-5 py-2.5 text-[13px] text-background transition-colors hover:bg-accent-hover"
+          >
+            Book a call
+          </Link>
+        </div>
+      </motion.div>
+    </aside>
+  );
+}
+
+/* ── Mobile header ── */
+function GalleryMobileHeader() {
+  return (
+    <div className="lg:hidden">
+      <motion.div
+        className="border-b border-border px-6 py-6"
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.4, ease }}
+      >
+        <div className="space-y-4">
+          <div>
+            <p className="text-[12px] uppercase tracking-[0.15em] text-muted">
+              Section
+            </p>
+            <p className="mt-1 text-[15px] font-medium">UI Gallery</p>
+          </div>
+          <div>
+            <p className="text-[12px] uppercase tracking-[0.15em] text-muted">
+              About
+            </p>
+            <p className="mt-1 text-[15px] leading-relaxed">
+              A curated collection of screens, interfaces, and design details
+              from various projects.
+            </p>
+          </div>
+        </div>
+      </motion.div>
+    </div>
+  );
+}
+
+/* ── Main export ── */
 export function GalleryGrid() {
   return (
-    <div>
-      <div className="mx-auto max-w-7xl px-6 pt-12 pb-10 lg:px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-        >
-          <p className="text-[13px] uppercase tracking-[0.2em] text-muted">
-            UI Gallery
-          </p>
-          <h1 className="mt-3 font-display text-4xl tracking-tight md:text-5xl">
-            Visual explorations
-          </h1>
-          <p className="mt-3 max-w-md text-[15px] leading-relaxed text-muted">
-            A curated collection of screens, interfaces, and design details from
-            various projects.
-          </p>
-        </motion.div>
-        <div className="mt-6 h-px bg-border" />
-      </div>
+    <>
+      <GallerySidebar />
+      <GalleryMobileHeader />
 
-      <div className="mx-auto max-w-7xl px-6 pb-20 lg:px-8">
-        <div className="columns-2 gap-5 md:columns-3 lg:columns-4">
-          {galleryItems.map((tile, i) => (
-            <GalleryTile key={tile.src} tile={tile} index={i} />
-          ))}
+      {/* Main content — offset on desktop for fixed sidebar */}
+      <div className="lg:ml-[360px]">
+        <div className="px-6 py-10 lg:px-10 lg:py-12">
+          <div className="space-y-5">
+            {galleryItems.map((tile, i) => (
+              <GalleryTile key={tile.src} tile={tile} index={i} />
+            ))}
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
