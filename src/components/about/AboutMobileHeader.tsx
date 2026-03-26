@@ -1,12 +1,17 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
 export function AboutMobileHeader() {
+  const [hydrated, setHydrated] = useState(false);
+  useEffect(() => setHydrated(true), []);
+
   return (
     <div className="lg:hidden">
+      {hydrated ? (
       <motion.div
         className="border-b border-border px-6 py-6"
         initial={{ opacity: 0, y: 12 }}
@@ -23,6 +28,19 @@ export function AboutMobileHeader() {
           </p>
         </div>
       </motion.div>
+      ) : (
+      <div className="border-b border-border px-6 py-6">
+        <div>
+          <p className="font-display text-[15px] font-medium">
+            I put this together for you...yes you!
+          </p>
+          <p className="mt-1 text-[13px] text-muted">
+            A collection of fragments and pieces of some really cool designs I
+            have worked on.
+          </p>
+        </div>
+      </div>
+      )}
     </div>
   );
 }

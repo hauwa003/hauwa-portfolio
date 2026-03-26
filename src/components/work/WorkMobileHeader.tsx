@@ -1,12 +1,17 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
 export function WorkMobileHeader() {
+  const [hydrated, setHydrated] = useState(false);
+  useEffect(() => setHydrated(true), []);
+
   return (
     <div className="lg:hidden">
+      {hydrated ? (
       <motion.div
         className="border-b border-border px-6 py-6"
         initial={{ opacity: 0, y: 12 }}
@@ -20,6 +25,16 @@ export function WorkMobileHeader() {
           <p className="mt-1 text-[15px] font-medium">Selected projects</p>
         </div>
       </motion.div>
+      ) : (
+      <div className="border-b border-border px-6 py-6">
+        <div>
+          <p className="text-[12px] uppercase tracking-[0.15em] text-muted">
+            Work
+          </p>
+          <p className="mt-1 text-[15px] font-medium">Selected projects</p>
+        </div>
+      </div>
+      )}
     </div>
   );
 }
