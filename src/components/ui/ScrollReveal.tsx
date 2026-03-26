@@ -14,21 +14,27 @@ export function ScrollReveal({
   delay = 0,
   className,
 }: ScrollRevealProps) {
-  const [hydrated, setHydrated] = useState(false);
+  const [state, setState] = useState<"ssr" | "visible" | "animate">("ssr");
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    setHydrated(true);
+    if (ref.current) {
+      const rect = ref.current.getBoundingClientRect();
+      const inView = rect.top < window.innerHeight && rect.bottom > 0;
+      setState(inView ? "visible" : "animate");
+    } else {
+      setState("visible");
+    }
   }, []);
 
-  // Before hydration: render visible content (no framer-motion inline styles)
-  if (!hydrated) {
-    return <div className={className}>{children}</div>;
+  // SSR or already-visible: render plain div (no framer-motion)
+  if (state !== "animate") {
+    return <div ref={ref} className={className}>{children}</div>;
   }
 
+  // Off-screen: animate on scroll
   return (
     <motion.div
-      ref={ref}
       className={className}
       initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}

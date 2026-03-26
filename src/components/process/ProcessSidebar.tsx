@@ -132,7 +132,7 @@ export function ProcessSidebar() {
             Home
           </Link>
           <Link
-            href="/work"
+            href="/explorations"
             className="border border-border px-5 py-2.5 text-[13px] transition-colors hover:bg-surface"
           >
             Work
@@ -155,7 +155,7 @@ export function ProcessSidebar() {
             Home
           </Link>
           <Link
-            href="/work"
+            href="/explorations"
             className="border border-border px-5 py-2.5 text-[13px] transition-colors hover:bg-surface"
           >
             Work

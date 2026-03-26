@@ -25,7 +25,7 @@ export function AboutContent() {
 
       {/* Hero photo placeholder */}
       <ScrollReveal>
-        <div className="mt-10 aspect-[16/9] w-full max-w-2xl bg-surface" />
+        <div className="mt-10 aspect-[16/9] w-full bg-surface" />
       </ScrollReveal>
 
       {/* Interests */}
