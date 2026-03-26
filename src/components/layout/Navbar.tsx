@@ -7,15 +7,73 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const navLinks = [
   { href: "/", label: "Home" },
-  { href: "/#work", label: "Work" },
+  { href: "/work", label: "Work" },
   { href: "/gallery", label: "Gallery" },
   { href: "/process", label: "Process" },
   { href: "/about", label: "About" },
 ];
 
 const socialLinks = [
-  { href: "https://www.linkedin.com/in/hauwa-yusuf", label: "LinkedIn" },
+  { href: "https://www.linkedin.com/in/hauwayusuf", label: "LinkedIn" },
   { href: "https://cal.com/hauwa-yusuf", label: "Book a call" },
+];
+
+const headerSocials = [
+  {
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/in/hauwayusuf",
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z" />
+        <rect x="2" y="9" width="4" height="12" />
+        <circle cx="4" cy="4" r="2" />
+      </svg>
+    ),
+  },
+  {
+    label: "Behance",
+    href: "https://www.behance.net/hauwayusuf1",
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+        <path d="M3 18V6h5.5a3.5 3.5 0 0 1 0 7H3" />
+        <path d="M3 12.5h6a3.5 3.5 0 0 1 0 7H3" />
+        <path d="M15 12.5h6" />
+        <path d="M21 15.5c0 2-1.5 3-3 3s-3-1-3-3 1.5-3 3-3 3 1 3 3z" />
+        <path d="M15 8h6" />
+      </svg>
+    ),
+  },
+  {
+    label: "Twitter",
+    href: "https://x.com/hauwa03",
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M4 20 10.5 13M14 10 20 4" />
+        <path d="M20 4h-5M20 4v5" />
+        <path d="M4 4l16 16" />
+      </svg>
+    ),
+  },
+  {
+    label: "TikTok",
+    href: "https://www.tiktok.com/@hauwa.design",
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" />
+      </svg>
+    ),
+  },
+  {
+    label: "Instagram",
+    href: "https://www.instagram.com/hauwa.design",
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="2" y="2" width="20" height="20" rx="5" />
+        <circle cx="12" cy="12" r="5" />
+        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+      </svg>
+    ),
+  },
 ];
 
 export function Navbar() {
@@ -56,10 +114,30 @@ export function Navbar() {
             hauwa<span className="text-accent">.</span>design
           </Link>
 
-          {/* Hamburger — always visible */}
+          {/* Social icons + Hamburger */}
+          <div className="relative z-[60] flex items-center gap-5">
+            {/* Social icons — hidden on mobile, visible on md+ */}
+            <div className="hidden items-center gap-4 md:flex">
+              {headerSocials.map((link) => (
+                <a
+                  key={link.label}
+                  href={link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-foreground transition-opacity duration-300 hover:opacity-60"
+                  aria-label={link.label}
+                >
+                  {link.icon}
+                </a>
+              ))}
+            </div>
+
+            {/* Separator */}
+            <div className="hidden h-5 w-px bg-border md:block" />
+
           <button
             onClick={() => setOpen(!open)}
-            className="relative z-[60] flex h-10 w-10 items-center justify-center"
+            className="flex h-10 w-10 items-center justify-center"
             aria-label={open ? "Close menu" : "Open menu"}
             aria-expanded={open}
           >
@@ -98,6 +176,7 @@ export function Navbar() {
               )}
             </AnimatePresence>
           </button>
+          </div>
         </nav>
       </header>
 

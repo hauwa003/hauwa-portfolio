@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
-import { Instrument_Serif, Caveat } from "next/font/google";
-import localFont from "next/font/local";
+import { Instrument_Serif, Caveat, Geist } from "next/font/google";
 import { LayoutShell } from "@/components/layout/LayoutShell";
 import "./globals.css";
 
@@ -17,15 +16,9 @@ const caveat = Caveat({
   display: "swap",
 });
 
-const tomatoGrotesk = localFont({
-  src: [
-    { path: "../../public/fonts/TomatoGrotesk-Light.otf", weight: "300" },
-    { path: "../../public/fonts/TomatoGrotesk-Regular.otf", weight: "400" },
-    { path: "../../public/fonts/TomatoGrotesk-Medium.otf", weight: "500" },
-    { path: "../../public/fonts/TomatoGrotesk-SemiBold.otf", weight: "600" },
-    { path: "../../public/fonts/TomatoGrotesk-Bold.otf", weight: "700" },
-  ],
-  variable: "--font-tomato-grotesk",
+const geist = Geist({
+  variable: "--font-geist",
+  subsets: ["latin"],
   display: "swap",
 });
 
@@ -56,7 +49,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${instrumentSerif.variable} ${tomatoGrotesk.variable} ${caveat.variable} h-full antialiased`}
+      className={`${instrumentSerif.variable} ${geist.variable} ${caveat.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col bg-background text-foreground">
         <LayoutShell>{children}</LayoutShell>
