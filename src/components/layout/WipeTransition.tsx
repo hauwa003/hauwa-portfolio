@@ -1,8 +1,17 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
 export function WipeTransition({ children }: { children: React.ReactNode }) {
+  const [hydrated, setHydrated] = useState(false);
+  useEffect(() => setHydrated(true), []);
+
+  // Before hydration: render children directly (no black overlays, no opacity:0)
+  if (!hydrated) {
+    return <>{children}</>;
+  }
+
   return (
     <>
       {/* Wipe overlay — slides down then out */}

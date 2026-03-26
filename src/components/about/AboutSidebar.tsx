@@ -16,6 +16,8 @@ const sections = [
 
 export function AboutSidebar() {
   const [activeId, setActiveId] = useState("");
+  const [hydrated, setHydrated] = useState(false);
+  useEffect(() => setHydrated(true), []);
 
   useEffect(() => {
     let observer: IntersectionObserver | null = null;
@@ -53,6 +55,7 @@ export function AboutSidebar() {
 
   return (
     <aside className="hidden lg:fixed lg:left-0 lg:top-0 lg:flex lg:h-screen lg:w-[360px] lg:flex-col lg:border-r lg:border-border lg:bg-background lg:z-40">
+      {hydrated ? (
       <motion.div
         className="flex flex-1 flex-col px-8 pt-8 pb-8 overflow-y-auto"
         initial={{ opacity: 0, x: -16 }}
@@ -87,8 +90,36 @@ export function AboutSidebar() {
           </ul>
         </nav>
       </motion.div>
+      ) : (
+      <div className="flex flex-1 flex-col px-8 pt-8 pb-8 overflow-y-auto">
+        <div>
+          <p className="font-display text-lg tracking-tight">About</p>
+          <p className="mt-1 text-[13px] text-muted">Getting to know me</p>
+        </div>
+
+        {/* Table of contents */}
+        <nav className="mt-8">
+          <p className="text-[12px] uppercase tracking-[0.15em] text-muted">
+            Contents
+          </p>
+          <ul className="mt-4 space-y-1">
+            {sections.map(({ id, label }) => (
+              <li key={id}>
+                <button
+                  onClick={() => scrollTo(id)}
+                  className="w-full text-left px-3 py-2 text-[14px] text-muted hover:text-foreground transition-colors duration-200"
+                >
+                  {label}
+                </button>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </div>
+      )}
 
       {/* Bottom nav links */}
+      {hydrated ? (
       <motion.div
         className="shrink-0 border-t border-border px-8 py-6"
         initial={{ opacity: 0 }}
@@ -116,6 +147,30 @@ export function AboutSidebar() {
           </Link>
         </div>
       </motion.div>
+      ) : (
+      <div className="shrink-0 border-t border-border px-8 py-6">
+        <div className="flex items-center gap-3">
+          <Link
+            href="/"
+            className="border border-border px-5 py-2.5 text-[13px] transition-colors hover:bg-surface"
+          >
+            Home
+          </Link>
+          <Link
+            href="/work"
+            className="border border-border px-5 py-2.5 text-[13px] transition-colors hover:bg-surface"
+          >
+            Work
+          </Link>
+          <Link
+            href="/#contact"
+            className="bg-foreground px-5 py-2.5 text-[13px] text-background transition-colors hover:bg-accent-hover"
+          >
+            Book a call
+          </Link>
+        </div>
+      </div>
+      )}
     </aside>
   );
 }

@@ -141,40 +141,26 @@ export function Navbar() {
             aria-label={open ? "Close menu" : "Open menu"}
             aria-expanded={open}
           >
-            <AnimatePresence mode="wait">
-              {open ? (
-                <motion.svg
-                  key="close"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="white"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  initial={{ opacity: 0, rotate: -90 }}
-                  animate={{ opacity: 1, rotate: 0 }}
-                  exit={{ opacity: 0, rotate: 90 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <line x1="18" y1="6" x2="6" y2="18" />
-                  <line x1="6" y1="6" x2="18" y2="18" />
-                </motion.svg>
-              ) : (
-                <motion.div
-                  key="burger"
-                  className="flex flex-col gap-[6px]"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <span className="block h-[1.5px] w-7 bg-foreground" />
-                  <span className="block h-[1.5px] w-7 bg-foreground" />
-                  <span className="block h-[1.5px] w-7 bg-foreground" />
-                </motion.div>
-              )}
-            </AnimatePresence>
+            {open ? (
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="white"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+              >
+                <line x1="18" y1="6" x2="6" y2="18" />
+                <line x1="6" y1="6" x2="18" y2="18" />
+              </svg>
+            ) : (
+              <div className="flex flex-col gap-[6px]">
+                <span className="block h-[1.5px] w-7 bg-foreground" />
+                <span className="block h-[1.5px] w-7 bg-foreground" />
+                <span className="block h-[1.5px] w-7 bg-foreground" />
+              </div>
+            )}
           </button>
           </div>
         </nav>
