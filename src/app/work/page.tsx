@@ -7,7 +7,7 @@ import { WipeTransition } from "@/components/layout/WipeTransition";
 export const metadata: Metadata = {
   title: "Work",
   description:
-    "Selected projects by Hauwa Yusuf — product design, dashboards, mobile apps, and web experiences.",
+    "Selected projects by Hauwa Yusuf, product design, dashboards, mobile apps, and web experiences.",
 };
 
 export default function WorkPage() {

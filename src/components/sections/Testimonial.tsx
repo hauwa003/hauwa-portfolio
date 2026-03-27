@@ -1,79 +1,375 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
 
+/* ── Data ── */
+const testimonials = [
+  {
+    quote:
+      "Hauwa has a rare ability to understand both the user and the business. She transformed our vision into a product our customers love.",
+    name: "Jafett Sandi",
+    role: "Co-founder, BetSell",
+    color: "#4C1D95",
+  },
+  {
+    quote:
+      "Working with Hauwa felt like having a design partner who truly cared about the outcome. Her attention to detail elevated everything we shipped.",
+    name: "Sarah Chen",
+    role: "Product Lead, Finova",
+    color: "#3B0764",
+  },
+  {
+    quote:
+      "Hauwa doesn\u2019t just design screens \u2014 she solves problems. Every decision she made was thoughtful and backed by real user insight.",
+    name: "Michael Okoye",
+    role: "CEO, CraftPay",
+    color: "#2E1065",
+  },
+];
+
+/* ── Timing ── */
+const AUTO_INTERVAL = 6000;
+const SWEEP_MS = 1800;
+const FADE_MS = 200;
+const ease = [0.22, 1, 0.36, 1] as const;
+
+/* ── Sweep engine ── */
+
+function easeOutQuart(t: number) {
+  return 1 - (1 - t) ** 4;
+}
+
+function runSweep(
+  canvas: HTMLCanvasElement,
+  bgColor: string,
+  onDone: () => void
+) {
+  const ctx = canvas.getContext("2d")!;
+  const dpr = window.devicePixelRatio || 1;
+  const w = canvas.width;
+  const h = canvas.height;
+
+  // Fill with current bg color
+  ctx.fillStyle = bgColor;
+  ctx.fillRect(0, 0, w, h);
+
+  const blurH = 250 * dpr;
+  const t0 = performance.now();
+  let raf = 0;
+
+  function tick(now: number) {
+    const raw = Math.min((now - t0) / SWEEP_MS, 1);
+    const p = easeOutQuart(raw);
+    const baseY = p * (h + blurH);
+
+    ctx.globalCompositeOperation = "destination-out";
+
+    // Hard clear above the blend zone
+    const solidEnd = Math.max(0, baseY - blurH);
+    if (solidEnd > 0) {
+      ctx.fillStyle = "rgba(0,0,0,1)";
+      ctx.fillRect(0, 0, w, solidEnd);
+    }
+
+    // Soft gradient blend zone — colors melt into each other
+    const gradTop = Math.max(0, baseY - blurH);
+    const gradBot = Math.min(baseY, h);
+    if (gradBot > gradTop) {
+      const grad = ctx.createLinearGradient(0, gradTop, 0, gradBot);
+      grad.addColorStop(0, "rgba(0,0,0,1)");
+      grad.addColorStop(1, "rgba(0,0,0,0)");
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, gradTop, w, gradBot - gradTop);
+    }
+
+    if (raw < 1) {
+      raf = requestAnimationFrame(tick);
+    } else {
+      ctx.clearRect(0, 0, w, h);
+      onDone();
+    }
+  }
+
+  raf = requestAnimationFrame(tick);
+  return () => cancelAnimationFrame(raf);
+}
+
+/* ── QuoteBlock ── */
+function QuoteBlock({
+  quote,
+  name,
+  role,
+}: {
+  quote: string;
+  name: string;
+  role: string;
+}) {
+  return (
+    <>
+      <blockquote>
+        <p className="font-display text-2xl leading-[1.4] md:text-4xl md:leading-[1.35]">
+          {quote}
+        </p>
+      </blockquote>
+      <footer className="mt-10 flex items-center gap-4">
+        <div className="h-px w-8 bg-white/50" />
+        <div>
+          <p className="text-sm font-medium text-white">{name}</p>
+          <p className="text-sm text-white/70">{role}</p>
+        </div>
+      </footer>
+    </>
+  );
+}
+
+/* ── Component ── */
 export function Testimonial() {
   const [hydrated, setHydrated] = useState(false);
-  const ref = useRef(null);
+  const [current, setCurrent] = useState(0);
+  const [nextIdx, setNextIdx] = useState<number | null>(null);
+  const [fading, setFading] = useState(false);
+
+  const sectionRef = useRef<HTMLElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
   const wasInView = useRef(false);
-  const isInView = useInView(ref, { once: true, margin: "-5%" });
+  const currentRef = useRef(0);
+  const busyRef = useRef(false);
+  const timerRef = useRef<ReturnType<typeof setInterval>>();
+  const cancelRef = useRef<(() => void) | null>(null);
+
+  const isInView = useInView(sectionRef, { once: true, margin: "-5%" });
 
   useEffect(() => {
-    if (ref.current) {
-      const rect = (ref.current as HTMLElement).getBoundingClientRect();
-      wasInView.current = rect.top < window.innerHeight && rect.bottom > 0;
+    if (sectionRef.current) {
+      const r = sectionRef.current.getBoundingClientRect();
+      wasInView.current = r.top < window.innerHeight && r.bottom > 0;
     }
     setHydrated(true);
   }, []);
 
   const shouldAnimate = hydrated && (isInView || wasInView.current);
 
+  /* ── Transition ── */
+  const go = useCallback((to: number) => {
+    if (busyRef.current || !canvasRef.current || !sectionRef.current) return;
+    busyRef.current = true;
+
+    const rect = sectionRef.current.getBoundingClientRect();
+    const dpr = window.devicePixelRatio || 1;
+    const cvs = canvasRef.current;
+    cvs.width = rect.width * dpr;
+    cvs.height = rect.height * dpr;
+    cvs.style.width = `${rect.width}px`;
+    cvs.style.height = `${rect.height}px`;
+
+    const bg = getComputedStyle(sectionRef.current).backgroundColor;
+
+    setNextIdx(to);
+    setFading(true);
+
+    cancelRef.current = runSweep(cvs, bg, () => {
+      currentRef.current = to;
+      setCurrent(to);
+      setFading(false);
+      setNextIdx(null);
+      busyRef.current = false;
+      cancelRef.current = null;
+    });
+  }, []);
+
+  const goNext = useCallback(
+    () => go((currentRef.current + 1) % testimonials.length),
+    [go]
+  );
+  const goPrev = useCallback(
+    () =>
+      go(
+        (currentRef.current - 1 + testimonials.length) % testimonials.length
+      ),
+    [go]
+  );
+
+  const resetTimer = useCallback(() => {
+    if (timerRef.current) clearInterval(timerRef.current);
+    timerRef.current = setInterval(goNext, AUTO_INTERVAL);
+  }, [goNext]);
+
+  /* ── Auto-rotate ── */
+  useEffect(() => {
+    if (!shouldAnimate) return;
+    const d = setTimeout(resetTimer, 2500);
+    return () => {
+      clearTimeout(d);
+      if (timerRef.current) clearInterval(timerRef.current);
+    };
+  }, [shouldAnimate, resetTimer]);
+
+  useEffect(
+    () => () => {
+      if (timerRef.current) clearInterval(timerRef.current);
+      cancelRef.current?.();
+    },
+    []
+  );
+
+  const t = testimonials[current];
+
   return (
-    <section ref={ref} className="relative overflow-hidden bg-foreground text-background">
-      <div className="mx-auto max-w-5xl px-6 py-28 md:py-36 lg:px-8">
+    <section
+      ref={sectionRef}
+      className="relative overflow-hidden text-white"
+      style={{ backgroundColor: t.color }}
+    >
+      {/* ── Transition layers ── */}
+
+      {/* Next background color (full bleed, underneath canvas) */}
+      {nextIdx !== null && (
+        <div
+          className="absolute inset-0"
+          style={{ backgroundColor: testimonials[nextIdx].color }}
+        />
+      )}
+
+      {/* Next testimonial text (underneath canvas) */}
+      {nextIdx !== null && (
+        <div className="absolute inset-0 z-[5]">
+          <div className="mx-auto max-w-5xl px-6 py-28 md:py-36 lg:px-8">
+            <div className="relative">
+              <QuoteBlock
+                quote={testimonials[nextIdx].quote}
+                name={testimonials[nextIdx].name}
+                role={testimonials[nextIdx].role}
+              />
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Canvas sweep overlay */}
+      <canvas
+        ref={canvasRef}
+        className="pointer-events-none absolute inset-0 z-10"
+        style={{ display: nextIdx !== null ? "block" : "none" }}
+      />
+
+      {/* ── Main content (above canvas) ── */}
+      <div className="relative z-20 mx-auto max-w-5xl px-6 py-28 md:py-36 lg:px-8">
+        {/* Decorative quote */}
         <span
-          className="absolute -left-4 -top-8 font-display text-[20rem] leading-none text-background/[0.03] md:-left-8 md:text-[28rem]"
+          className="absolute -left-4 -top-8 font-display text-[20rem] leading-none text-white/[0.06] md:-left-8 md:text-[28rem]"
           aria-hidden="true"
         >
           &ldquo;
         </span>
 
         <div className="relative">
+          {/* Current testimonial */}
           {hydrated ? (
-            <motion.blockquote
+            <motion.div
               initial={wasInView.current ? false : { opacity: 0, y: 32 }}
-              animate={shouldAnimate ? { opacity: 1, y: 0 } : { opacity: 0, y: 32 }}
-              transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+              animate={
+                shouldAnimate
+                  ? { opacity: 1, y: 0 }
+                  : { opacity: 0, y: 32 }
+              }
+              transition={{ duration: 0.8, ease }}
             >
-              <p className="font-display text-2xl leading-[1.4] md:text-4xl md:leading-[1.35]">
-                Hauwa has a rare ability to understand both the user and the
-                business. She transformed our vision into a product our customers
-                love.
-              </p>
-            </motion.blockquote>
+              <div
+                style={{
+                  opacity: fading ? 0 : 1,
+                  transition: fading
+                    ? `opacity ${FADE_MS}ms ease-out`
+                    : "none",
+                }}
+              >
+                <QuoteBlock quote={t.quote} name={t.name} role={t.role} />
+              </div>
+            </motion.div>
           ) : (
-            <blockquote>
-              <p className="font-display text-2xl leading-[1.4] md:text-4xl md:leading-[1.35]">
-                Hauwa has a rare ability to understand both the user and the
-                business. She transformed our vision into a product our customers
-                love.
-              </p>
-            </blockquote>
+            <div>
+              <QuoteBlock quote={t.quote} name={t.name} role={t.role} />
+            </div>
           )}
 
-          {hydrated ? (
-            <motion.footer
-              className="mt-10 flex items-center gap-4"
-              initial={wasInView.current ? false : { opacity: 0, y: 16 }}
-              animate={shouldAnimate ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
-              transition={{ duration: 0.6, delay: wasInView.current ? 0 : 0.3, ease: [0.22, 1, 0.36, 1] }}
+          {/* Navigation */}
+          {hydrated && (
+            <motion.div
+              className="mt-12 flex items-center justify-between"
+              initial={wasInView.current ? false : { opacity: 0 }}
+              animate={shouldAnimate ? { opacity: 1 } : { opacity: 0 }}
+              transition={{
+                delay: wasInView.current ? 0 : 0.4,
+                duration: 0.5,
+              }}
             >
-              <div className="h-px w-8 bg-background/30" />
-              <div>
-                <p className="text-sm font-medium">Jafett Sandi</p>
-                <p className="text-sm text-background/50">Co-founder, BetSell</p>
+              {/* Progress dots */}
+              <div className="flex items-center gap-2">
+                {testimonials.map((_, i) => (
+                  <button
+                    key={i}
+                    onClick={() => {
+                      if (i !== currentRef.current) {
+                        go(i);
+                        resetTimer();
+                      }
+                    }}
+                    className={`h-1.5 rounded-full transition-all duration-500 ${
+                      i === (nextIdx ?? current)
+                        ? "w-6 bg-white"
+                        : "w-1.5 bg-white/30 hover:bg-white/50"
+                    }`}
+                    aria-label={`Go to testimonial ${i + 1}`}
+                  />
+                ))}
               </div>
-            </motion.footer>
-          ) : (
-            <footer className="mt-10 flex items-center gap-4">
-              <div className="h-px w-8 bg-background/30" />
-              <div>
-                <p className="text-sm font-medium">Jafett Sandi</p>
-                <p className="text-sm text-background/50">Co-founder, BetSell</p>
+
+              {/* Arrow buttons */}
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => {
+                    goPrev();
+                    resetTimer();
+                  }}
+                  className="flex h-9 w-9 items-center justify-center rounded-full border border-white/20 text-white/60 transition-colors hover:border-white/40 hover:text-white"
+                  aria-label="Previous testimonial"
+                >
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="M15 18l-6-6 6-6" />
+                  </svg>
+                </button>
+                <button
+                  onClick={() => {
+                    goNext();
+                    resetTimer();
+                  }}
+                  className="flex h-9 w-9 items-center justify-center rounded-full border border-white/20 text-white/60 transition-colors hover:border-white/40 hover:text-white"
+                  aria-label="Next testimonial"
+                >
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="M9 18l6-6-6-6" />
+                  </svg>
+                </button>
               </div>
-            </footer>
+            </motion.div>
           )}
         </div>
       </div>

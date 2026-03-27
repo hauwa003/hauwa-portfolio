@@ -3,11 +3,12 @@ import { ScrollReveal } from "@/components/ui/ScrollReveal";
 export function AboutContent() {
   return (
     <div className="px-8 py-16 lg:px-16">
-      {/* Title */}
+      {/* Title bar */}
       <ScrollReveal>
-        <h1 className="font-display text-2xl tracking-tight md:text-3xl">
-          Getting to know me
-        </h1>
+        <div className="flex items-center justify-between border-b border-border pb-6">
+          <h1 className="font-display text-2xl tracking-[-0.04em]">Getting to know me</h1>
+          <span className="text-sm text-muted">About</span>
+        </div>
       </ScrollReveal>
 
       {/* Overview */}
@@ -15,7 +16,7 @@ export function AboutContent() {
         <div id="overview" className="mt-10 max-w-2xl scroll-mt-8">
           <p className="text-base leading-[1.85] text-muted">
             Hi, I&apos;m Hauwa, a product designer. I&apos;ve always been the
-            observant one—the person quietly paying attention to how things work
+            observant one, the person quietly paying attention to how things work
             and how people interact with the tools around them. That habit of
             noticing things eventually led me to design, where curiosity and
             attention to detail are not just useful, but essential.
@@ -25,7 +26,7 @@ export function AboutContent() {
 
       {/* Hero photo placeholder */}
       <ScrollReveal>
-        <div className="mt-10 aspect-[16/9] w-full bg-surface" />
+        <div className="mt-10 aspect-[16/9] w-full rounded-2xl bg-surface" />
       </ScrollReveal>
 
       {/* Interests */}
@@ -44,10 +45,10 @@ export function AboutContent() {
       {/* Photo grid — 4 images */}
       <ScrollReveal>
         <div className="mt-10 grid grid-cols-2 gap-3 md:grid-cols-4">
-          <div className="aspect-[3/4] bg-surface" />
-          <div className="aspect-[3/4] bg-surface" />
-          <div className="aspect-[3/4] bg-surface" />
-          <div className="aspect-[3/4] bg-surface" />
+          <div className="aspect-[3/4] rounded-2xl bg-surface" />
+          <div className="aspect-[3/4] rounded-2xl bg-surface" />
+          <div className="aspect-[3/4] rounded-2xl bg-surface" />
+          <div className="aspect-[3/4] rounded-2xl bg-surface" />
         </div>
       </ScrollReveal>
 
@@ -65,9 +66,9 @@ export function AboutContent() {
       {/* Photo grid — 3 images */}
       <ScrollReveal>
         <div className="mt-10 grid grid-cols-3 gap-3">
-          <div className="aspect-[4/3] bg-surface" />
-          <div className="aspect-[4/3] bg-surface" />
-          <div className="aspect-[4/3] bg-surface" />
+          <div className="aspect-[4/3] rounded-2xl bg-surface" />
+          <div className="aspect-[4/3] rounded-2xl bg-surface" />
+          <div className="aspect-[4/3] rounded-2xl bg-surface" />
         </div>
       </ScrollReveal>
 
@@ -78,7 +79,7 @@ export function AboutContent() {
             Music is also part of my daily rhythm. I usually have a playlist
             playing while I&apos;m working, cooking, or reading. I enjoy
             discovering new songs and building playlists that match different
-            moods, often finding music the same way I find ideas—by going down
+            moods, often finding music the same way I find ideas, by going down
             unexpected rabbit holes.
           </p>
         </div>
@@ -87,9 +88,9 @@ export function AboutContent() {
       {/* Photo grid — 3 images */}
       <ScrollReveal>
         <div className="mt-10 grid grid-cols-3 gap-3">
-          <div className="aspect-[4/3] bg-surface" />
-          <div className="aspect-[4/3] bg-surface" />
-          <div className="aspect-[4/3] bg-surface" />
+          <div className="aspect-[4/3] rounded-2xl bg-surface" />
+          <div className="aspect-[4/3] rounded-2xl bg-surface" />
+          <div className="aspect-[4/3] rounded-2xl bg-surface" />
         </div>
       </ScrollReveal>
 

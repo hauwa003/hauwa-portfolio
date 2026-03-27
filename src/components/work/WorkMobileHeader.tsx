@@ -19,19 +19,19 @@ export function WorkMobileHeader() {
         transition={{ duration: 0.5, delay: 0.4, ease }}
       >
         <div>
-          <p className="text-[12px] uppercase tracking-[0.15em] text-muted">
+          <p className="text-sm uppercase tracking-[0.15em] text-muted">
             Work
           </p>
-          <p className="mt-1 text-[15px] font-medium">Selected projects</p>
+          <p className="mt-1 text-base font-medium">Selected projects</p>
         </div>
       </motion.div>
       ) : (
       <div className="border-b border-border px-6 py-6">
         <div>
-          <p className="text-[12px] uppercase tracking-[0.15em] text-muted">
+          <p className="text-sm uppercase tracking-[0.15em] text-muted">
             Work
           </p>
-          <p className="mt-1 text-[15px] font-medium">Selected projects</p>
+          <p className="mt-1 text-base font-medium">Selected projects</p>
         </div>
       </div>
       )}

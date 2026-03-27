@@ -19,10 +19,10 @@ export function AboutMobileHeader() {
         transition={{ duration: 0.5, delay: 0.4, ease }}
       >
         <div>
-          <p className="font-display text-[15px] font-medium">
+          <p className="font-display text-base font-medium">
             I put this together for you...yes you!
           </p>
-          <p className="mt-1 text-[13px] text-muted">
+          <p className="mt-1 text-sm text-muted">
             A collection of fragments and pieces of some really cool designs I
             have worked on.
           </p>
@@ -31,10 +31,10 @@ export function AboutMobileHeader() {
       ) : (
       <div className="border-b border-border px-6 py-6">
         <div>
-          <p className="font-display text-[15px] font-medium">
+          <p className="font-display text-base font-medium">
             I put this together for you...yes you!
           </p>
-          <p className="mt-1 text-[13px] text-muted">
+          <p className="mt-1 text-sm text-muted">
             A collection of fragments and pieces of some really cool designs I
             have worked on.
           </p>

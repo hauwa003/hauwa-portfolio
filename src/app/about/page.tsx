@@ -7,7 +7,7 @@ import { WipeTransition } from "@/components/layout/WipeTransition";
 export const metadata: Metadata = {
   title: "About",
   description:
-    "Learn about Hauwa Yusuf — a product designer and Framer developer with 4+ years of experience helping startups build better products.",
+    "Learn about Hauwa Yusuf, a product designer and Framer developer with 4+ years of experience helping startups build better products.",
 };
 
 export default function AboutPage() {

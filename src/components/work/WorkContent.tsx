@@ -6,15 +6,10 @@ export function WorkContent() {
   return (
     <div className="px-8 py-16 lg:px-16">
       <ScrollReveal>
-        <div className="flex items-end justify-between gap-8">
-          <h1 className="font-display text-2xl tracking-tight md:text-3xl">
-            Selected Work
-          </h1>
-          <span className="text-[13px] text-muted">
-            {String(projects.length).padStart(2, "0")} projects
-          </span>
+        <div className="flex items-center justify-between border-b border-border pb-6">
+          <h1 className="font-display text-2xl tracking-[-0.04em]">Selected projects</h1>
+          <span className="text-sm text-muted">Work</span>
         </div>
-        <div className="mt-4 h-px bg-border" />
       </ScrollReveal>
 
       {/* Project list */}

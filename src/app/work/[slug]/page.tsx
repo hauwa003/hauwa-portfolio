@@ -29,10 +29,10 @@ export async function generateMetadata({
   if (!project) return {};
 
   return {
-    title: `${project.title} — Case Study`,
+    title: `${project.title} | Case Study`,
     description: project.tagline,
     openGraph: {
-      title: `${project.title} — Case Study | Hauwa Yusuf`,
+      title: `${project.title} | Case Study | Hauwa Yusuf`,
       description: project.tagline,
       images: [{ url: project.heroImage, width: 1200, height: 630 }],
     },

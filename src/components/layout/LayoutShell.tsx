@@ -3,20 +3,20 @@
 import { usePathname } from "next/navigation";
 import { Navbar } from "./Navbar";
 import { Footer } from "./Footer";
-import { ExitMessage } from "./ExitMessage";
-
+import { CustomCursor } from "../ui/CustomCursor";
 export function LayoutShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const isCaseStudy = pathname.startsWith("/work/");
+  const isWork = pathname === "/work";
   const isExplorations = pathname === "/explorations";
   const isGallery = pathname === "/gallery";
   const isAbout = pathname === "/about";
   const isProcess = pathname === "/process";
-  const hasSidebar = isCaseStudy || isExplorations || isGallery || isAbout || isProcess;
+  const hasSidebar = isCaseStudy || isWork || isExplorations || isGallery || isAbout || isProcess;
 
   return (
     <>
-      {!hasSidebar && <ExitMessage />}
+      <CustomCursor />
       {!hasSidebar && <Navbar />}
       <div className="flex-1">{children}</div>
       {!hasSidebar && <Footer />}

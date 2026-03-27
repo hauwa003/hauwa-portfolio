@@ -56,11 +56,11 @@ export function ExitMessage() {
           <p className="mt-3 font-handwriting text-[19px] leading-relaxed text-foreground">
             Hey, thanks for scrolling all the way down here. It really means a lot
             that you took the time to look through my work. If anything resonated,
-            don&apos;t be a stranger — I&apos;d love to connect.
+            don&apos;t be a stranger. I&apos;d love to connect.
           </p>
 
           <p className="mt-3 font-handwriting text-[17px] text-muted">
-            — Hauwa
+            Hauwa
           </p>
         </motion.div>
       )}

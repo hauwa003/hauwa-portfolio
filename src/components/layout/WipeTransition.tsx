@@ -16,14 +16,14 @@ export function WipeTransition({ children }: { children: React.ReactNode }) {
     <>
       {/* Wipe overlay — slides down then out */}
       <motion.div
-        className="fixed inset-0 z-[100] origin-top bg-black"
+        className="fixed inset-0 z-[100] origin-top bg-background"
         initial={{ scaleY: 1 }}
         animate={{ scaleY: 0 }}
         transition={{ duration: 0.8, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
         style={{ transformOrigin: "bottom" }}
       />
       <motion.div
-        className="fixed inset-0 z-[99] origin-top bg-black"
+        className="fixed inset-0 z-[99] origin-top bg-background"
         initial={{ scaleY: 1 }}
         animate={{ scaleY: 0 }}
         transition={{ duration: 0.8, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}

@@ -5,7 +5,7 @@ import { WipeTransition } from "@/components/layout/WipeTransition";
 export const metadata: Metadata = {
   title: "Explorations",
   description:
-    "Side projects and experiments by Hauwa Yusuf — personal apps, Chrome extensions, and creative builds.",
+    "Side projects and experiments by Hauwa Yusuf, personal apps, Chrome extensions, and creative builds.",
 };
 
 export default function ExplorationsPage() {

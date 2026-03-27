@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const navLinks = [
-  { href: "/", label: "Home" },
+  { href: "/work", label: "Work" },
   { href: "/explorations", label: "Explorations" },
   { href: "/gallery", label: "Gallery" },
   { href: "/process", label: "Process" },
@@ -23,9 +23,9 @@ const headerSocials = [
     label: "LinkedIn",
     href: "https://www.linkedin.com/in/hauwayusuf",
     icon: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
         <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z" />
-        <rect x="2" y="9" width="4" height="12" />
+        <rect x="2" y="9" width="4" height="12" rx="1" />
         <circle cx="4" cy="4" r="2" />
       </svg>
     ),
@@ -34,7 +34,7 @@ const headerSocials = [
     label: "Behance",
     href: "https://www.behance.net/hauwayusuf1",
     icon: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
         <path d="M3 18V6h5.5a3.5 3.5 0 0 1 0 7H3" />
         <path d="M3 12.5h6a3.5 3.5 0 0 1 0 7H3" />
         <path d="M15 12.5h6" />
@@ -101,15 +101,15 @@ export function Navbar() {
       <header
         className={`sticky top-0 z-50 transition-all duration-500 ${
           scrolled
-            ? "bg-background/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.06)]"
-            : "bg-transparent"
+            ? "bg-background/95 shadow-[0_1px_8px_rgba(0,0,0,0.06)] backdrop-blur-md"
+            : "bg-background"
         }`}
       >
         <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 lg:px-8">
           {/* Logo */}
           <Link
             href="/"
-            className="relative z-[60] font-display text-xl tracking-tight transition-opacity duration-300 hover:opacity-60"
+            className="relative z-[60] font-display text-xl tracking-[-0.04em] transition-opacity duration-300 hover:opacity-60"
           >
             hauwa<span className="text-accent">.</span>design
           </Link>
@@ -117,14 +117,14 @@ export function Navbar() {
           {/* Social icons + Hamburger */}
           <div className="relative z-[60] flex items-center gap-5">
             {/* Social icons — hidden on mobile, visible on md+ */}
-            <div className="hidden items-center gap-4 md:flex">
+            <div className="hidden items-center gap-2 md:flex">
               {headerSocials.map((link) => (
                 <a
                   key={link.label}
                   href={link.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-foreground transition-opacity duration-300 hover:opacity-60"
+                  className="flex h-9 w-9 items-center justify-center rounded-full border border-border text-foreground transition-colors duration-300 hover:bg-surface"
                   aria-label={link.label}
                 >
                   {link.icon}
@@ -147,18 +147,19 @@ export function Navbar() {
                 height="24"
                 viewBox="0 0 24 24"
                 fill="none"
-                stroke="white"
+                stroke="currentColor"
                 strokeWidth="1.5"
                 strokeLinecap="round"
+                strokeLinejoin="round"
               >
                 <line x1="18" y1="6" x2="6" y2="18" />
                 <line x1="6" y1="6" x2="18" y2="18" />
               </svg>
             ) : (
               <div className="flex flex-col gap-[6px]">
-                <span className="block h-[1.5px] w-7 bg-foreground" />
-                <span className="block h-[1.5px] w-7 bg-foreground" />
-                <span className="block h-[1.5px] w-7 bg-foreground" />
+                <span className="block h-[1.5px] w-7 rounded-full bg-foreground" />
+                <span className="block h-[1.5px] w-7 rounded-full bg-foreground" />
+                <span className="block h-[1.5px] w-7 rounded-full bg-foreground" />
               </div>
             )}
           </button>
@@ -182,7 +183,7 @@ export function Navbar() {
 
             {/* Panel from right */}
             <motion.div
-              className="fixed right-0 top-0 z-[58] flex h-full w-full flex-col items-center justify-center bg-black px-12 md:w-[50vw] md:px-16 lg:px-20"
+              className="fixed right-0 top-0 z-[58] flex h-full w-full flex-col items-center justify-center bg-[#5B21B6] px-12 md:w-[50vw] md:px-16 lg:px-20"
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
@@ -202,7 +203,7 @@ export function Navbar() {
                   >
                     <Link
                       href={link.href}
-                      className="block font-display text-5xl text-white/50 transition-colors duration-300 hover:text-white md:text-6xl lg:text-7xl"
+                      className="block font-display text-4xl text-white transition-colors duration-300 hover:text-white/80 md:text-5xl lg:text-6xl"
                       onClick={() => setOpen(false)}
                     >
                       {link.label}
@@ -224,7 +225,7 @@ export function Navbar() {
                     href={link.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="block font-display text-2xl text-white/30 transition-colors duration-300 hover:text-white md:text-3xl"
+                    className="block font-display text-xl text-white transition-colors duration-300 hover:text-white/80 md:text-2xl"
                   >
                     {link.label}
                   </a>
@@ -233,7 +234,7 @@ export function Navbar() {
 
               {/* Email at bottom */}
               <motion.p
-                className="absolute bottom-10 left-0 right-0 text-center text-sm text-white/30"
+                className="absolute bottom-10 left-0 right-0 text-center text-sm text-white/60"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.55, duration: 0.5 }}

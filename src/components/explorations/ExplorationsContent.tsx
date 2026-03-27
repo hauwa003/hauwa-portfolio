@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 
+import { getTagColor } from "@/lib/tag-colors";
+
 const ease = [0.22, 1, 0.36, 1] as const;
 
 interface Exploration {
@@ -18,14 +20,14 @@ interface Exploration {
 const explorations: Exploration[] = [
   {
     title: "Scented",
-    tagline: "A fragrance discovery app — swipe through scent profiles matched to your mood and style",
+    tagline: "A fragrance discovery app. Swipe through scent profiles matched to your mood and style",
     category: "Mobile App",
     video: "/videos/explorations/scented.mp4",
     href: "#",
   },
   {
     title: "FridgeChef",
-    tagline: "Snap your fridge, get recipes — an AI-powered cooking companion for what you already have",
+    tagline: "Snap your fridge, get recipes. An AI-powered cooking companion for what you already have",
     category: "Mobile App",
     video: "/videos/explorations/fridgechef.mp4",
     href: "#",
@@ -39,21 +41,21 @@ const explorations: Exploration[] = [
   },
   {
     title: "Scrapcut",
-    tagline: "Turn long videos into short, shareable clips — powered by AI scene detection",
+    tagline: "Turn long videos into short, shareable clips. Powered by AI scene detection",
     category: "Web App",
     video: "/videos/explorations/scrapcut.mp4",
     href: "#",
   },
   {
     title: "PixelPin",
-    tagline: "Pin design feedback directly on live websites — a QA tool for design-obsessed teams",
+    tagline: "Pin design feedback directly on live websites. A QA tool for design-obsessed teams",
     category: "Chrome Extension",
     video: "/videos/explorations/pixelpin.mp4",
     href: "#",
   },
   {
     title: "VibeFlick",
-    tagline: "Pick a mood, get a movie — mood-based recommendations for when you can't decide what to watch",
+    tagline: "Pick a mood, get a movie. Mood-based recommendations for when you can't decide what to watch",
     category: "Chrome Extension",
     video: "/videos/explorations/vibeflick.mp4",
     href: "#",
@@ -78,7 +80,7 @@ function ExplorationCard({
 
   const card = (
     <div id={explorationId(index)}>
-      <div className="relative aspect-[16/9] overflow-hidden rounded-lg bg-surface">
+      <div className="relative aspect-[16/9] overflow-hidden rounded-2xl bg-surface">
         <video
           src={item.video}
           autoPlay
@@ -92,15 +94,15 @@ function ExplorationCard({
       <div className="mt-5 flex items-start justify-between gap-4">
         <div>
           <div className="flex items-center gap-3">
-            <span className="text-[13px] tabular-nums text-muted">{number}</span>
+            <span className="text-sm tabular-nums text-muted">{number}</span>
             <span className="h-px w-4 bg-border" />
             <h3 className="text-lg font-medium tracking-tight">{item.title}</h3>
           </div>
-          <p className="mt-1.5 text-[15px] leading-relaxed text-muted">
+          <p className="mt-1.5 text-base leading-relaxed text-muted">
             {item.tagline}
           </p>
         </div>
-        <span className="mt-0.5 shrink-0 border border-border px-3 py-1 text-xs text-muted">
+        <span className={`mt-0.5 shrink-0 rounded-full border px-3 py-1 text-xs ${getTagColor(item.category)}`}>
           {item.category}
         </span>
       </div>
@@ -142,29 +144,8 @@ function ExplorationsSidebar({
   }
 
   const sidebarContent = (
-    <div className="space-y-8">
-      <div>
-        <p className="font-display text-lg tracking-tight">Explorations</p>
-        <p className="mt-1 text-[13px] text-muted">
-          Side projects & experiments
-        </p>
-      </div>
-
-      <div>
-        <p className="text-[12px] uppercase tracking-[0.15em] text-muted">
-          About
-        </p>
-        <p className="mt-1.5 text-[15px] leading-relaxed">
-          Personal projects where I explore new ideas, learn by building, and
-          design without constraints.
-        </p>
-      </div>
-
-      <div>
-        <p className="text-[12px] uppercase tracking-[0.15em] text-muted">
-          Projects
-        </p>
-        <ul className="mt-4 space-y-1">
+    <nav>
+      <ul className="space-y-1">
           {explorations.map((item, i) => {
             const id = explorationId(i);
             const isActive = activeId === id;
@@ -172,13 +153,16 @@ function ExplorationsSidebar({
               <li key={item.title}>
                 <button
                   onClick={() => scrollTo(id)}
-                  className={`flex w-full items-center gap-2 px-3 py-2 text-left text-[14px] transition-colors duration-200 ${
+                  className={`flex w-full items-center gap-3 py-2 text-left font-display text-base transition-all duration-300 ${
                     isActive
-                      ? "font-medium text-foreground"
-                      : "text-muted hover:text-foreground"
+                      ? "font-medium text-white translate-x-3"
+                      : "text-white/60 hover:text-white"
                   }`}
                 >
-                  <span className="text-[12px] tabular-nums">
+                  <span className={`h-px shrink-0 transition-all duration-300 ${
+                    isActive ? "w-5 bg-white" : "w-2 bg-white/40"
+                  }`} />
+                  <span className="text-sm tabular-nums">
                     {String(i + 1).padStart(2, "0")}
                   </span>
                   {item.title}
@@ -187,27 +171,26 @@ function ExplorationsSidebar({
             );
           })}
         </ul>
-      </div>
-    </div>
+    </nav>
   );
 
   const bottomNav = (
-    <div className="flex items-center gap-3">
+    <div className="flex items-center gap-2">
       <Link
         href="/"
-        className="border border-border px-5 py-2.5 text-[13px] transition-colors hover:bg-surface"
+        className="rounded-full border border-white/20 px-5 py-3 text-sm text-white transition-colors hover:bg-white/10"
       >
         Home
       </Link>
       <Link
         href="/gallery"
-        className="border border-border px-5 py-2.5 text-[13px] transition-colors hover:bg-surface"
+        className="rounded-full border border-white/20 px-5 py-3 text-sm text-white transition-colors hover:bg-white/10"
       >
         Gallery
       </Link>
       <Link
         href="/#contact"
-        className="bg-foreground px-5 py-2.5 text-[13px] text-background transition-colors hover:bg-accent-hover"
+        className="rounded-full bg-white px-5 py-3 text-sm font-medium text-[#5B21B6] transition-colors hover:bg-white/90"
       >
         Book a call
       </Link>
@@ -215,10 +198,10 @@ function ExplorationsSidebar({
   );
 
   return (
-    <aside className="hidden lg:fixed lg:left-0 lg:top-0 lg:z-40 lg:flex lg:h-screen lg:w-[360px] lg:flex-col lg:border-r lg:border-border lg:bg-background">
+    <aside className="hidden lg:fixed lg:left-0 lg:top-0 lg:z-40 lg:flex lg:h-screen lg:w-[360px] lg:flex-col lg:border-r lg:border-white/10 lg:bg-[#5B21B6]">
       {hydrated ? (
         <motion.div
-          className="flex flex-1 flex-col overflow-y-auto px-8 pb-8 pt-8"
+          className="flex flex-1 flex-col justify-center overflow-y-auto px-8 pb-8 pt-8"
           initial={{ opacity: 0, x: -16 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6, delay: 0.5, ease }}
@@ -226,14 +209,14 @@ function ExplorationsSidebar({
           {sidebarContent}
         </motion.div>
       ) : (
-        <div className="flex flex-1 flex-col overflow-y-auto px-8 pb-8 pt-8">
+        <div className="flex flex-1 flex-col justify-center overflow-y-auto px-8 pb-8 pt-8">
           {sidebarContent}
         </div>
       )}
 
       {hydrated ? (
         <motion.div
-          className="shrink-0 border-t border-border px-8 py-6"
+          className="shrink-0 border-t border-white/10 px-8 py-6"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.7, duration: 0.5 }}
@@ -241,7 +224,7 @@ function ExplorationsSidebar({
           {bottomNav}
         </motion.div>
       ) : (
-        <div className="shrink-0 border-t border-border px-8 py-6">
+        <div className="shrink-0 border-t border-white/10 px-8 py-6">
           {bottomNav}
         </div>
       )}
@@ -254,12 +237,12 @@ function ExplorationsMobileHeader({ hydrated }: { hydrated: boolean }) {
   const content = (
     <div className="space-y-4">
       <div>
-        <p className="font-display text-lg tracking-tight">Explorations</p>
-        <p className="mt-1 text-[13px] text-muted">
+        <p className="font-display text-lg tracking-[-0.04em]">Explorations</p>
+        <p className="mt-1 text-sm text-muted">
           Side projects & experiments
         </p>
       </div>
-      <p className="text-[15px] leading-relaxed">
+      <p className="text-base leading-relaxed">
         Personal projects where I explore new ideas, learn by building, and
         design without constraints.
       </p>
@@ -324,6 +307,10 @@ export function ExplorationsContent() {
 
       <div className="lg:ml-[360px]">
         <div className="px-6 py-10 lg:px-10 lg:py-12">
+          <div className="mb-12 flex items-center justify-between border-b border-border pb-6">
+            <h1 className="font-display text-2xl tracking-[-0.04em]">Side projects & experiments</h1>
+            <span className="text-sm text-muted">Explorations</span>
+          </div>
           <div className="grid gap-y-16">
             {explorations.map((item, i) => (
               <ExplorationCard
