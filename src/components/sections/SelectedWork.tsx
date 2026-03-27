@@ -9,10 +9,10 @@ export function SelectedWork() {
     <section id="work" className="mx-auto max-w-7xl px-6 py-28 lg:px-8">
       <ScrollReveal>
         <div className="flex items-end justify-between gap-8">
-          <h2 className="font-display text-4xl tracking-tight md:text-5xl">
+          <h2 className="font-display text-4xl tracking-[-0.04em] md:text-5xl">
             Selected Work
           </h2>
-          <span className="hidden text-[13px] text-muted md:block">
+          <span className="hidden text-sm text-muted md:block">
             {String(previewProjects.length).padStart(2, "0")} projects
           </span>
         </div>

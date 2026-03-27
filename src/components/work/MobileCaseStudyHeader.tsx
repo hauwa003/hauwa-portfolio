@@ -27,24 +27,24 @@ export function MobileCaseStudyHeader({
           {prev ? (
             <Link
               href={`/work/${prev.slug}`}
-              className="border border-border px-4 py-2 text-[13px] transition-colors hover:bg-surface"
+              className="rounded-full border border-border px-4 py-2 text-sm transition-colors hover:bg-surface"
             >
               &larr; Prev
             </Link>
           ) : (
-            <span className="border border-border px-4 py-2 text-[13px] text-muted/40">
+            <span className="rounded-full border border-border px-4 py-2 text-sm text-muted/60">
               &larr; Prev
             </span>
           )}
           {next ? (
             <Link
               href={`/work/${next.slug}`}
-              className="border border-border px-4 py-2 text-[13px] transition-colors hover:bg-surface"
+              className="rounded-full border border-border px-4 py-2 text-sm transition-colors hover:bg-surface"
             >
               Next &rarr;
             </Link>
           ) : (
-            <span className="border border-border px-4 py-2 text-[13px] text-muted/40">
+            <span className="rounded-full border border-border px-4 py-2 text-sm text-muted/60">
               Next &rarr;
             </span>
           )}
@@ -54,16 +54,16 @@ export function MobileCaseStudyHeader({
       {/* Project info */}
       <div className="mt-6 space-y-4">
         <div>
-          <p className="text-[12px] uppercase tracking-[0.15em] text-muted">
+          <p className="text-sm uppercase tracking-[0.15em] text-muted">
             Project Name
           </p>
-          <p className="mt-1 text-[15px] font-medium">{project.title}</p>
+          <p className="mt-1 text-base font-medium">{project.title}</p>
         </div>
         <div>
-          <p className="text-[12px] uppercase tracking-[0.15em] text-muted">
+          <p className="text-sm uppercase tracking-[0.15em] text-muted">
             Scope of Work
           </p>
-          <p className="mt-1 text-[15px]">{project.scope}</p>
+          <p className="mt-1 text-base">{project.scope}</p>
         </div>
       </div>
     </>

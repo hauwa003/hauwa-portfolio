@@ -18,10 +18,10 @@ export function ProjectNav({ prev, next }: ProjectNavProps) {
             href={`/work/${prev.slug}`}
             className="group relative overflow-hidden px-6 py-12 transition-colors duration-500 hover:bg-surface lg:px-12"
           >
-            <p className="text-[11px] uppercase tracking-[0.2em] text-muted">
+            <p className="text-xs uppercase tracking-[0.2em] text-muted">
               Previous
             </p>
-            <p className="mt-3 font-display text-xl tracking-tight transition-colors duration-300 group-hover:text-accent md:text-2xl">
+            <p className="mt-3 font-display text-xl tracking-[-0.04em] transition-colors duration-300 group-hover:text-accent md:text-2xl">
               {prev.title}
             </p>
             {/* Animated arrow */}
@@ -42,10 +42,10 @@ export function ProjectNav({ prev, next }: ProjectNavProps) {
             href={`/work/${next.slug}`}
             className="group relative overflow-hidden px-6 py-12 text-right transition-colors duration-500 hover:bg-surface lg:px-12"
           >
-            <p className="text-[11px] uppercase tracking-[0.2em] text-muted">
+            <p className="text-xs uppercase tracking-[0.2em] text-muted">
               Next
             </p>
-            <p className="mt-3 font-display text-xl tracking-tight transition-colors duration-300 group-hover:text-accent md:text-2xl">
+            <p className="mt-3 font-display text-xl tracking-[-0.04em] transition-colors duration-300 group-hover:text-accent md:text-2xl">
               {next.title}
             </p>
             <motion.span

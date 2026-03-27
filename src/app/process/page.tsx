@@ -7,7 +7,7 @@ import { WipeTransition } from "@/components/layout/WipeTransition";
 export const metadata: Metadata = {
   title: "Process",
   description:
-    "How Hauwa Yusuf approaches product design — from discovery and research to design delivery.",
+    "How Hauwa Yusuf approaches product design, from discovery and research to design delivery.",
 };
 
 export default function ProcessPage() {

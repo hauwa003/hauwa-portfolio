@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 import type { Project } from "@/types";
+import { getTagColor } from "@/lib/tag-colors";
 
 interface ProjectCardProps {
   project: Project;
@@ -61,7 +62,7 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
     <Link href={`/work/${project.slug}`} className="group block">
       <div
         ref={imageRef}
-        className="relative aspect-[3/2] overflow-hidden bg-surface"
+        className="relative aspect-[3/2] overflow-hidden rounded-2xl bg-surface"
         onMouseMove={handleMouseMove}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={() => setHovered(false)}
@@ -85,7 +86,7 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
           style={{ x, y }}
         >
           <motion.span
-            className="absolute -translate-x-1/2 -translate-y-1/2 flex items-center gap-2 overflow-hidden rounded-full bg-foreground px-5 py-3 shadow-[0_8px_32px_rgba(0,0,0,0.2)]"
+            className="absolute -translate-x-1/2 -translate-y-1/2 flex items-center gap-2 overflow-hidden rounded-full bg-foreground px-5 py-3 shadow-[0_8px_32px_rgba(0,0,0,0.08)]"
             initial={false}
             animate={{
               scale: hovered ? 1 : 0.6,
@@ -93,7 +94,7 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
             }}
             transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
           >
-            <span className="whitespace-nowrap text-[13px] font-medium tracking-wide text-background">
+            <span className="whitespace-nowrap text-sm font-medium tracking-wide text-background">
               View Project
             </span>
             <svg
@@ -115,15 +116,15 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
       <div className="mt-5 flex items-start justify-between gap-4">
         <div>
           <div className="flex items-center gap-3">
-            <span className="text-[13px] tabular-nums text-muted">{number}</span>
+            <span className="text-sm tabular-nums text-muted">{number}</span>
             <span className="h-px w-4 bg-border" />
             <h3 className="text-lg font-medium tracking-tight">{project.title}</h3>
           </div>
-          <p className="mt-1.5 text-[15px] leading-relaxed text-muted">
+          <p className="mt-1.5 text-base leading-relaxed text-muted">
             {project.tagline}
           </p>
         </div>
-        <span className="mt-0.5 shrink-0 border border-border px-3 py-1 text-xs text-muted">
+        <span className={`mt-0.5 shrink-0 rounded-full border px-3 py-1 text-xs ${getTagColor(project.category)}`}>
           {project.category}
         </span>
       </div>

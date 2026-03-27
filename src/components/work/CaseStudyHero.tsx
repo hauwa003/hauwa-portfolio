@@ -26,7 +26,7 @@ export function CaseStudyHero({ project }: CaseStudyHeroProps) {
 
   if (!hydrated) {
     return (
-      <div className="relative aspect-[4/3] w-full overflow-hidden bg-surface lg:aspect-auto lg:h-[70vh]">
+      <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl bg-surface lg:aspect-auto lg:h-[70vh]">
         {image}
       </div>
     );
@@ -34,7 +34,7 @@ export function CaseStudyHero({ project }: CaseStudyHeroProps) {
 
   return (
     <motion.div
-      className="relative aspect-[4/3] w-full overflow-hidden bg-surface lg:aspect-auto lg:h-[70vh]"
+      className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl bg-surface lg:aspect-auto lg:h-[70vh]"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.8, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}

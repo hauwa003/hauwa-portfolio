@@ -16,7 +16,7 @@ export function Button({
   className = "",
 }: ButtonProps) {
   const base =
-    "group relative inline-flex items-center justify-center overflow-hidden px-7 py-3.5 text-[13px] font-medium uppercase tracking-[0.1em] transition-all duration-500";
+    "group relative inline-flex items-center justify-center overflow-hidden rounded-full px-8 py-4 text-sm font-medium uppercase tracking-[0.1em] transition-all duration-500";
 
   const variants = {
     primary:

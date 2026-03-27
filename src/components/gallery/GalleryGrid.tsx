@@ -56,7 +56,7 @@ function GalleryTile({ tile, index, hydrated }: { tile: GalleryItem; index: numb
     >
       <motion.div
         ref={ref}
-        className="group relative overflow-hidden"
+        className="group relative overflow-hidden rounded-2xl"
         style={{
           perspective: 800,
           ...(isTilt ? { rotateX, rotateY } : {}),
@@ -79,17 +79,17 @@ function GalleryTile({ tile, index, hydrated }: { tile: GalleryItem; index: numb
           <div className="absolute inset-0 overflow-hidden">
             <div className="absolute inset-0 translate-y-full bg-foreground/85 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-y-0" />
             <div className="relative flex h-full flex-col items-center justify-center opacity-0 transition-opacity delay-150 duration-300 group-hover:opacity-100">
-              <span className="text-lg font-medium text-white">
+              <span className="text-lg font-medium text-background">
                 {tile.project}
               </span>
-              <span className="mt-1 text-[12px] uppercase tracking-[0.15em] text-white/60">
+              <span className="mt-1 text-sm uppercase tracking-[0.15em] text-background/70">
                 View project
               </span>
             </div>
           </div>
         ) : (
           <div className="absolute inset-0 flex items-end bg-gradient-to-t from-black/50 via-transparent to-transparent p-5 opacity-0 transition-opacity duration-500 group-hover:opacity-100">
-            <span className="text-[13px] font-medium tracking-wide text-white">
+            <span className="text-sm font-medium tracking-wide text-white">
               {tile.project}
             </span>
           </div>
@@ -110,34 +110,34 @@ function GallerySidebar({ hydrated }: { hydrated: boolean }) {
       {/* Gallery metadata */}
       <div className="space-y-8">
         <div>
-          <p className="text-[12px] uppercase tracking-[0.15em] text-muted">
+          <p className="text-sm uppercase tracking-[0.15em] text-white/60">
             Section
           </p>
-          <p className="mt-1.5 text-[15px] font-medium">UI Gallery</p>
+          <p className="mt-1.5 text-base font-medium text-white">UI Gallery</p>
         </div>
 
         <div>
-          <p className="text-[12px] uppercase tracking-[0.15em] text-muted">
+          <p className="text-sm uppercase tracking-[0.15em] text-white/60">
             About
           </p>
-          <p className="mt-1.5 text-[15px] leading-relaxed">
+          <p className="mt-1.5 text-base leading-relaxed text-white/80">
             A curated collection of screens, interfaces, and design details
             from various projects.
           </p>
         </div>
 
         <div>
-          <p className="text-[12px] uppercase tracking-[0.15em] text-muted">
+          <p className="text-sm uppercase tracking-[0.15em] text-white/60">
             Total Pieces
           </p>
-          <p className="mt-1.5 text-[15px]">{galleryItems.length}</p>
+          <p className="mt-1.5 text-base text-white">{galleryItems.length}</p>
         </div>
 
         <div>
-          <p className="text-[12px] uppercase tracking-[0.15em] text-muted">
+          <p className="text-sm uppercase tracking-[0.15em] text-white/60">
             Categories
           </p>
-          <p className="mt-1.5 text-[15px]">
+          <p className="mt-1.5 text-base text-white/80">
             {[...new Set(galleryItems.map((g) => g.project))].join(", ")}
           </p>
         </div>
@@ -146,22 +146,22 @@ function GallerySidebar({ hydrated }: { hydrated: boolean }) {
   );
 
   const bottomNav = (
-    <div className="flex items-center gap-3">
+    <div className="flex items-center gap-2">
       <Link
         href="/"
-        className="border border-border px-5 py-2.5 text-[13px] transition-colors hover:bg-surface"
+        className="rounded-full border border-white/20 px-5 py-3 text-sm text-white transition-colors hover:bg-white/10"
       >
         Home
       </Link>
       <Link
         href="/explorations"
-        className="border border-border px-5 py-2.5 text-[13px] transition-colors hover:bg-surface"
+        className="rounded-full border border-white/20 px-5 py-3 text-sm text-white transition-colors hover:bg-white/10"
       >
-        Explorations
+        Explore
       </Link>
       <Link
         href="/#contact"
-        className="bg-foreground px-5 py-2.5 text-[13px] text-background transition-colors hover:bg-accent-hover"
+        className="rounded-full bg-white px-5 py-3 text-sm font-medium text-[#5B21B6] transition-colors hover:bg-white/90"
       >
         Book a call
       </Link>
@@ -169,10 +169,10 @@ function GallerySidebar({ hydrated }: { hydrated: boolean }) {
   );
 
   return (
-    <aside className="hidden lg:fixed lg:left-0 lg:top-0 lg:flex lg:h-screen lg:w-[360px] lg:flex-col lg:border-r lg:border-border lg:bg-background lg:z-40">
+    <aside className="hidden lg:fixed lg:left-0 lg:top-0 lg:flex lg:h-screen lg:w-[360px] lg:flex-col lg:border-r lg:border-white/10 lg:bg-[#5B21B6] lg:z-40">
       {hydrated ? (
       <motion.div
-        className="flex flex-1 flex-col px-8 pt-8 pb-8 overflow-y-auto"
+        className="flex flex-1 flex-col justify-center px-8 pt-8 pb-8 overflow-y-auto"
         initial={{ opacity: 0, x: -16 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.6, delay: 0.5, ease }}
@@ -180,7 +180,7 @@ function GallerySidebar({ hydrated }: { hydrated: boolean }) {
         {sidebarContent}
       </motion.div>
       ) : (
-      <div className="flex flex-1 flex-col px-8 pt-8 pb-8 overflow-y-auto">
+      <div className="flex flex-1 flex-col justify-center px-8 pt-8 pb-8 overflow-y-auto">
         {sidebarContent}
       </div>
       )}
@@ -188,7 +188,7 @@ function GallerySidebar({ hydrated }: { hydrated: boolean }) {
       {/* Bottom nav links */}
       {hydrated ? (
       <motion.div
-        className="shrink-0 border-t border-border px-8 py-6"
+        className="shrink-0 border-t border-white/10 px-8 py-6"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.7, duration: 0.5 }}
@@ -196,7 +196,7 @@ function GallerySidebar({ hydrated }: { hydrated: boolean }) {
         {bottomNav}
       </motion.div>
       ) : (
-      <div className="shrink-0 border-t border-border px-8 py-6">
+      <div className="shrink-0 border-t border-white/10 px-8 py-6">
         {bottomNav}
       </div>
       )}
@@ -209,16 +209,16 @@ function GalleryMobileHeader({ hydrated }: { hydrated: boolean }) {
   const content = (
     <div className="space-y-4">
       <div>
-        <p className="text-[12px] uppercase tracking-[0.15em] text-muted">
+        <p className="text-sm uppercase tracking-[0.15em] text-muted">
           Section
         </p>
-        <p className="mt-1 text-[15px] font-medium">UI Gallery</p>
+        <p className="mt-1 text-base font-medium">UI Gallery</p>
       </div>
       <div>
-        <p className="text-[12px] uppercase tracking-[0.15em] text-muted">
+        <p className="text-sm uppercase tracking-[0.15em] text-muted">
           About
         </p>
-        <p className="mt-1 text-[15px] leading-relaxed">
+        <p className="mt-1 text-base leading-relaxed">
           A curated collection of screens, interfaces, and design details
           from various projects.
         </p>
@@ -259,6 +259,10 @@ export function GalleryGrid() {
       {/* Main content — offset on desktop for fixed sidebar */}
       <div className="lg:ml-[360px]">
         <div className="px-6 py-10 lg:px-10 lg:py-12">
+          <div className="mb-12 flex items-center justify-between border-b border-border pb-6">
+            <h1 className="font-display text-2xl tracking-[-0.04em]">A curated collection</h1>
+            <span className="text-sm text-muted">Gallery</span>
+          </div>
           <div className="space-y-5">
             {galleryItems.map((tile, i) => (
               <GalleryTile key={tile.src} tile={tile} index={i} hydrated={hydrated} />

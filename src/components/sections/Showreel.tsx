@@ -4,13 +4,13 @@ import Image from "next/image";
 import { useEffect, useRef } from "react";
 
 const showreelImages = [
-  { src: "/images/projects/basketball.png", alt: "Sport Mag — Basketball" },
-  { src: "/images/projects/budgio-screens.png", alt: "Budgio — Fintech App" },
-  { src: "/images/projects/tennis.png", alt: "Sport Mag — Tennis" },
+  { src: "/images/projects/basketball.png", alt: "Sport Mag - Basketball" },
+  { src: "/images/projects/budgio-screens.png", alt: "Budgio - Fintech App" },
+  { src: "/images/projects/tennis.png", alt: "Sport Mag - Tennis" },
   { src: "/images/projects/onboarding.png", alt: "Onboarding Flow" },
-  { src: "/images/projects/football.png", alt: "Sport Mag — Football" },
-  { src: "/images/projects/brix.png", alt: "Brix — Spending Onboarding" },
-  { src: "/images/projects/memory-bird.png", alt: "Memory Bird — 100 Day Streak" },
+  { src: "/images/projects/football.png", alt: "Sport Mag - Football" },
+  { src: "/images/projects/brix.png", alt: "Brix - Spending Onboarding" },
+  { src: "/images/projects/memory-bird.png", alt: "Memory Bird - 100 Day Streak" },
 ];
 
 export function Showreel() {
@@ -44,7 +44,7 @@ export function Showreel() {
 
   return (
     <section className="w-full overflow-hidden">
-      <div ref={scrollRef} className="flex gap-2 will-change-transform">
+      <div ref={scrollRef} className="flex will-change-transform">
         {/* Two identical sets for seamless loop */}
         {[0, 1].map((set) =>
           showreelImages.map((img, i) => (

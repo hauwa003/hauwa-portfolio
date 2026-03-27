@@ -50,10 +50,10 @@ export function ContactSection() {
               animate={shouldAnimate ? { opacity: 1, y: 0 } : { opacity: 0, y: 32 }}
               transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
             >
-              <p className="text-[13px] uppercase tracking-[0.2em] text-muted">
+              <p className="text-sm uppercase tracking-[0.2em] text-muted">
                 Get in Touch
               </p>
-              <h2 className="mt-6 font-display text-5xl tracking-tight md:text-7xl">
+              <h2 className="mt-6 font-display text-5xl tracking-[-0.04em] md:text-7xl">
                 Let&apos;s work
                 <br />
                 together<span className="text-accent">.</span>
@@ -65,10 +65,10 @@ export function ContactSection() {
             </motion.div>
           ) : (
             <div>
-              <p className="text-[13px] uppercase tracking-[0.2em] text-muted">
+              <p className="text-sm uppercase tracking-[0.2em] text-muted">
                 Get in Touch
               </p>
-              <h2 className="mt-6 font-display text-5xl tracking-tight md:text-7xl">
+              <h2 className="mt-6 font-display text-5xl tracking-[-0.04em] md:text-7xl">
                 Let&apos;s work
                 <br />
                 together<span className="text-accent">.</span>
@@ -89,7 +89,7 @@ export function ContactSection() {
             >
               {contactLinks.map((link) => (
                 <div key={link.label} className="group">
-                  <p className="text-[11px] uppercase tracking-[0.2em] text-muted">
+                  <p className="text-xs uppercase tracking-[0.2em] text-muted">
                     {link.label}
                   </p>
                   <a
@@ -107,7 +107,7 @@ export function ContactSection() {
             <div className="flex flex-col justify-end space-y-8">
               {contactLinks.map((link) => (
                 <div key={link.label} className="group">
-                  <p className="text-[11px] uppercase tracking-[0.2em] text-muted">
+                  <p className="text-xs uppercase tracking-[0.2em] text-muted">
                     {link.label}
                   </p>
                   <a

@@ -53,122 +53,83 @@ export function AboutSidebar() {
     }
   }
 
+  const navContent = (
+    <nav>
+      <ul className="space-y-1">
+          {sections.map(({ id, label }) => (
+            <li key={id}>
+              <button
+                onClick={() => scrollTo(id)}
+                className={`flex w-full items-center gap-3 py-2 text-left font-display text-base transition-all duration-300 ${
+                  activeId === id
+                    ? "font-medium text-white translate-x-3"
+                    : "text-white/60 hover:text-white"
+                }`}
+              >
+                <span className={`h-px shrink-0 transition-all duration-300 ${
+                  activeId === id ? "w-5 bg-white" : "w-2 bg-white/40"
+                }`} />
+                {label}
+              </button>
+            </li>
+          ))}
+        </ul>
+    </nav>
+  );
+
+  const bottomNav = (
+    <div className="flex items-center gap-2">
+      <Link
+        href="/"
+        className="rounded-full border border-white/20 px-5 py-3 text-sm text-white transition-colors hover:bg-white/10"
+      >
+        Home
+      </Link>
+      <Link
+        href="/work"
+        className="rounded-full border border-white/20 px-5 py-3 text-sm text-white transition-colors hover:bg-white/10"
+      >
+        Work
+      </Link>
+      <Link
+        href="/#contact"
+        className="rounded-full bg-white px-5 py-3 text-sm font-medium text-[#5B21B6] transition-colors hover:bg-white/90"
+      >
+        Book a call
+      </Link>
+    </div>
+  );
+
   return (
-    <aside className="hidden lg:fixed lg:left-0 lg:top-0 lg:flex lg:h-screen lg:w-[360px] lg:flex-col lg:border-r lg:border-border lg:bg-background lg:z-40">
+    <aside className="hidden lg:fixed lg:left-0 lg:top-0 lg:flex lg:h-screen lg:w-[360px] lg:flex-col lg:border-r lg:border-white/10 lg:bg-[#5B21B6] lg:z-40">
       {hydrated ? (
       <motion.div
-        className="flex flex-1 flex-col px-8 pt-8 pb-8 overflow-y-auto"
+        className="flex flex-1 flex-col justify-center px-8 pt-8 pb-8 overflow-y-auto"
         initial={{ opacity: 0, x: -16 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.6, delay: 0.5, ease }}
       >
-        <div>
-          <p className="font-display text-lg tracking-tight">About</p>
-          <p className="mt-1 text-[13px] text-muted">Getting to know me</p>
-        </div>
-
-        {/* Table of contents */}
-        <nav className="mt-8">
-          <p className="text-[12px] uppercase tracking-[0.15em] text-muted">
-            Contents
-          </p>
-          <ul className="mt-4 space-y-1">
-            {sections.map(({ id, label }) => (
-              <li key={id}>
-                <button
-                  onClick={() => scrollTo(id)}
-                  className={`w-full text-left px-3 py-2 text-[14px] transition-colors duration-200 ${
-                    activeId === id
-                      ? "font-medium text-foreground"
-                      : "text-muted hover:text-foreground"
-                  }`}
-                >
-                  {label}
-                </button>
-              </li>
-            ))}
-          </ul>
-        </nav>
+        {navContent}
       </motion.div>
       ) : (
-      <div className="flex flex-1 flex-col px-8 pt-8 pb-8 overflow-y-auto">
-        <div>
-          <p className="font-display text-lg tracking-tight">About</p>
-          <p className="mt-1 text-[13px] text-muted">Getting to know me</p>
-        </div>
-
-        {/* Table of contents */}
-        <nav className="mt-8">
-          <p className="text-[12px] uppercase tracking-[0.15em] text-muted">
-            Contents
-          </p>
-          <ul className="mt-4 space-y-1">
-            {sections.map(({ id, label }) => (
-              <li key={id}>
-                <button
-                  onClick={() => scrollTo(id)}
-                  className="w-full text-left px-3 py-2 text-[14px] text-muted hover:text-foreground transition-colors duration-200"
-                >
-                  {label}
-                </button>
-              </li>
-            ))}
-          </ul>
-        </nav>
+      <div className="flex flex-1 flex-col justify-center px-8 pt-8 pb-8 overflow-y-auto">
+        {navContent}
       </div>
       )}
 
       {/* Bottom nav links */}
       {hydrated ? (
       <motion.div
-        className="shrink-0 border-t border-border px-8 py-6"
+        className="shrink-0 border-t border-white/10 px-8 py-6"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.7, duration: 0.5 }}
       >
-        <div className="flex items-center gap-3">
-          <Link
-            href="/"
-            className="border border-border px-5 py-2.5 text-[13px] transition-colors hover:bg-surface"
-          >
-            Home
-          </Link>
-          <Link
-            href="/explorations"
-            className="border border-border px-5 py-2.5 text-[13px] transition-colors hover:bg-surface"
-          >
-            Work
-          </Link>
-          <Link
-            href="/#contact"
-            className="bg-foreground px-5 py-2.5 text-[13px] text-background transition-colors hover:bg-accent-hover"
-          >
-            Book a call
-          </Link>
-        </div>
+        {bottomNav}
       </motion.div>
       ) : (
-      <div className="shrink-0 border-t border-border px-8 py-6">
-        <div className="flex items-center gap-3">
-          <Link
-            href="/"
-            className="border border-border px-5 py-2.5 text-[13px] transition-colors hover:bg-surface"
-          >
-            Home
-          </Link>
-          <Link
-            href="/explorations"
-            className="border border-border px-5 py-2.5 text-[13px] transition-colors hover:bg-surface"
-          >
-            Work
-          </Link>
-          <Link
-            href="/#contact"
-            className="bg-foreground px-5 py-2.5 text-[13px] text-background transition-colors hover:bg-accent-hover"
-          >
-            Book a call
-          </Link>
-        </div>
+      <div className="shrink-0 border-t border-white/10 px-8 py-6">
+        {bottomNav}
       </div>
       )}
     </aside>

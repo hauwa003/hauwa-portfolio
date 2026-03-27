@@ -65,14 +65,25 @@ const tools = [
   { category: "Collaboration", items: ["Notion", "Slack", "Linear", "Loom"] },
 ];
 
+const badgeColors = [
+  "bg-violet-600 text-white border-violet-600",
+  "bg-sky-600 text-white border-sky-600",
+  "bg-amber-500 text-white border-amber-500",
+  "bg-emerald-600 text-white border-emerald-600",
+  "bg-rose-500 text-white border-rose-500",
+  "bg-orange-500 text-white border-orange-500",
+  "bg-pink-500 text-white border-pink-500",
+  "bg-teal-600 text-white border-teal-600",
+];
+
 export function ProcessContent() {
   return (
     <div className="px-8 py-16 lg:px-16">
       {/* Title bar */}
       <ScrollReveal>
         <div className="flex items-center justify-between border-b border-border pb-6">
-          <h1 className="font-display text-2xl tracking-tight">How I work</h1>
-          <span className="text-[13px] text-muted">Process</span>
+          <h1 className="font-display text-2xl tracking-[-0.04em]">How I work</h1>
+          <span className="text-sm text-muted">Process</span>
         </div>
       </ScrollReveal>
 
@@ -82,60 +93,65 @@ export function ProcessContent() {
           <p className="text-base leading-[1.85] text-muted">
             Every project is different, but my approach stays consistent. I
             follow a structured yet flexible process that ensures clarity at
-            every stage — from understanding the problem to shipping the
+            every stage, from understanding the problem to shipping the
             solution.
           </p>
         </div>
       </ScrollReveal>
 
       {/* Process steps */}
-      {processSteps.map((step) => (
-        <ScrollReveal key={step.number}>
-          <div
-            id={step.id}
-            className="mt-14 space-y-4 scroll-mt-8"
-          >
-            <div className="flex items-center gap-3">
-              <span className="text-[12px] tabular-nums text-muted">
-                {step.number}
-              </span>
-              <span className="h-px w-4 bg-border" />
-              <h2 className="font-display text-xl tracking-tight">
-                {step.title}
-              </h2>
-            </div>
-            <p className="max-w-2xl text-base leading-[1.85] text-muted">
-              {step.description}
-            </p>
-            <div className="flex flex-wrap gap-2 pt-2">
-              {step.deliverables.map((d) => (
-                <span
-                  key={d}
-                  className="border border-border px-3 py-1.5 text-xs text-muted"
-                >
-                  {d}
+      {processSteps.map((step, stepIndex) => {
+        const baseColorIndex = processSteps
+          .slice(0, stepIndex)
+          .reduce((sum, s) => sum + s.deliverables.length, 0);
+        return (
+          <ScrollReveal key={step.number}>
+            <div
+              id={step.id}
+              className="mt-14 space-y-4 scroll-mt-8"
+            >
+              <div className="flex items-center gap-3">
+                <span className="text-sm tabular-nums text-muted">
+                  {step.number}
                 </span>
-              ))}
+                <span className="h-px w-4 bg-border" />
+                <h2 className="font-display text-xl tracking-[-0.04em]">
+                  {step.title}
+                </h2>
+              </div>
+              <p className="max-w-2xl text-base leading-[1.85] text-muted">
+                {step.description}
+              </p>
+              <div className="flex flex-wrap gap-2 pt-2">
+                {step.deliverables.map((d, i) => (
+                  <span
+                    key={d}
+                    className={`rounded-full border px-3 py-1.5 text-xs ${badgeColors[(baseColorIndex + i) % badgeColors.length]}`}
+                  >
+                    {d}
+                  </span>
+                ))}
+              </div>
             </div>
-          </div>
-        </ScrollReveal>
-      ))}
+          </ScrollReveal>
+        );
+      })}
 
       {/* Toolkit */}
       <ScrollReveal>
         <div id="toolkit" className="mt-20 space-y-4 scroll-mt-8">
-          <p className="text-[12px] uppercase tracking-[0.15em] text-muted">
+          <p className="text-sm uppercase tracking-[0.15em] text-muted">
             Toolkit
           </p>
           <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
             {tools.map((group) => (
               <div key={group.category}>
-                <p className="text-[11px] uppercase tracking-[0.2em] text-foreground">
+                <p className="text-xs uppercase tracking-[0.2em] text-foreground">
                   {group.category}
                 </p>
                 <ul className="mt-4 space-y-3">
                   {group.items.map((item) => (
-                    <li key={item} className="text-[15px] text-muted">
+                    <li key={item} className="text-base text-muted">
                       {item}
                     </li>
                   ))}
@@ -152,14 +168,14 @@ export function ProcessContent() {
           id="working-together"
           className="mt-20 bg-surface p-8 lg:p-10 scroll-mt-8"
         >
-          <p className="text-[12px] uppercase tracking-[0.15em] text-muted">
+          <p className="text-sm uppercase tracking-[0.15em] text-muted">
             Working Together
           </p>
           <div className="mt-4 max-w-2xl space-y-5 text-base leading-[1.85] text-muted">
             <p>
               When we work together, you can expect clear communication,
               consistent updates, and a collaborative process. I don&apos;t
-              disappear into a design cave — I share work early and often, and I
+              disappear into a design cave. I share work early and often, and I
               value your input at every stage.
             </p>
             <p>

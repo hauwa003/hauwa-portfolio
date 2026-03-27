@@ -53,13 +53,13 @@ function StepCard({ step, index }: { step: typeof steps[0]; index: number }) {
       />
 
       <div className="pb-2 pt-8">
-        <span className="text-[13px] tabular-nums tracking-wide text-accent">
+        <span className="text-sm tabular-nums tracking-wide text-accent">
           {step.number}
         </span>
-        <h3 className="mt-3 font-display text-2xl tracking-tight">
+        <h3 className="mt-3 font-display text-2xl tracking-[-0.04em]">
           {step.title}
         </h3>
-        <p className="mt-3 text-[15px] leading-relaxed text-muted">
+        <p className="mt-3 text-base leading-relaxed text-muted">
           {step.description}
         </p>
       </div>
@@ -71,10 +71,10 @@ export function ProcessSnapshot() {
   return (
     <section className="mx-auto max-w-7xl px-6 py-28 lg:px-8">
       <ScrollReveal>
-        <p className="text-[13px] uppercase tracking-[0.2em] text-muted">
+        <p className="text-sm uppercase tracking-[0.2em] text-muted">
           How I Work
         </p>
-        <h2 className="mt-3 font-display text-4xl tracking-tight md:text-5xl">
+        <h2 className="mt-3 font-display text-4xl tracking-[-0.04em] md:text-5xl">
           A process built on clarity
         </h2>
       </ScrollReveal>

@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
-import { Instrument_Serif, Caveat, Geist } from "next/font/google";
+import { Bricolage_Grotesque, Caveat, DM_Sans } from "next/font/google";
 import { LayoutShell } from "@/components/layout/LayoutShell";
 import "./globals.css";
 
-const instrumentSerif = Instrument_Serif({
-  variable: "--font-instrument-serif",
+const bricolageGrotesque = Bricolage_Grotesque({
+  variable: "--font-bricolage-grotesque",
   subsets: ["latin"],
-  weight: "400",
+  weight: ["400", "500", "600", "700", "800"],
   display: "swap",
 });
 
@@ -16,15 +16,16 @@ const caveat = Caveat({
   display: "swap",
 });
 
-const geist = Geist({
-  variable: "--font-geist",
+const dmSans = DM_Sans({
+  variable: "--font-dm-sans",
   subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
   display: "swap",
 });
 
 export const metadata: Metadata = {
   title: {
-    default: "Hauwa Yusuf — Product Designer & Framer Developer",
+    default: "Hauwa Yusuf | Product Designer & Framer Developer",
     template: "%s | Hauwa Yusuf",
   },
   description:
@@ -49,9 +50,9 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${instrumentSerif.variable} ${geist.variable} ${caveat.variable} h-full antialiased`}
+      className={`${bricolageGrotesque.variable} ${dmSans.variable} ${caveat.variable} h-full antialiased`}
     >
-      <body className="flex min-h-full flex-col bg-background text-foreground">
+      <body className="flex min-h-full flex-col text-foreground">
         <LayoutShell>{children}</LayoutShell>
       </body>
     </html>

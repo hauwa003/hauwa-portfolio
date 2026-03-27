@@ -11,7 +11,7 @@ const principles = [
     body: "If a user has to think about the interface, the interface hasn't done its job.",
     image: "/images/projects/onboarding.png",
     alt: "Onboarding screen design showing clear user flow",
-    caption: "Onboarding — BetSell",
+    caption: "Onboarding - BetSell",
   },
   {
     number: "02",
@@ -19,7 +19,7 @@ const principles = [
     body: "The best features are often the ones you remove. Simplicity is a deliberate act.",
     image: "/images/projects/brix.png",
     alt: "Brix design system with minimal, focused components",
-    caption: "Component system — Brix",
+    caption: "Component system - Brix",
   },
   {
     number: "03",
@@ -27,7 +27,7 @@ const principles = [
     body: "Aesthetics matter, but the real test is whether someone can finish what they came to do.",
     image: "/images/projects/budgio-screens.png",
     alt: "Budgio app screens showing intuitive budget tracking",
-    caption: "Budget flow — Budgio",
+    caption: "Budget flow - Budgio",
   },
   {
     number: "04",
@@ -35,7 +35,7 @@ const principles = [
     body: "A screen without a clear purpose is a screen that shouldn't exist.",
     image: "/images/projects/memory-bird.png",
     alt: "Memory Bird app screen with focused single-purpose layout",
-    caption: "Recall view — Memory Bird",
+    caption: "Recall view - Memory Bird",
   },
 ];
 
@@ -76,7 +76,7 @@ export function DesignPhilosophy() {
   function getOpacityClass(index: number) {
     if (!hydrated) return "";
     if (activeIndex === null) return "opacity-[0.65]";
-    return activeIndex === index ? "opacity-100" : "opacity-[0.40]";
+    return activeIndex === index ? "opacity-100" : "opacity-50";
   }
 
   const activePrinciple =
@@ -84,10 +84,10 @@ export function DesignPhilosophy() {
 
   const headerContent = (
     <>
-      <p className="text-[13px] uppercase tracking-[0.2em] text-muted">
+      <p className="text-sm uppercase tracking-[0.2em] text-muted">
         Design Philosophy
       </p>
-      <h2 className="mt-4 font-display text-4xl tracking-tight md:text-5xl">
+      <h2 className="mt-4 font-display text-4xl tracking-[-0.04em] md:text-5xl">
         How I think about products
       </h2>
     </>
@@ -127,7 +127,7 @@ export function DesignPhilosophy() {
                   {p.body}
                 </p>
 
-                {/* Mobile image — accordion */}
+                {/* Mobile image - accordion */}
                 <div className="md:hidden">
                   <AnimatePresence>
                     {activeIndex === i && (
@@ -139,7 +139,7 @@ export function DesignPhilosophy() {
                         className="overflow-hidden"
                       >
                         <div className="pt-5">
-                          <div className="relative aspect-[4/3] w-full overflow-hidden rounded-lg bg-surface">
+                          <div className="relative aspect-[4/3] w-full overflow-hidden rounded-xl bg-surface">
                             <Image
                               src={p.image}
                               alt={p.alt}
@@ -160,7 +160,7 @@ export function DesignPhilosophy() {
         ))}
         <div className="h-px bg-border" />
 
-        {/* Desktop image — absolutely positioned, no layout shift */}
+        {/* Desktop image - absolutely positioned, no layout shift */}
         <div className="pointer-events-none absolute right-0 top-0 hidden h-full w-[240px] items-start justify-end md:flex">
           <div className="sticky top-1/3">
             <AnimatePresence mode="wait">
@@ -172,7 +172,7 @@ export function DesignPhilosophy() {
                   exit={{ opacity: 0, y: 6 }}
                   transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
                 >
-                  <div className="relative aspect-[4/3] w-[240px] overflow-hidden rounded-lg bg-surface">
+                  <div className="relative aspect-[4/3] w-[240px] overflow-hidden rounded-xl bg-surface">
                     <Image
                       src={activePrinciple.image}
                       alt={activePrinciple.alt}
