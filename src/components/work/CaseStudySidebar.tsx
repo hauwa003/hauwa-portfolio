@@ -196,7 +196,7 @@ export function CaseStudySidebar({
   );
 
   const bottomNav = (
-    <div className="flex items-center gap-3">
+    <div className="flex items-center gap-2">
       <Link
         href="/"
         className="rounded-full border border-white/20 px-5 py-3 text-sm text-white transition-colors hover:bg-white/10"
@@ -204,7 +204,7 @@ export function CaseStudySidebar({
         Home
       </Link>
       <Link
-        href="/#work"
+        href="/work"
         className="rounded-full border border-white/20 px-5 py-3 text-sm text-white transition-colors hover:bg-white/10"
       >
         Work

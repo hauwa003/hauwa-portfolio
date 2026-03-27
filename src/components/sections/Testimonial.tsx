@@ -135,7 +135,7 @@ export function Testimonial() {
   const wasInView = useRef(false);
   const currentRef = useRef(0);
   const busyRef = useRef(false);
-  const timerRef = useRef<ReturnType<typeof setInterval>>();
+  const timerRef = useRef<ReturnType<typeof setInterval>>(undefined);
   const cancelRef = useRef<(() => void) | null>(null);
 
   const isInView = useInView(sectionRef, { once: true, margin: "-5%" });
