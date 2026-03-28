@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { ProcessContent } from "@/components/process/ProcessContent";
 import { ProcessSidebar } from "@/components/process/ProcessSidebar";
 import { ProcessMobileHeader } from "@/components/process/ProcessMobileHeader";
-import { WipeTransition } from "@/components/layout/WipeTransition";
+import { ContentEntrance } from "@/components/layout/ContentEntrance";
 
 export const metadata: Metadata = {
   title: "Process",
@@ -12,14 +12,14 @@ export const metadata: Metadata = {
 
 export default function ProcessPage() {
   return (
-    <WipeTransition>
-      <main>
-        <ProcessSidebar />
-        <ProcessMobileHeader />
+    <main>
+      <ProcessSidebar />
+      <ProcessMobileHeader />
+      <ContentEntrance>
         <div className="lg:ml-[360px]">
           <ProcessContent />
         </div>
-      </main>
-    </WipeTransition>
+      </ContentEntrance>
+    </main>
   );
 }

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { ExplorationsContent } from "@/components/explorations/ExplorationsContent";
-import { WipeTransition } from "@/components/layout/WipeTransition";
+import { ContentEntrance } from "@/components/layout/ContentEntrance";
 
 export const metadata: Metadata = {
   title: "Explorations",
@@ -10,10 +10,10 @@ export const metadata: Metadata = {
 
 export default function ExplorationsPage() {
   return (
-    <WipeTransition>
-      <main className="min-h-screen">
+    <main className="min-h-screen">
+      <ContentEntrance>
         <ExplorationsContent />
-      </main>
-    </WipeTransition>
+      </ContentEntrance>
+    </main>
   );
 }

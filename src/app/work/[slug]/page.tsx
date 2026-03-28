@@ -9,7 +9,7 @@ import { CaseStudyHero } from "@/components/work/CaseStudyHero";
 import { CaseStudyBody } from "@/components/work/CaseStudyBody";
 import { CaseStudySidebar } from "@/components/work/CaseStudySidebar";
 import { MobileCaseStudyHeader } from "@/components/work/MobileCaseStudyHeader";
-import { WipeTransition } from "@/components/layout/WipeTransition";
+import { ContentEntrance } from "@/components/layout/ContentEntrance";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -50,25 +50,25 @@ export default async function CaseStudyPage({ params }: PageProps) {
   const { prev, next } = getAdjacentProjects(slug);
 
   return (
-    <WipeTransition>
-      <main>
-        {/* Fixed sidebar — desktop only */}
-        <CaseStudySidebar
-          project={project}
-          prev={prev}
-          next={next}
-          allProjects={projects}
-        />
+    <main>
+      {/* Fixed sidebar — desktop only */}
+      <CaseStudySidebar
+        project={project}
+        prev={prev}
+        next={next}
+        allProjects={projects}
+      />
 
-        {/* Mobile header */}
-        <MobileCaseStudyHeader project={project} prev={prev} next={next} />
+      {/* Mobile header */}
+      <MobileCaseStudyHeader project={project} prev={prev} next={next} />
 
-        {/* Main content — offset on desktop to account for fixed sidebar */}
+      {/* Main content — offset on desktop to account for fixed sidebar */}
+      <ContentEntrance>
         <div className="lg:ml-[360px]">
           <CaseStudyHero project={project} />
           <CaseStudyBody project={project} />
         </div>
-      </main>
-    </WipeTransition>
+      </ContentEntrance>
+    </main>
   );
 }
