@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Bricolage_Grotesque, Caveat, DM_Sans } from "next/font/google";
+import { Bricolage_Grotesque, Caveat, DM_Sans, Kalam } from "next/font/google";
 import { LayoutShell } from "@/components/layout/LayoutShell";
 import "./globals.css";
 
@@ -13,6 +13,13 @@ const bricolageGrotesque = Bricolage_Grotesque({
 const caveat = Caveat({
   variable: "--font-caveat",
   subsets: ["latin"],
+  display: "swap",
+});
+
+const kalam = Kalam({
+  variable: "--font-kalam",
+  subsets: ["latin"],
+  weight: ["300", "400", "700"],
   display: "swap",
 });
 
@@ -50,7 +57,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${bricolageGrotesque.variable} ${dmSans.variable} ${caveat.variable} h-full antialiased`}
+      className={`${bricolageGrotesque.variable} ${dmSans.variable} ${caveat.variable} ${kalam.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col text-foreground">
         <LayoutShell>{children}</LayoutShell>

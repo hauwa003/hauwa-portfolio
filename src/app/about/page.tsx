@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { AboutContent } from "@/components/about/AboutContent";
 import { AboutSidebar } from "@/components/about/AboutSidebar";
 import { AboutMobileHeader } from "@/components/about/AboutMobileHeader";
-import { WipeTransition } from "@/components/layout/WipeTransition";
+import { ContentEntrance } from "@/components/layout/ContentEntrance";
 
 export const metadata: Metadata = {
   title: "About",
@@ -12,14 +12,14 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
-    <WipeTransition>
-      <main>
-        <AboutSidebar />
-        <AboutMobileHeader />
+    <main>
+      <AboutSidebar />
+      <AboutMobileHeader />
+      <ContentEntrance>
         <div className="lg:ml-[360px]">
           <AboutContent />
         </div>
-      </main>
-    </WipeTransition>
+      </ContentEntrance>
+    </main>
   );
 }

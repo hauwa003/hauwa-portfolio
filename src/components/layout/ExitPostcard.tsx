@@ -5,199 +5,480 @@ import {
   motion,
   AnimatePresence,
   useMotionValue,
-  useSpring,
   useTransform,
+  useSpring,
 } from "framer-motion";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
-/* ── Location-based messages ── */
-function getLocationNote(loc: string | null): { message: string[]; closing: string } {
-  if (!loc) {
-    return {
-      message: [
-        "wherever you are right now,",
-        "I hope something here",
-        "made you pause for a second.",
-      ],
-      closing: "that's what good design does.",
-    };
-  }
-
-  const city = loc.split(",")[0].trim().toLowerCase();
+/* ── Location greeting in local language ── */
+function getLocationLine(loc: string | null): string {
+  if (!loc) return "sent with love from the internet —";
+  const city = loc.split(",")[0]?.trim() || "";
   const country = loc.split(",")[1]?.trim().toLowerCase() || "";
+  const c = city.toLowerCase();
 
-  // Africa
-  if (["lagos", "abuja", "accra", "nairobi", "cape town", "johannesburg", "kigali", "dar es salaam"].includes(city) ||
-      ["nigeria", "ghana", "kenya", "south africa", "rwanda", "tanzania", "egypt", "ethiopia"].includes(country)) {
-    return {
-      message: [
-        "from one creative in Africa",
-        "to someone browsing in " + loc.split(",")[0] + " —",
-        "this one's for you.",
-      ],
-      closing: "we're building something beautiful here.",
-    };
-  }
-
-  // UK
-  if (["london", "manchester", "birmingham", "edinburgh", "bristol", "leeds"].includes(city) || country === "united kingdom") {
-    return {
-      message: [
-        "a little note landing in " + loc.split(",")[0] + ".",
-        "hope the weather's being kind.",
-        "this postcard? always sunny.",
-      ],
-      closing: "cheers for stopping by.",
-    };
-  }
-
-  // USA / Canada
-  if (["new york", "san francisco", "los angeles", "chicago", "austin", "seattle", "toronto", "vancouver"].includes(city) ||
-      ["united states", "canada"].includes(country)) {
-    return {
-      message: [
-        "hey " + loc.split(",")[0] + ",",
-        "thanks for scrolling this far.",
-        "most people don't — you're different.",
-      ],
-      closing: "that curiosity? it's a superpower.",
-    };
-  }
-
-  // Europe
-  if (["berlin", "paris", "amsterdam", "madrid", "barcelona", "lisbon", "rome", "milan", "stockholm", "copenhagen", "prague", "vienna", "warsaw", "dublin", "zurich", "munich", "hamburg"].includes(city) ||
-      ["germany", "france", "netherlands", "spain", "italy", "portugal", "sweden", "denmark", "czech republic", "austria", "poland", "ireland", "switzerland"].includes(country)) {
-    return {
-      message: [
-        "sending this from the internet",
-        "to " + loc.split(",")[0] + " with care.",
-        "some things are worth the detour.",
-      ],
-      closing: "like good coffee. and good design.",
-    };
-  }
-
-  // Asia
-  if (["tokyo", "singapore", "dubai", "mumbai", "bangalore", "delhi", "hong kong", "seoul", "shanghai", "beijing", "bangkok", "jakarta", "manila", "kuala lumpur", "taipei"].includes(city) ||
-      ["japan", "singapore", "united arab emirates", "india", "china", "south korea", "thailand", "indonesia", "philippines", "malaysia", "taiwan"].includes(country)) {
-    return {
-      message: [
-        "all the way to " + loc.split(",")[0] + " —",
-        "this little note found you.",
-        "must be meant to be.",
-      ],
-      closing: "good things travel far.",
-    };
-  }
-
-  // South America
-  if (["são paulo", "rio de janeiro", "buenos aires", "bogotá", "lima", "santiago", "medellín", "mexico city"].includes(city) ||
-      ["brazil", "argentina", "colombia", "peru", "chile", "mexico"].includes(country)) {
-    return {
-      message: [
-        "a postcard for " + loc.split(",")[0] + "?",
-        "why not. design has no borders.",
-        "neither does good taste.",
-      ],
-      closing: "glad you made it here.",
-    };
-  }
-
-  // Australia / NZ
-  if (["sydney", "melbourne", "brisbane", "perth", "auckland", "wellington"].includes(city) ||
-      ["australia", "new zealand"].includes(country)) {
-    return {
-      message: [
-        "this postcard crossed the whole internet",
-        "to reach " + loc.split(",")[0] + ".",
-        "that's commitment.",
-      ],
-      closing: "thanks for making it worth the trip.",
-    };
-  }
-
-  // Fallback with location
-  return {
-    message: [
-      "a little note for " + loc.split(",")[0] + " —",
-      "thanks for spending some time here.",
-      "it means more than you know.",
-    ],
-    closing: "good design remembers its visitors.",
-  };
+  if (["lagos", "abuja", "kano", "ibadan", "port harcourt"].includes(c) || country === "nigeria")
+    return `hello from ${city}! —`;
+  if (c === "accra" || country === "ghana") return `akwaaba, ${city}! —`;
+  if (["nairobi", "mombasa", "dar es salaam"].includes(c) || ["kenya", "tanzania"].includes(country))
+    return `karibu, ${city}! —`;
+  if (["cape town", "johannesburg", "durban", "pretoria"].includes(c) || country === "south africa")
+    return `sawubona, ${city}! —`;
+  if (["rwanda", "ethiopia", "senegal", "cameroon", "egypt"].includes(country) || ["kigali", "addis ababa", "dakar"].includes(c))
+    return `welcome, ${city}! —`;
+  if (["paris", "lyon", "marseille", "nice"].includes(c) || country === "france")
+    return `bienvenue, ${city}! —`;
+  if (["madrid", "barcelona", "buenos aires", "bogotá", "lima", "santiago", "medellín", "mexico city"].includes(c) || ["spain", "argentina", "colombia", "peru", "chile", "mexico", "ecuador", "uruguay"].includes(country))
+    return `bienvenido, ${city}! —`;
+  if (["são paulo", "rio de janeiro", "lisbon", "porto"].includes(c) || ["brazil", "portugal"].includes(country))
+    return `bem-vindo, ${city}! —`;
+  if (["berlin", "munich", "hamburg", "vienna", "zurich"].includes(c) || ["germany", "austria"].includes(country))
+    return `willkommen, ${city}! —`;
+  if (c === "amsterdam" || country === "netherlands") return `welkom, ${city}! —`;
+  if (["rome", "milan", "florence", "naples"].includes(c) || country === "italy")
+    return `benvenuto, ${city}! —`;
+  if (["stockholm", "copenhagen", "oslo"].includes(c) || ["sweden", "denmark", "norway"].includes(country))
+    return `välkommen, ${city}! —`;
+  if (["tokyo", "osaka", "kyoto"].includes(c) || country === "japan") return `ようこそ, ${city}! —`;
+  if (c === "seoul" || country === "south korea") return `환영합니다, ${city}! —`;
+  if (["shanghai", "beijing", "shenzhen"].includes(c) || country === "china") return `欢迎, ${city}! —`;
+  if (["mumbai", "bangalore", "delhi", "hyderabad", "chennai"].includes(c) || country === "india")
+    return `swaagatam, ${city}! —`;
+  if (c === "dubai" || country === "united arab emirates") return `أهلاً وسهلاً, ${city}! —`;
+  if (c === "bangkok" || country === "thailand") return `ยินดีต้อนรับ, ${city}! —`;
+  if (c === "jakarta" || country === "indonesia") return `selamat datang, ${city}! —`;
+  if (c === "manila" || country === "philippines") return `mabuhay, ${city}! —`;
+  if (["australia", "new zealand", "united kingdom", "uk", "united states", "usa", "us", "canada", "ireland"].includes(country))
+    return `hello from ${city}! —`;
+  return `hello, ${city}! —`;
 }
 
-/* ── Stamp designs ── */
-const stamps: { bg: string; border: string; icon: React.ReactNode; label: string }[] = [
-  {
-    bg: "from-violet-500 to-purple-700",
-    border: "border-violet-300/40",
-    label: "DESIGN",
-    icon: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M12 19l7-7 3 3-7 7-3-3z" /><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z" /><path d="M2 2l7.586 7.586" /><circle cx="11" cy="11" r="2" />
-      </svg>
-    ),
-  },
-  {
-    bg: "from-rose-400 to-pink-600",
-    border: "border-rose-300/40",
-    label: "WITH LOVE",
-    icon: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="white" stroke="none">
-        <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z" />
-      </svg>
-    ),
-  },
-  {
-    bg: "from-amber-400 to-orange-600",
-    border: "border-amber-300/40",
-    label: "AIRMAIL",
-    icon: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M22 2L11 13" /><path d="M22 2l-7 20-4-9-9-4 20-7z" />
-      </svg>
-    ),
-  },
-  {
-    bg: "from-emerald-400 to-teal-600",
-    border: "border-emerald-300/40",
-    label: "EXPLORE",
-    icon: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <circle cx="12" cy="12" r="10" /><path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z" />
-      </svg>
-    ),
-  },
-  {
-    bg: "from-sky-400 to-blue-600",
-    border: "border-sky-300/40",
-    label: "NAVIGATE",
-    icon: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <circle cx="12" cy="12" r="10" /><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76" fill="white" stroke="none" />
-      </svg>
-    ),
-  },
-];
+/* ── Landmark stamp — Ghibli-style ── */
 
-/* ── Perforated edge dots ── */
-function PerfEdge({ side }: { side: "left" | "right" | "top" | "bottom" }) {
-  const count = side === "top" || side === "bottom" ? 7 : 9;
-  const isVert = side === "left" || side === "right";
-  const pos = {
-    left: "-left-[3px] top-0 bottom-0 flex-col",
-    right: "-right-[3px] top-0 bottom-0 flex-col",
-    top: "-top-[3px] left-0 right-0 flex-row",
-    bottom: "-bottom-[3px] left-0 right-0 flex-row",
-  }[side];
+type LandmarkData = {
+  colors: [string, string, string];
+  scene: React.ReactNode;
+};
 
+function getLandmark(loc: string | null): LandmarkData {
+  if (!loc) return landmarks.default;
+  const country = loc.split(",")[1]?.trim().toLowerCase() || "";
+  const city = loc.split(",")[0]?.trim().toLowerCase() || "";
+
+  if (country === "nigeria" || ["lagos", "abuja"].includes(city)) return landmarks.nigeria;
+  if (country === "ghana" || country === "kenya" || country === "tanzania" || country === "south africa")
+    return landmarks.africa;
+  if (country === "japan" || ["tokyo", "osaka", "kyoto"].includes(city)) return landmarks.japan;
+  if (country === "france" || city === "paris") return landmarks.france;
+  if (["united states", "usa", "us"].includes(country) || ["new york", "san francisco", "los angeles"].includes(city))
+    return landmarks.usa;
+  if (["united kingdom", "uk"].includes(country) || city === "london") return landmarks.uk;
+  if (country === "india" || ["mumbai", "delhi", "bangalore"].includes(city)) return landmarks.india;
+  if (country === "brazil" || ["são paulo", "rio de janeiro"].includes(city)) return landmarks.brazil;
+  if (country === "egypt" || city === "cairo") return landmarks.egypt;
+  if (country === "china" || ["shanghai", "beijing"].includes(city)) return landmarks.china;
+  if (country === "south korea" || city === "seoul") return landmarks.korea;
+  if (country === "italy" || ["rome", "milan"].includes(city)) return landmarks.italy;
+  if (["united arab emirates", "uae"].includes(country) || city === "dubai") return landmarks.dubai;
+  if (country === "australia" || city === "sydney") return landmarks.australia;
+  if (["germany", "austria"].includes(country) || ["berlin", "munich"].includes(city)) return landmarks.germany;
+  if (["spain", "mexico", "argentina", "colombia"].includes(country)) return landmarks.spain;
+  if (country === "turkey" || city === "istanbul") return landmarks.turkey;
+  return landmarks.default;
+}
+
+const landmarks: Record<string, LandmarkData> = {
+  // Nigeria — Abuja National Mosque dome, warm sunset
+  nigeria: {
+    colors: ["#F59E0B", "#E67E22", "#D35400"],
+    scene: (
+      <svg viewBox="0 0 80 100" className="h-full w-full">
+        <circle cx="40" cy="18" r="10" fill="white" opacity="0.25" />
+        <circle cx="60" cy="24" r="6" fill="white" opacity="0.15" />
+        {/* Mosque dome */}
+        <ellipse cx="40" cy="62" rx="28" ry="22" fill="white" opacity="0.9" />
+        <rect x="12" y="62" width="56" height="30" fill="white" opacity="0.9" />
+        {/* Minaret left */}
+        <rect x="8" y="40" width="5" height="52" fill="white" opacity="0.85" />
+        <circle cx="10.5" cy="39" r="3.5" fill="white" opacity="0.85" />
+        {/* Minaret right */}
+        <rect x="67" y="40" width="5" height="52" fill="white" opacity="0.85" />
+        <circle cx="69.5" cy="39" r="3.5" fill="white" opacity="0.85" />
+        {/* Crescent */}
+        <path d="M38 42 Q40 36 42 42" fill="none" stroke="white" strokeWidth="1.5" opacity="0.7" />
+      </svg>
+    ),
+  },
+  // Africa — Acacia tree, golden savanna
+  africa: {
+    colors: ["#D97706", "#B45309", "#92400E"],
+    scene: (
+      <svg viewBox="0 0 80 100" className="h-full w-full">
+        <circle cx="55" cy="16" r="8" fill="white" opacity="0.3" />
+        {/* Acacia tree */}
+        <rect x="37" y="50" width="6" height="42" fill="white" opacity="0.85" />
+        <ellipse cx="40" cy="42" rx="26" ry="16" fill="white" opacity="0.85" />
+        <ellipse cx="30" cy="48" rx="14" ry="10" fill="white" opacity="0.8" />
+        <ellipse cx="52" cy="46" rx="16" ry="11" fill="white" opacity="0.8" />
+        {/* Ground */}
+        <rect x="0" y="90" width="80" height="10" fill="white" opacity="0.2" />
+      </svg>
+    ),
+  },
+  // Japan — Torii gate + Fuji, cherry blossom pinks
+  japan: {
+    colors: ["#FDA4AF", "#F472B6", "#DB2777"],
+    scene: (
+      <svg viewBox="0 0 80 100" className="h-full w-full">
+        {/* Mt Fuji */}
+        <path d="M5 92 L40 30 L75 92Z" fill="white" opacity="0.3" />
+        <path d="M25 55 L40 30 L55 55Z" fill="white" opacity="0.2" />
+        {/* Torii gate */}
+        <rect x="18" y="50" width="5" height="42" fill="white" opacity="0.9" />
+        <rect x="57" y="50" width="5" height="42" fill="white" opacity="0.9" />
+        <rect x="12" y="48" width="56" height="5" rx="1" fill="white" opacity="0.9" />
+        <rect x="16" y="58" width="48" height="3" fill="white" opacity="0.85" />
+        {/* Cherry blossoms */}
+        <circle cx="14" cy="20" r="2.5" fill="white" opacity="0.5" />
+        <circle cx="66" cy="15" r="2" fill="white" opacity="0.4" />
+        <circle cx="50" cy="22" r="1.5" fill="white" opacity="0.35" />
+        <circle cx="30" cy="12" r="2" fill="white" opacity="0.45" />
+      </svg>
+    ),
+  },
+  // France — Eiffel Tower, twilight blue
+  france: {
+    colors: ["#818CF8", "#6366F1", "#4F46E5"],
+    scene: (
+      <svg viewBox="0 0 80 100" className="h-full w-full">
+        <circle cx="60" cy="18" r="6" fill="white" opacity="0.2" />
+        {/* Eiffel Tower */}
+        <path d="M40 12 L26 92 L54 92Z" fill="white" opacity="0.85" />
+        <rect x="30" y="55" width="20" height="4" rx="1" fill="white" opacity="0.9" />
+        <rect x="28" y="72" width="24" height="4" rx="1" fill="white" opacity="0.9" />
+        {/* Cutout */}
+        <path d="M35 60 Q40 50 45 60Z" fill="currentColor" opacity="0.5" className="text-[#6366F1]" />
+        {/* Stars */}
+        <circle cx="18" cy="30" r="1" fill="white" opacity="0.5" />
+        <circle cx="65" cy="40" r="1.2" fill="white" opacity="0.4" />
+        <circle cx="22" cy="55" r="0.8" fill="white" opacity="0.35" />
+      </svg>
+    ),
+  },
+  // USA — Statue of Liberty, sunset
+  usa: {
+    colors: ["#F97316", "#EA580C", "#9333EA"],
+    scene: (
+      <svg viewBox="0 0 80 100" className="h-full w-full">
+        {/* Statue silhouette */}
+        <rect x="33" y="55" width="14" height="37" fill="white" opacity="0.85" />
+        {/* Body */}
+        <path d="M30 55 Q40 28 50 55Z" fill="white" opacity="0.85" />
+        {/* Crown */}
+        <path d="M33 30 L35 20 L37 28 L40 16 L43 28 L45 20 L47 30Z" fill="white" opacity="0.9" />
+        {/* Torch arm */}
+        <rect x="48" y="22" width="3" height="20" fill="white" opacity="0.85" transform="rotate(15 49 32)" />
+        <ellipse cx="50" cy="18" rx="3" ry="5" fill="white" opacity="0.9" />
+        {/* Base */}
+        <rect x="25" y="88" width="30" height="6" fill="white" opacity="0.6" />
+      </svg>
+    ),
+  },
+  // UK — Big Ben, misty blue
+  uk: {
+    colors: ["#94A3B8", "#64748B", "#475569"],
+    scene: (
+      <svg viewBox="0 0 80 100" className="h-full w-full">
+        <circle cx="58" cy="22" r="8" fill="white" opacity="0.15" />
+        {/* Big Ben tower */}
+        <rect x="32" y="20" width="16" height="72" fill="white" opacity="0.85" />
+        {/* Spire */}
+        <path d="M36 20 L40 6 L44 20Z" fill="white" opacity="0.9" />
+        {/* Clock face */}
+        <circle cx="40" cy="36" r="6" fill="white" opacity="0.2" />
+        <circle cx="40" cy="36" r="5" fill="none" stroke="white" strokeWidth="1" opacity="0.9" />
+        {/* Windows */}
+        <rect x="36" y="50" width="8" height="5" rx="1" fill="white" opacity="0.3" />
+        <rect x="36" y="60" width="8" height="5" rx="1" fill="white" opacity="0.3" />
+        {/* Base */}
+        <rect x="26" y="85" width="28" height="8" fill="white" opacity="0.6" />
+      </svg>
+    ),
+  },
+  // India — Taj Mahal, warm saffron
+  india: {
+    colors: ["#FBBF24", "#F59E0B", "#D97706"],
+    scene: (
+      <svg viewBox="0 0 80 100" className="h-full w-full">
+        {/* Main dome */}
+        <ellipse cx="40" cy="40" rx="16" ry="20" fill="white" opacity="0.9" />
+        {/* Finial */}
+        <circle cx="40" cy="18" r="2.5" fill="white" opacity="0.9" />
+        <rect x="39" y="20" width="2" height="4" fill="white" opacity="0.85" />
+        {/* Body */}
+        <rect x="14" y="55" width="52" height="30" fill="white" opacity="0.85" />
+        {/* Arch */}
+        <path d="M32 85 Q40 65 48 85Z" fill="currentColor" opacity="0.4" className="text-[#F59E0B]" />
+        {/* Minarets */}
+        <rect x="8" y="35" width="4" height="50" fill="white" opacity="0.75" />
+        <circle cx="10" cy="34" r="2.5" fill="white" opacity="0.75" />
+        <rect x="68" y="35" width="4" height="50" fill="white" opacity="0.75" />
+        <circle cx="70" cy="34" r="2.5" fill="white" opacity="0.75" />
+        {/* Base */}
+        <rect x="10" y="85" width="60" height="6" fill="white" opacity="0.5" />
+      </svg>
+    ),
+  },
+  // Brazil — Christ the Redeemer, tropical green
+  brazil: {
+    colors: ["#34D399", "#10B981", "#059669"],
+    scene: (
+      <svg viewBox="0 0 80 100" className="h-full w-full">
+        <circle cx="58" cy="18" r="8" fill="white" opacity="0.2" />
+        {/* Mountain */}
+        <path d="M0 92 L40 40 L80 92Z" fill="white" opacity="0.25" />
+        {/* Christ statue */}
+        <circle cx="40" cy="32" r="4" fill="white" opacity="0.9" />
+        <rect x="38" y="36" width="4" height="28" fill="white" opacity="0.9" />
+        {/* Arms */}
+        <rect x="16" y="38" width="48" height="4" rx="2" fill="white" opacity="0.9" />
+        {/* Base */}
+        <rect x="34" y="64" width="12" height="8" fill="white" opacity="0.7" />
+      </svg>
+    ),
+  },
+  // Egypt — Pyramids, golden
+  egypt: {
+    colors: ["#FCD34D", "#FBBF24", "#D97706"],
+    scene: (
+      <svg viewBox="0 0 80 100" className="h-full w-full">
+        <circle cx="62" cy="20" r="9" fill="white" opacity="0.3" />
+        {/* Pyramid large */}
+        <path d="M10 88 L42 32 L74 88Z" fill="white" opacity="0.85" />
+        {/* Pyramid small */}
+        <path d="M0 88 L18 52 L36 88Z" fill="white" opacity="0.6" />
+        {/* Sand dunes */}
+        <ellipse cx="40" cy="92" rx="42" ry="6" fill="white" opacity="0.2" />
+      </svg>
+    ),
+  },
+  // China — Pagoda, soft red
+  china: {
+    colors: ["#FCA5A5", "#EF4444", "#DC2626"],
+    scene: (
+      <svg viewBox="0 0 80 100" className="h-full w-full">
+        {/* Pagoda tiers */}
+        <path d="M22 92 L28 78 L52 78 L58 92Z" fill="white" opacity="0.85" />
+        <path d="M24 78 L30 65 L50 65 L56 78Z" fill="white" opacity="0.85" />
+        <path d="M26 65 L32 52 L48 52 L54 65Z" fill="white" opacity="0.85" />
+        <path d="M28 52 L34 40 L46 40 L52 52Z" fill="white" opacity="0.85" />
+        <path d="M32 40 L36 30 L44 30 L48 40Z" fill="white" opacity="0.85" />
+        {/* Spire */}
+        <rect x="39" y="18" width="2" height="12" fill="white" opacity="0.9" />
+        <circle cx="40" cy="16" r="2" fill="white" opacity="0.9" />
+        {/* Clouds */}
+        <circle cx="14" cy="28" r="4" fill="white" opacity="0.2" />
+        <circle cx="66" cy="22" r="3" fill="white" opacity="0.15" />
+      </svg>
+    ),
+  },
+  // Korea — Temple gate, autumn
+  korea: {
+    colors: ["#FB923C", "#F97316", "#EA580C"],
+    scene: (
+      <svg viewBox="0 0 80 100" className="h-full w-full">
+        {/* Temple roof */}
+        <path d="M6 52 L40 28 L74 52Z" fill="white" opacity="0.85" />
+        <path d="M10 54 L40 35 L70 54Z" fill="white" opacity="0.3" />
+        {/* Pillars */}
+        <rect x="18" y="52" width="5" height="34" fill="white" opacity="0.85" />
+        <rect x="57" y="52" width="5" height="34" fill="white" opacity="0.85" />
+        {/* Base */}
+        <rect x="12" y="84" width="56" height="6" fill="white" opacity="0.6" />
+        {/* Leaves */}
+        <circle cx="10" cy="20" r="2" fill="white" opacity="0.35" />
+        <circle cx="70" cy="18" r="1.5" fill="white" opacity="0.3" />
+        <circle cx="65" cy="38" r="2" fill="white" opacity="0.25" />
+      </svg>
+    ),
+  },
+  // Italy — Colosseum, warm terracotta
+  italy: {
+    colors: ["#FDBA74", "#F97316", "#C2410C"],
+    scene: (
+      <svg viewBox="0 0 80 100" className="h-full w-full">
+        {/* Colosseum arches */}
+        <ellipse cx="40" cy="60" rx="34" ry="28" fill="white" opacity="0.85" />
+        <ellipse cx="40" cy="60" rx="26" ry="20" fill="currentColor" opacity="0.4" className="text-[#F97316]" />
+        {/* Top arches row */}
+        <path d="M14 48 Q18 40 22 48" fill="none" stroke="white" strokeWidth="2" opacity="0.9" />
+        <path d="M24 46 Q28 38 32 46" fill="none" stroke="white" strokeWidth="2" opacity="0.9" />
+        <path d="M34 44 Q38 36 42 44" fill="none" stroke="white" strokeWidth="2" opacity="0.9" />
+        <path d="M44 44 Q48 36 52 44" fill="none" stroke="white" strokeWidth="2" opacity="0.9" />
+        <path d="M54 46 Q58 38 62 46" fill="none" stroke="white" strokeWidth="2" opacity="0.9" />
+        {/* Ground */}
+        <rect x="4" y="86" width="72" height="6" fill="white" opacity="0.3" />
+      </svg>
+    ),
+  },
+  // Dubai — Burj Khalifa, sand/gold
+  dubai: {
+    colors: ["#FDE68A", "#FBBF24", "#B45309"],
+    scene: (
+      <svg viewBox="0 0 80 100" className="h-full w-full">
+        <circle cx="60" cy="18" r="8" fill="white" opacity="0.3" />
+        {/* Burj Khalifa */}
+        <path d="M38 8 L36 92 L44 92 L42 8Z" fill="white" opacity="0.9" />
+        <path d="M32 40 L36 30 L36 92 L32 92Z" fill="white" opacity="0.7" />
+        <path d="M48 40 L44 30 L44 92 L48 92Z" fill="white" opacity="0.7" />
+        {/* Smaller buildings */}
+        <rect x="16" y="60" width="10" height="32" fill="white" opacity="0.4" />
+        <rect x="55" y="55" width="12" height="37" fill="white" opacity="0.35" />
+        <rect x="70" y="65" width="8" height="27" fill="white" opacity="0.3" />
+      </svg>
+    ),
+  },
+  // Australia — Opera House, ocean blue
+  australia: {
+    colors: ["#7DD3FC", "#38BDF8", "#0284C7"],
+    scene: (
+      <svg viewBox="0 0 80 100" className="h-full w-full">
+        <circle cx="60" cy="20" r="8" fill="white" opacity="0.2" />
+        {/* Opera House shells */}
+        <path d="M15 75 Q22 35 30 75Z" fill="white" opacity="0.9" />
+        <path d="M25 75 Q35 30 45 75Z" fill="white" opacity="0.9" />
+        <path d="M38 75 Q46 38 54 75Z" fill="white" opacity="0.85" />
+        <path d="M48 75 Q53 48 58 75Z" fill="white" opacity="0.8" />
+        {/* Base */}
+        <rect x="10" y="75" width="55" height="8" fill="white" opacity="0.7" />
+        {/* Water */}
+        <path d="M0 88 Q20 84 40 88 Q60 92 80 88 L80 100 L0 100Z" fill="white" opacity="0.15" />
+      </svg>
+    ),
+  },
+  // Germany — Brandenburg Gate, stone grey
+  germany: {
+    colors: ["#A1A1AA", "#71717A", "#52525B"],
+    scene: (
+      <svg viewBox="0 0 80 100" className="h-full w-full">
+        {/* Columns */}
+        {[16, 26, 36, 46, 56].map((x) => (
+          <rect key={x} x={x} y="38" width="5" height="48" fill="white" opacity="0.85" />
+        ))}
+        {/* Top beam */}
+        <rect x="12" y="32" width="56" height="8" fill="white" opacity="0.9" />
+        {/* Pediment */}
+        <path d="M14 32 L40 16 L66 32Z" fill="white" opacity="0.85" />
+        {/* Quadriga (simplified) */}
+        <rect x="36" y="10" width="8" height="6" fill="white" opacity="0.7" />
+        {/* Base */}
+        <rect x="12" y="84" width="56" height="6" fill="white" opacity="0.5" />
+      </svg>
+    ),
+  },
+  // Spain / Latin America — Sagrada Familia style
+  spain: {
+    colors: ["#FB923C", "#E11D48", "#BE123C"],
+    scene: (
+      <svg viewBox="0 0 80 100" className="h-full w-full">
+        {/* Spires */}
+        <rect x="18" y="22" width="5" height="68" fill="white" opacity="0.85" />
+        <path d="M16 22 L20.5 8 L25 22Z" fill="white" opacity="0.85" />
+        <rect x="35" y="28" width="5" height="62" fill="white" opacity="0.8" />
+        <path d="M33 28 L37.5 14 L42 28Z" fill="white" opacity="0.8" />
+        <rect x="52" y="18" width="5" height="72" fill="white" opacity="0.85" />
+        <path d="M50 18 L54.5 4 L59 18Z" fill="white" opacity="0.85" />
+        {/* Body */}
+        <rect x="14" y="50" width="52" height="40" fill="white" opacity="0.6" />
+        {/* Arch */}
+        <path d="M28 90 Q40 70 52 90Z" fill="currentColor" opacity="0.4" className="text-[#E11D48]" />
+      </svg>
+    ),
+  },
+  // Turkey — Hagia Sophia, warm terracotta
+  turkey: {
+    colors: ["#FDBA74", "#E11D48", "#9F1239"],
+    scene: (
+      <svg viewBox="0 0 80 100" className="h-full w-full">
+        {/* Main dome */}
+        <ellipse cx="40" cy="42" rx="22" ry="18" fill="white" opacity="0.9" />
+        {/* Body */}
+        <rect x="14" y="50" width="52" height="36" fill="white" opacity="0.85" />
+        {/* Finial */}
+        <circle cx="40" cy="23" r="2" fill="white" opacity="0.9" />
+        {/* Minarets */}
+        <rect x="6" y="30" width="3.5" height="56" fill="white" opacity="0.8" />
+        <circle cx="7.75" cy="28" r="2.5" fill="white" opacity="0.8" />
+        <rect x="70" y="30" width="3.5" height="56" fill="white" opacity="0.8" />
+        <circle cx="71.75" cy="28" r="2.5" fill="white" opacity="0.8" />
+        {/* Base */}
+        <rect x="4" y="86" width="72" height="6" fill="white" opacity="0.4" />
+      </svg>
+    ),
+  },
+  // Default — Globe with clouds
+  default: {
+    colors: ["#A78BFA", "#7C3AED", "#6D28D9"],
+    scene: (
+      <svg viewBox="0 0 80 100" className="h-full w-full">
+        {/* Globe */}
+        <circle cx="40" cy="50" r="26" fill="none" stroke="white" strokeWidth="2" opacity="0.85" />
+        {/* Meridians */}
+        <ellipse cx="40" cy="50" rx="12" ry="26" fill="none" stroke="white" strokeWidth="1.2" opacity="0.5" />
+        <line x1="14" y1="50" x2="66" y2="50" stroke="white" strokeWidth="1.2" opacity="0.5" />
+        <line x1="18" y1="36" x2="62" y2="36" stroke="white" strokeWidth="1" opacity="0.35" />
+        <line x1="18" y1="64" x2="62" y2="64" stroke="white" strokeWidth="1" opacity="0.35" />
+        {/* Clouds */}
+        <ellipse cx="18" cy="22" rx="8" ry="4" fill="white" opacity="0.3" />
+        <ellipse cx="62" cy="80" rx="10" ry="4" fill="white" opacity="0.25" />
+        {/* Sparkle */}
+        <circle cx="60" cy="18" r="1.5" fill="white" opacity="0.5" />
+        <circle cx="22" cy="82" r="1" fill="white" opacity="0.4" />
+      </svg>
+    ),
+  },
+};
+
+function LandmarkStamp({ location }: { location: string | null }) {
+  const lm = getLandmark(location);
   return (
-    <div className={`absolute ${pos} flex justify-around`}>
-      {Array.from({ length: count }).map((_, i) => (
-        <div key={i} className={`rounded-full bg-[#FFFDF9] ${isVert ? "h-1.5 w-1.5" : "h-1.5 w-1.5"}`} />
-      ))}
+    <div className="relative h-[120px] w-[96px]">
+      {/* Perforated border */}
+      <div className="absolute inset-0 rounded-[3px] border-[2px] border-dashed border-foreground/[0.08]" />
+      {/* Gradient inner */}
+      <div
+        className="absolute inset-[6px] overflow-hidden rounded-[2px]"
+        style={{ background: `linear-gradient(135deg, ${lm.colors[0]}, ${lm.colors[1]}, ${lm.colors[2]})` }}
+      >
+        {/* Dreamy texture */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/[0.1] via-transparent to-white/[0.12]" />
+        {/* Landmark scene */}
+        <div className="absolute inset-0">{lm.scene}</div>
+      </div>
+    </div>
+  );
+}
+
+/* ── Postmark ── */
+function Postmark({ date }: { date: string }) {
+  return (
+    <div className="relative">
+      {/* Circular mark */}
+      <div className="flex h-[40px] w-[40px] items-center justify-center rounded-full border-[1.5px] border-foreground/[0.08]">
+        <div className="flex flex-col items-center">
+          <span className="text-[6px] font-bold uppercase tracking-[0.15em] text-foreground/20">HAUWA</span>
+          <span className="text-[5px] uppercase tracking-[0.1em] text-foreground/15">DESIGN</span>
+        </div>
+      </div>
+      {/* Cancellation lines */}
+      <div className="absolute -right-5 top-1/2 flex -translate-y-1/2 flex-col gap-[2.5px]">
+        {[0, 1, 2, 3, 4].map((i) => (
+          <div key={i} className="h-[0.8px] w-6 bg-foreground/[0.06]" />
+        ))}
+      </div>
+      {/* Date below */}
+      <p className="mt-1 text-center text-[7px] tracking-wider text-foreground/15">{date}</p>
     </div>
   );
 }
@@ -206,44 +487,39 @@ export function ExitPostcard() {
   const [show, setShow] = useState(false);
   const [location, setLocation] = useState<string | null>(null);
   const [engaged, setEngaged] = useState(false);
-  const [stamp] = useState(() => stamps[Math.floor(Math.random() * stamps.length)]);
+  const [downloaded, setDownloaded] = useState(false);
   const shownRef = useRef(false);
   const startTime = useRef(Date.now());
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const cardRef = useRef<HTMLDivElement>(null);
 
-  // Check sessionStorage on mount
+  /* ── 3D tilt ── */
+  const mx = useMotionValue(0);
+  const my = useMotionValue(0);
+  const rotX = useTransform(my, [-0.5, 0.5], [4, -4]);
+  const rotY = useTransform(mx, [-0.5, 0.5], [-4, 4]);
+  const sRotX = useSpring(rotX, { damping: 30, stiffness: 200 });
+  const sRotY = useSpring(rotY, { damping: 30, stiffness: 200 });
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    mx.set((e.clientX - rect.left) / rect.width - 0.5);
+    my.set((e.clientY - rect.top) / rect.height - 0.5);
+  };
+  const resetTilt = () => { mx.set(0); my.set(0); };
+
+  /* ── Session check ── */
   useEffect(() => {
     try {
-      if (sessionStorage.getItem("postcard-shown") === "1") {
-        shownRef.current = true;
-      }
+      if (sessionStorage.getItem("postcard-shown") === "1") shownRef.current = true;
     } catch { /* private browsing */ }
   }, []);
-
-  /* ── 3D tilt on hover ── */
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-  const rotateX = useSpring(useTransform(mouseY, [-0.5, 0.5], [5, -5]), { stiffness: 200, damping: 20 });
-  const rotateY = useSpring(useTransform(mouseX, [-0.5, 0.5], [-5, 5]), { stiffness: 200, damping: 20 });
-
-  const handleMouseMove = useCallback((e: React.MouseEvent) => {
-    if (!cardRef.current) return;
-    const rect = cardRef.current.getBoundingClientRect();
-    mouseX.set((e.clientX - rect.left) / rect.width - 0.5);
-    mouseY.set((e.clientY - rect.top) / rect.height - 0.5);
-  }, [mouseX, mouseY]);
-
-  const handleMouseLeaveCard = useCallback(() => {
-    mouseX.set(0);
-    mouseY.set(0);
-  }, [mouseX, mouseY]);
 
   useEffect(() => {
     const timer = setTimeout(() => setEngaged(true), 30000);
     return () => clearTimeout(timer);
   }, []);
 
+  /* ── Geolocation ── */
   useEffect(() => {
     fetch("https://ipapi.co/json/")
       .then((r) => r.json())
@@ -254,6 +530,7 @@ export function ExitPostcard() {
       .catch(() => {});
   }, []);
 
+  /* ── Trigger ── */
   const trigger = useCallback(() => {
     if (shownRef.current) return;
     shownRef.current = true;
@@ -262,14 +539,15 @@ export function ExitPostcard() {
     document.body.style.overflow = "hidden";
   }, []);
 
-  // Desktop: mouse exits toward top
+
+  /* ── Exit intent: mouse leaves top ── */
   useEffect(() => {
     const h = (e: MouseEvent) => { if (e.clientY <= 5 && !shownRef.current) trigger(); };
     document.addEventListener("mouseleave", h);
     return () => document.removeEventListener("mouseleave", h);
   }, [trigger]);
 
-  // Tab visibility change
+  /* ── Tab switch ── */
   useEffect(() => {
     const handleVisibility = () => {
       if (document.visibilityState === "hidden" && !shownRef.current) {
@@ -289,7 +567,7 @@ export function ExitPostcard() {
     return () => { clearTimeout(delay); document.removeEventListener("visibilitychange", handleVisibility); };
   }, [trigger]);
 
-  // Inactivity — 90s
+  /* ── Inactivity ── */
   useEffect(() => {
     let t: ReturnType<typeof setTimeout>;
     const reset = () => { clearTimeout(t); if (!shownRef.current) t = setTimeout(trigger, 90000); };
@@ -299,7 +577,7 @@ export function ExitPostcard() {
     return () => { clearTimeout(t); evts.forEach((e) => window.removeEventListener(e, reset)); };
   }, [trigger]);
 
-  // Mobile: scroll up
+  /* ── Mobile scroll-up ── */
   useEffect(() => {
     let lastY = window.scrollY, ups = 0, t: ReturnType<typeof setTimeout>;
     const h = () => {
@@ -314,80 +592,160 @@ export function ExitPostcard() {
 
   const close = () => { setShow(false); document.body.style.overflow = ""; };
 
-  const note = getLocationNote(location);
-  const locationDisplay = location || "somewhere in the world";
+  /* ── Content ── */
+  const locationLine = getLocationLine(location);
+  const locationDisplay = location || "the internet";
   const today = new Date();
-
+  const dateStr = today.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });
+  const dateShort = today.toLocaleDateString("en-US", { month: "short", day: "numeric" }).toUpperCase();
   const elapsed = Math.floor((Date.now() - startTime.current) / 1000);
-  const introLine = engaged || elapsed > 30
-    ? "You stayed for a bit\u2026 so I made you this."
-    : "Even if it was brief\u2026 I made you this.";
 
+  const lines = engaged || elapsed > 30
+    ? [
+        `${locationLine} thanks for spending time here — it really means a lot.`,
+        "",
+        "I hope something in my work sparked an idea, or at the very least, looked pretty enough to remember.",
+        "",
+        "take care of yourself.",
+        "",
+        "yours truly, hauwa",
+      ]
+    : [
+        `${locationLine} thanks for stopping by my little corner of the internet.`,
+        "",
+        "I hope something here caught your eye, or made you think. that's all I could ask for.",
+        "",
+        "take care of yourself.",
+        "",
+        "yours truly, hauwa",
+      ];
+
+  /* ── Canvas download ── */
   const downloadPostcard = useCallback(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext("2d")!;
-    const w = 900, h = 520;
+    const w = 1040, h = 580, mid = Math.floor(w * 0.55);
     canvas.width = w; canvas.height = h;
 
-    const grad = ctx.createLinearGradient(0, 0, w, h);
-    grad.addColorStop(0, "#F5F3FF"); grad.addColorStop(0.5, "#FBF8F3"); grad.addColorStop(1, "#FDF2F8");
-    ctx.fillStyle = grad; ctx.fillRect(0, 0, w, h);
+    // Left — deep purple
+    ctx.fillStyle = "#5B21B6";
+    ctx.fillRect(0, 0, mid, h);
 
-    ctx.strokeStyle = "#E8E0D4"; ctx.lineWidth = 1.5; ctx.strokeRect(16, 16, w - 32, h - 32);
+    // Dot grid on purple
+    ctx.fillStyle = "rgba(255,255,255,0.05)";
+    for (let dy = 0; dy < h; dy += 18) {
+      for (let dx = 0; dx < mid; dx += 18) {
+        ctx.beginPath(); ctx.arc(dx, dy, 0.8, 0, Math.PI * 2); ctx.fill();
+      }
+    }
 
-    const mid = Math.floor(w * 0.5);
-    ctx.setLineDash([4, 4]);
-    ctx.beginPath(); ctx.moveTo(mid, 32); ctx.lineTo(mid, h - 32);
-    ctx.strokeStyle = "#D4C9B8"; ctx.lineWidth = 1; ctx.stroke(); ctx.setLineDash([]);
+    // Right — cream
+    ctx.fillStyle = "#FAF8F5";
+    ctx.fillRect(mid, 0, w - mid, h);
 
-    ctx.font = "bold 18px sans-serif"; ctx.fillStyle = "#7C3AED";
-    ctx.fillText("hauwa.design", 44, 64);
+    // Dot grid on cream
+    ctx.fillStyle = "rgba(124,58,237,0.04)";
+    for (let dy = 0; dy < h; dy += 18) {
+      for (let dx = mid; dx < w; dx += 18) {
+        ctx.beginPath(); ctx.arc(dx, dy, 0.8, 0, Math.PI * 2); ctx.fill();
+      }
+    }
 
-    // Left: location note
-    ctx.font = "italic 20px Georgia, serif"; ctx.fillStyle = "#4A3F35";
-    let ny = 120;
-    note.message.forEach((line) => { ctx.fillText(line, 44, ny); ny += 32; });
-    ctx.font = "italic 16px Georgia, serif"; ctx.fillStyle = "#7C6B5A";
-    ctx.fillText(note.closing, 44, ny + 16);
+    // Accent stripe top + bottom
+    const sg1 = ctx.createLinearGradient(0, 0, w, 0);
+    sg1.addColorStop(0, "#7C3AED"); sg1.addColorStop(0.5, "#A78BFA"); sg1.addColorStop(1, "#7C3AED");
+    ctx.fillStyle = sg1;
+    ctx.fillRect(0, 0, w, 3);
+    ctx.fillRect(0, h - 3, w, 3);
 
-    // Location badge
+    // "POST CARD" header
+    ctx.font = "bold 9px sans-serif";
+    ctx.fillStyle = "rgba(255,255,255,0.2)";
+    ctx.letterSpacing = "3px";
+    ctx.fillText("P O S T   C A R D", 40, 42);
+
+    // Letter text — wrap long sentences
+    ctx.font = "20px Georgia, serif";
+    ctx.fillStyle = "rgba(255,255,255,0.85)";
+    let ny = 80;
+    const maxLineW = mid - 80;
+    lines.forEach((line) => {
+      if (!line) { ny += 14; return; }
+      const words = line.split(" ");
+      let cur = "";
+      for (const word of words) {
+        const test = cur ? `${cur} ${word}` : word;
+        if (ctx.measureText(test).width > maxLineW && cur) {
+          ctx.fillText(cur, 40, ny); ny += 28; cur = word;
+        } else { cur = test; }
+      }
+      if (cur) { ctx.fillText(cur, 40, ny); ny += 28; }
+    });
+
+    // "To" label
+    const rX = mid + 32;
+    ctx.font = "bold 11px sans-serif";
     ctx.fillStyle = "#7C3AED";
-    ctx.beginPath(); ctx.roundRect(44, 300, mid - 100, 60, 12); ctx.fill();
-    ctx.font = "bold 10px sans-serif"; ctx.fillStyle = "#FFFFFF";
-    ctx.fillText("SENT FROM", 60, 322);
-    ctx.font = "bold 14px sans-serif";
-    ctx.fillText(locationDisplay, 60, 346);
+    ctx.fillText("T O", rX, 55);
 
-    ctx.font = "12px sans-serif"; ctx.fillStyle = "#9B8F80";
-    ctx.fillText(today.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" }), 44, h - 50);
-
-    // Right: signature
-    const rX = mid + 40;
-    ctx.font = "italic 22px Georgia, serif"; ctx.fillStyle = "#4A3F35";
-    ctx.fillText("Good design isn't just", rX, 120);
-    ctx.fillText("what you see.", rX, 156);
-    ctx.fillText("It's what stays with you", rX, 220);
-    ctx.fillText("after you leave.", rX, 256);
-    ctx.font = "italic 20px Georgia, serif"; ctx.fillStyle = "#7C6B5A";
-    ctx.fillText("— hauwa", rX + 20, 330);
+    ctx.font = "15px sans-serif";
+    ctx.fillStyle = "#374151";
+    ctx.fillText("A creative soul", rX, 80);
+    ctx.font = "13px sans-serif";
+    ctx.fillStyle = "#9CA3AF";
+    ctx.fillText(dateStr, rX, 100);
 
     // Stamp
-    const sx = w - 80, sy = 56;
-    ctx.strokeStyle = "#7C3AED"; ctx.lineWidth = 2.5;
-    ctx.beginPath(); ctx.arc(sx, sy, 28, 0, Math.PI * 2); ctx.stroke();
-    ctx.beginPath(); ctx.arc(sx, sy, 22, 0, Math.PI * 2); ctx.stroke();
-    ctx.font = "bold 18px sans-serif"; ctx.fillStyle = "#7C3AED"; ctx.textAlign = "center";
-    ctx.fillText("H", sx, sy + 6); ctx.textAlign = "left";
+    const sx = w - 110, sy = 32;
+    const stampGrad = ctx.createLinearGradient(sx, sy, sx + 68, sy + 88);
+    stampGrad.addColorStop(0, "#7C3AED"); stampGrad.addColorStop(0.5, "#8B5CF6"); stampGrad.addColorStop(1, "#A78BFA");
+    ctx.fillStyle = stampGrad;
+    ctx.fillRect(sx + 6, sy + 6, 56, 76);
+    ctx.setLineDash([4, 3]);
+    ctx.strokeStyle = "rgba(0,0,0,0.08)";
+    ctx.lineWidth = 2;
+    ctx.strokeRect(sx, sy, 68, 88);
+    ctx.setLineDash([]);
+    // "H" on stamp
+    ctx.font = "bold 28px sans-serif";
+    ctx.fillStyle = "rgba(255,255,255,0.9)";
+    ctx.fillText("H", sx + 22, sy + 56);
+
+    // "From" label
+    ctx.font = "bold 11px sans-serif";
+    ctx.fillStyle = "#7C3AED";
+    ctx.fillText("F R O M", rX, 170);
+    ctx.font = "15px Georgia, serif";
+    ctx.fillStyle = "#6B7280";
+    ctx.fillText(locationDisplay, rX, 195);
+
+    // Address lines
+    ctx.strokeStyle = "rgba(0,0,0,0.04)";
+    ctx.lineWidth = 1;
+    for (let i = 0; i < 3; i++) {
+      const ly = 240 + i * 28;
+      ctx.beginPath(); ctx.moveTo(rX, ly); ctx.lineTo(w - 40, ly); ctx.stroke();
+    }
+
+    // hauwa.design
+    ctx.font = "10px sans-serif";
+    ctx.fillStyle = "rgba(0,0,0,0.12)";
+    ctx.fillText("hauwa.design", rX, h - 30);
+
+    // Outer border
+    ctx.strokeStyle = "rgba(0,0,0,0.06)";
+    ctx.lineWidth = 1;
+    ctx.strokeRect(0.5, 0.5, w - 1, h - 1);
+
+    setDownloaded(true);
+    setTimeout(() => setDownloaded(false), 2000);
 
     const link = document.createElement("a");
-    link.download = "hauwa-postcard.png"; link.href = canvas.toDataURL("image/png"); link.click();
-  }, [location, locationDisplay, note, today]);
-
-  const fadeUp = {
-    hidden: { opacity: 0, y: 16 },
-    show: { opacity: 1, y: 0, transition: { duration: 0.5, ease } },
-  };
+    link.download = "hauwa-postcard.png";
+    link.href = canvas.toDataURL("image/png");
+    link.click();
+  }, [lines, locationDisplay, dateStr]);
 
   return (
     <>
@@ -397,7 +755,7 @@ export function ExitPostcard() {
           <>
             {/* Backdrop */}
             <motion.div
-              className="fixed inset-0 z-[80] bg-foreground/40 backdrop-blur-md"
+              className="fixed inset-0 z-[80] bg-foreground/60 backdrop-blur-md"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
@@ -405,209 +763,222 @@ export function ExitPostcard() {
               onClick={close}
             />
 
+            {/* Card container */}
             <motion.div
-              className="fixed inset-0 z-[85] flex items-center justify-center px-4"
+              className="fixed inset-0 z-[85] flex items-center justify-center p-4"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
             >
-              {/* 3D tilt wrapper */}
               <motion.div
-                ref={cardRef}
-                onMouseMove={handleMouseMove}
-                onMouseLeave={handleMouseLeaveCard}
-                style={{ rotateX, rotateY, transformPerspective: 900 }}
-                initial={{ opacity: 0, y: 50, rotate: -2 }}
-                animate={{ opacity: 1, y: 0, rotate: -1 }}
-                exit={{ opacity: 0, y: 50, scale: 0.95 }}
+                initial={{ opacity: 0, y: 50, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: 40, scale: 0.96 }}
                 transition={{ duration: 0.6, ease }}
-                className="relative w-full max-w-[580px]"
+                className="relative w-full max-w-[540px]"
+                style={{
+                  rotateX: sRotX,
+                  rotateY: sRotY,
+                  transformPerspective: 1200,
+                }}
+                onMouseMove={handleMouseMove}
+                onMouseLeave={resetTilt}
               >
-                {/* Floating decorations */}
-                <motion.span className="absolute -left-5 -top-5 text-xl text-accent/50" animate={{ rotate: [0, 20, 0], scale: [1, 1.2, 1] }} transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}>✦</motion.span>
-                <motion.span className="absolute -bottom-3 -right-3 text-base text-pink-400/40" animate={{ rotate: [0, -15, 0] }} transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}>✧</motion.span>
-                <motion.span className="absolute -right-6 top-1/2 text-xs text-accent/30" animate={{ y: [0, -6, 0] }} transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", delay: 1 }}>✦</motion.span>
+                {/* Floating close button */}
+                <motion.button
+                  onClick={close}
+                  className="absolute -right-2 -top-2 z-20 flex h-8 w-8 items-center justify-center rounded-full bg-white text-foreground/40 shadow-lg transition-all hover:scale-110 hover:text-foreground sm:-right-3 sm:-top-3"
+                  initial={{ opacity: 0, scale: 0 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.8, type: "spring", stiffness: 300, damping: 20 }}
+                  aria-label="Close"
+                >
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6L6 18M6 6l12 12" /></svg>
+                </motion.button>
 
-                <div className="relative overflow-hidden rounded-2xl bg-white shadow-[0_30px_80px_rgba(0,0,0,0.18)]">
-                  {/* Close */}
-                  <button
-                    onClick={close}
-                    className="absolute right-3 top-3 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-white/80 text-muted backdrop-blur-sm transition-all hover:bg-white hover:text-foreground hover:scale-110"
-                    aria-label="Close"
-                  >
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6L6 18M6 6l12 12" /></svg>
-                  </button>
+                {/* The postcard */}
+                <div className="relative overflow-hidden rounded-2xl shadow-[0_32px_80px_rgba(0,0,0,0.18),0_0_0_1px_rgba(0,0,0,0.04)]">
 
-                  {/* Colored accent strip at top */}
-                  <div className="h-1.5 bg-gradient-to-r from-accent via-purple-500 to-pink-400" />
+                  {/* Accent stripe — top */}
+                  <div className="h-[3px] bg-gradient-to-r from-accent via-violet-400 to-accent" />
 
-                  {/* Intro */}
-                  <motion.div variants={fadeUp} initial="hidden" animate="show" className="px-6 py-5 sm:px-8">
-                    <p className="text-xs uppercase tracking-[0.2em] text-muted">Before you go&hellip;</p>
-                    <h2 className="mt-1.5 font-display text-xl tracking-[-0.02em] text-foreground sm:text-2xl">
-                      I left something for you.
-                    </h2>
-                    <p className="mt-1 text-sm text-muted">{introLine}</p>
-                  </motion.div>
+                  <div className="grid grid-cols-1 sm:grid-cols-[1.15fr_0.85fr]">
 
-                  {/* The postcard itself */}
-                  <motion.div
-                    initial={{ opacity: 0, y: 12 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.2, duration: 0.5, ease }}
-                    className="mx-5 mb-5 overflow-hidden rounded-xl border border-[#E8E0D4] shadow-sm sm:mx-7"
-                  >
-                    <div className="grid grid-cols-1 sm:grid-cols-2">
-                      {/* LEFT — gradient side with location-specific note */}
-                      <div className="relative overflow-hidden bg-gradient-to-br from-[#F5F3FF] via-[#FBF8F3] to-[#FDF2F8] p-5 sm:p-6">
-                        {/* Dot pattern */}
-                        <div className="pointer-events-none absolute inset-0 opacity-25" style={{ backgroundImage: "radial-gradient(circle, rgba(124,58,237,0.12) 1px, transparent 1px)", backgroundSize: "14px 14px" }} />
+                    {/* ─── LEFT — Purple letter side ─── */}
+                    <div className="relative px-6 py-6 sm:px-7 sm:py-7">
+                      {/* Purple background */}
+                      <div className="absolute inset-0 bg-[#5B21B6]" />
+                      {/* Dot grid */}
+                      <div
+                        className="pointer-events-none absolute inset-0"
+                        style={{
+                          backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.05) 0.8px, transparent 0.8px)",
+                          backgroundSize: "18px 18px",
+                        }}
+                      />
 
-                        <div className="relative">
-                          <div className="flex items-center gap-1.5">
-                            <span className="font-display text-sm font-bold text-accent">hauwa</span>
-                            <span className="text-sm text-accent/50">.design</span>
-                          </div>
-
-                          {/* Location-specific handwritten note */}
-                          <div className="mt-4 space-y-0.5">
-                            {note.message.map((line, i) => (
-                              <motion.p
-                                key={i}
-                                className="font-handwriting text-lg leading-snug text-[#4A3F35] sm:text-xl"
-                                initial={{ opacity: 0, x: -6 }}
-                                animate={{ opacity: 1, x: 0 }}
-                                transition={{ delay: 0.3 + i * 0.1, duration: 0.4, ease }}
-                              >
-                                {line}
-                              </motion.p>
-                            ))}
-                          </div>
-
-                          <motion.p
-                            className="mt-3 font-handwriting text-base text-accent/70 italic"
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            transition={{ delay: 0.7, duration: 0.4 }}
-                          >
-                            {note.closing}
-                          </motion.p>
-
-                          {/* Location badge */}
-                          <motion.div
-                            className="mt-4 inline-flex items-center gap-2 rounded-lg bg-accent px-3.5 py-2.5 text-white shadow-lg shadow-accent/20"
-                            initial={{ opacity: 0, scale: 0.9 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            transition={{ delay: 0.5, duration: 0.4, ease }}
-                            whileHover={{ scale: 1.03 }}
-                          >
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" className="shrink-0">
-                              <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 010-5 2.5 2.5 0 010 5z" />
-                            </svg>
-                            <div>
-                              <p className="text-[9px] font-bold uppercase tracking-[0.15em] text-white/60">Sent from</p>
-                              <p className="text-xs font-semibold leading-tight">{locationDisplay}</p>
-                            </div>
-                          </motion.div>
-
-                          {/* Date */}
-                          <div className="mt-2.5 flex items-center gap-2">
-                            <div className="flex h-6 w-6 items-center justify-center rounded bg-accent/10 font-display text-xs font-bold text-accent">
-                              {today.getDate()}
-                            </div>
-                            <span className="text-[11px] text-[#9B8F80]">
-                              {today.toLocaleDateString("en-US", { weekday: "short", month: "short", year: "numeric" })}
-                            </span>
-                          </div>
-                        </div>
+                      {/* Faint ruled lines behind text */}
+                      <div className="pointer-events-none absolute inset-x-8 top-[64px] bottom-0 sm:inset-x-10">
+                        {Array.from({ length: 8 }).map((_, i) => (
+                          <div key={i} className="h-px bg-white/[0.04]" style={{ marginTop: i === 0 ? 0 : 36 }} />
+                        ))}
                       </div>
 
-                      {/* RIGHT — message side with stamp */}
-                      <div className="relative border-t border-dashed border-[#D4C9B8] bg-[#FFFDF9] p-5 sm:border-l sm:border-t-0 sm:p-6">
-                        {/* Postage stamp */}
-                        <motion.div
-                          className="absolute right-3 top-3"
-                          initial={{ opacity: 0, rotate: 15, scale: 0.4 }}
-                          animate={{ opacity: 1, rotate: 4, scale: 1 }}
-                          transition={{ delay: 0.6, duration: 0.5, type: "spring", stiffness: 200 }}
-                        >
-                          <div className={`relative flex h-[68px] w-[56px] flex-col items-center justify-center rounded-sm bg-gradient-to-br ${stamp.bg} shadow-md`}>
-                            <PerfEdge side="left" />
-                            <PerfEdge side="right" />
-                            <PerfEdge side="top" />
-                            <PerfEdge side="bottom" />
-                            <div className={`absolute inset-1.5 rounded-[1px] border ${stamp.border}`} />
-                            {stamp.icon}
-                            <span className="mt-0.5 text-[6px] font-bold uppercase tracking-wider text-white/80">{stamp.label}</span>
-                          </div>
-                        </motion.div>
-
-                        {/* Handwritten quote on lines */}
-                        <div className="mt-1 pr-16 sm:pr-14">
-                          {[
-                            { text: "Good design isn\u2019t just", delay: 0.35 },
-                            { text: "what you see.", delay: 0.45 },
-                            { text: "", delay: 0 },
-                            { text: "It\u2019s what stays with you", delay: 0.55 },
-                            { text: "after you leave.", delay: 0.65 },
-                          ].map((line, i) => (
-                            <motion.div
-                              key={i}
-                              className="border-b border-[#E8E0D4]/60 py-[9px]"
-                              initial={{ opacity: 0, x: -6 }}
-                              animate={{ opacity: 1, x: 0 }}
-                              transition={{ duration: 0.35, delay: line.delay, ease }}
-                            >
-                              {line.text && (
-                                <p className="font-handwriting text-lg leading-none text-[#4A3F35] sm:text-xl">
-                                  {line.text}
-                                </p>
-                              )}
-                            </motion.div>
-                          ))}
-                        </div>
-
-                        {/* Signature */}
-                        <motion.div
-                          className="mt-3 flex items-end gap-2"
+                      <div className="relative">
+                        {/* POST CARD label */}
+                        <motion.p
+                          className="font-postcard text-[13px] text-white/20"
                           initial={{ opacity: 0 }}
                           animate={{ opacity: 1 }}
-                          transition={{ delay: 0.8 }}
+                          transition={{ delay: 0.2, duration: 0.5 }}
                         >
-                          <div>
-                            <p className="font-handwriting text-lg text-[#7C6B5A]">— hauwa</p>
-                            <svg width="70" height="6" viewBox="0 0 70 6" fill="none" className="mt-0.5">
-                              <path d="M1 5C18 1 35 1 69 5" stroke="#7C3AED" strokeWidth="1.2" strokeLinecap="round" opacity="0.35" />
-                            </svg>
+                          postcard
+                        </motion.p>
+
+                        {/* Letter lines — big handwriting with organic tilts */}
+                        <div className="mt-4">
+                          {lines.map((line, i) => (
+                            <motion.p
+                              key={i}
+                              className={`font-postcard leading-[1.9] ${
+                                line
+                                  ? i === lines.length - 1
+                                    ? "text-[17px] text-white/90 sm:text-[19px]"
+                                    : i === 0
+                                      ? "text-[16px] text-white/60 sm:text-[18px]"
+                                      : "text-[16px] text-white/80 sm:text-[19px]"
+                                  : "h-1"
+                              }`}
+                              style={{
+                                rotate: line ? `${(i % 3 === 0 ? -0.3 : i % 3 === 1 ? 0.2 : -0.15)}deg` : undefined,
+                              }}
+                              initial={{ opacity: 0, x: -12 }}
+                              animate={{ opacity: 1, x: 0 }}
+                              transition={{ delay: 0.25 + i * 0.06, duration: 0.45, ease }}
+                            >
+                              {line}
+                            </motion.p>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* ─── RIGHT — Cream address side ─── */}
+                    <div className="relative flex flex-col justify-between border-t border-white/10 sm:border-l sm:border-t-0">
+                      {/* Cream background */}
+                      <div className="absolute inset-0 bg-[#FAF8F5]" />
+                      {/* Dot grid */}
+                      <div
+                        className="pointer-events-none absolute inset-0"
+                        style={{
+                          backgroundImage: "radial-gradient(circle, rgba(124,58,237,0.035) 0.8px, transparent 0.8px)",
+                          backgroundSize: "18px 18px",
+                        }}
+                      />
+
+                      <div className="relative flex flex-1 flex-col justify-between px-6 py-6 sm:px-7 sm:py-7">
+                        <div>
+                          {/* Stamp + To cluster */}
+                          <div className="flex items-start justify-between">
+                            {/* To section — handwritten */}
+                            <motion.div
+                              initial={{ opacity: 0, y: 8 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              transition={{ delay: 0.4, duration: 0.5, ease }}
+                            >
+                              <p className="font-postcard text-[15px] text-accent">
+                                To:
+                              </p>
+                              <p className="mt-1 font-postcard text-[17px] text-foreground/75" style={{ rotate: "-0.5deg" }}>
+                                A creative soul
+                              </p>
+                              <p className="mt-0.5 font-postcard text-[13px] text-muted">{dateStr}</p>
+                            </motion.div>
+
+                            {/* Stamp */}
+                            <motion.div
+                              initial={{ opacity: 0, scale: 0.4, rotate: 15 }}
+                              animate={{ opacity: 1, scale: 1, rotate: 3 }}
+                              transition={{ delay: 0.6, type: "spring", stiffness: 160, damping: 12 }}
+                            >
+                              <LandmarkStamp location={location} />
+                            </motion.div>
                           </div>
-                          <span className="mb-0.5 text-[10px] text-accent/30">✦</span>
+
+                          {/* Postmark */}
+                          <motion.div
+                            className="absolute right-4 top-[100px] sm:right-6 sm:top-[110px]"
+                            initial={{ opacity: 0, scale: 0.8 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            transition={{ delay: 0.75, duration: 0.3, ease }}
+                          >
+                            <Postmark date={dateShort} />
+                          </motion.div>
+
+                          {/* From section — handwritten */}
+                          <motion.div
+                            className="mt-10"
+                            initial={{ opacity: 0, y: 8 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.55, duration: 0.5, ease }}
+                          >
+                            <p className="font-postcard text-[15px] text-accent">
+                              From:
+                            </p>
+                            <p className="mt-1 font-postcard text-[16px] text-foreground/50" style={{ rotate: "0.3deg" }}>
+                              {locationDisplay}
+                            </p>
+                          </motion.div>
+
+                          {/* Ruled address lines */}
+                          <motion.div
+                            className="mt-7 space-y-6"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ delay: 0.65, duration: 0.4 }}
+                          >
+                            {[0, 1, 2].map((i) => (
+                              <div key={i} className="h-px bg-foreground/[0.05]" />
+                            ))}
+                          </motion.div>
+                        </div>
+
+                        {/* Bottom: watermark + download */}
+                        <motion.div
+                          className="mt-6 flex items-end justify-between"
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ delay: 0.8, duration: 0.5, ease }}
+                        >
+                          <p className="font-postcard text-[14px] text-foreground/[0.12]">
+                            hauwa.design
+                          </p>
+
+                          <button
+                            onClick={downloadPostcard}
+                            className="group flex w-full items-center justify-center gap-2 whitespace-nowrap rounded-full bg-accent/[0.07] px-5 py-2.5 font-display text-[13px] font-medium tracking-[-0.01em] text-accent transition-all duration-300 hover:bg-accent hover:text-white"
+                          >
+                            {downloaded ? (
+                              <>
+                                saved!
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6L9 17l-5-5" /></svg>
+                              </>
+                            ) : (
+                              <>
+                                keep this
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="transition-transform duration-300 group-hover:translate-y-0.5">
+                                  <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3" />
+                                </svg>
+                              </>
+                            )}
+                          </button>
                         </motion.div>
                       </div>
                     </div>
-                  </motion.div>
+                  </div>
 
-                  {/* Actions */}
-                  <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.6 }}
-                    className="flex items-center justify-between border-t border-border/40 px-6 py-3.5 sm:px-8"
-                  >
-                    <button onClick={close} className="text-sm text-muted transition-colors hover:text-foreground">
-                      &larr; Back to site
-                    </button>
-                    <motion.button
-                      onClick={downloadPostcard}
-                      className="inline-flex items-center gap-2 rounded-full bg-foreground px-5 py-2.5 text-sm font-medium text-background transition-colors hover:bg-foreground/90"
-                      whileHover={{ scale: 1.04 }}
-                      whileTap={{ scale: 0.97 }}
-                    >
-                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3" />
-                      </svg>
-                      Keep this
-                    </motion.button>
-                  </motion.div>
+                  {/* Accent stripe — bottom */}
+                  <div className="h-[3px] bg-gradient-to-r from-accent via-violet-400 to-accent" />
                 </div>
               </motion.div>
             </motion.div>

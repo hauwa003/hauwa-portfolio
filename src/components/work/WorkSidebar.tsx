@@ -62,7 +62,7 @@ export function WorkSidebar() {
         className="flex flex-1 flex-col justify-center px-8 pt-8 pb-8 overflow-y-auto"
         initial={{ opacity: 0, x: -16 }}
         animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.6, delay: 0.5, ease }}
+        transition={{ duration: 0.6, delay: 0.1, ease }}
       >
         {navContent}
       </motion.div>
@@ -77,7 +77,7 @@ export function WorkSidebar() {
         className="shrink-0 border-t border-white/10 px-8 py-6"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 0.7, duration: 0.5 }}
+        transition={{ delay: 0.3, duration: 0.5 }}
       >
         {bottomNav}
       </motion.div>

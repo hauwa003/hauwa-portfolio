@@ -7,28 +7,28 @@ import { motion, useInView } from "framer-motion";
 const testimonials = [
   {
     quote:
-      "Sharp eye for design with a strong grasp of user-centered thinking. She turns complex requirements into clean, intuitive experiences.",
+      "Hauwa has a sharp eye for design and a strong grasp of user-centered thinking. She turns complex requirements into clean, intuitive experiences.",
     name: "Hariprasad KB",
     role: "Design Manager, DERA",
     color: "#4C1D95",
   },
   {
     quote:
-      "Incredibly organized and detail-oriented. Her designs are so clear and well-structured, they make the development process much smoother.",
+      "Working with Hauwa was a breeze. Incredibly organized and detail-oriented — her designs are so well-structured, they made development so much smoother.",
     name: "Javier Damiani",
     role: "Developer, BetSell",
     color: "#3B0764",
   },
   {
     quote:
-      "Easygoing, collaborative, and seamless to work with. Her product management and design skills elevated the entire project.",
+      "If you need someone who's easygoing, collaborative, and just seamless to work with — that's Hauwa. Her product management and design skills elevated the entire project.",
     name: "Maryam Yahaya",
     role: "Collaborator",
     color: "#2E1065",
   },
   {
     quote:
-      "Strong product thinking with a clear design approach. She translates ideas into practical solutions \u2014 reliable on any team.",
+      "What stood out about Hauwa is her product thinking. She doesn't just design — she translates ideas into practical solutions. Reliable on any team.",
     name: "Markanthony Udoye",
     role: "Collaborator",
     color: "#1E1B4B",
