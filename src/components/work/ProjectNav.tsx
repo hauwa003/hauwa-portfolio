@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { TransitionLink } from "@/components/layout/TransitionLink";
 import { motion } from "framer-motion";
 import type { Project } from "@/types";
 
@@ -14,7 +14,7 @@ export function ProjectNav({ prev, next }: ProjectNavProps) {
     <nav className="border-t border-border">
       <div className="mx-auto grid max-w-7xl grid-cols-2 divide-x divide-border">
         {prev ? (
-          <Link
+          <TransitionLink
             href={`/work/${prev.slug}`}
             className="group relative overflow-hidden px-6 py-12 transition-colors duration-500 hover:bg-surface lg:px-12"
           >
@@ -32,13 +32,13 @@ export function ProjectNav({ prev, next }: ProjectNavProps) {
             >
               &larr;
             </motion.span>
-          </Link>
+          </TransitionLink>
         ) : (
           <div className="px-6 py-12" />
         )}
 
         {next ? (
-          <Link
+          <TransitionLink
             href={`/work/${next.slug}`}
             className="group relative overflow-hidden px-6 py-12 text-right transition-colors duration-500 hover:bg-surface lg:px-12"
           >
@@ -55,7 +55,7 @@ export function ProjectNav({ prev, next }: ProjectNavProps) {
             >
               &rarr;
             </motion.span>
-          </Link>
+          </TransitionLink>
         ) : (
           <div className="px-6 py-12" />
         )}

@@ -1,7 +1,7 @@
 "use client";
 
-import Link from "next/link";
 import Image from "next/image";
+import { TransitionLink } from "@/components/layout/TransitionLink";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 import type { Project } from "@/types";
@@ -59,7 +59,7 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
   );
 
   const content = (
-    <Link href={`/work/${project.slug}`} className="group block">
+    <TransitionLink href={`/work/${project.slug}`} className="group block">
       <div
         ref={imageRef}
         className="relative aspect-[3/2] overflow-hidden rounded-2xl bg-surface"
@@ -128,7 +128,7 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
           {project.category}
         </span>
       </div>
-    </Link>
+    </TransitionLink>
   );
 
   // SSR or already-visible: render plain div (no framer-motion)

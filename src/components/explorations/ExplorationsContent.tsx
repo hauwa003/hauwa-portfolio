@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Link from "next/link";
+import { TransitionLink } from "@/components/layout/TransitionLink";
 import { motion } from "framer-motion";
 
 import { getTagColor } from "@/lib/tag-colors";
@@ -91,20 +91,18 @@ function ExplorationCard({
         />
       </div>
 
-      <div className="mt-5 flex items-start justify-between gap-4">
-        <div>
-          <div className="flex items-center gap-3">
-            <span className="text-sm tabular-nums text-muted">{number}</span>
-            <span className="h-px w-4 bg-border" />
-            <h3 className="text-lg font-medium tracking-tight">{item.title}</h3>
-          </div>
-          <p className="mt-1.5 text-base leading-relaxed text-muted">
-            {item.tagline}
-          </p>
+      <div className="mt-5">
+        <div className="flex items-center gap-3">
+          <span className="text-sm tabular-nums text-muted">{number}</span>
+          <span className="h-px w-4 bg-border" />
+          <h3 className="text-lg font-medium tracking-tight">{item.title}</h3>
+          <span className={`shrink-0 rounded-full border px-3 py-1 text-xs ${getTagColor(item.category)}`}>
+            {item.category}
+          </span>
         </div>
-        <span className={`mt-0.5 shrink-0 rounded-full border px-3 py-1 text-xs ${getTagColor(item.category)}`}>
-          {item.category}
-        </span>
+        <p className="mt-1.5 text-base leading-relaxed text-muted">
+          {item.tagline}
+        </p>
       </div>
     </div>
   );
@@ -176,24 +174,24 @@ function ExplorationsSidebar({
 
   const bottomNav = (
     <div className="flex items-center gap-2">
-      <Link
+      <TransitionLink
         href="/"
         className="rounded-full border border-white/20 px-5 py-3 text-sm text-white transition-colors hover:bg-white/10"
       >
         Home
-      </Link>
-      <Link
+      </TransitionLink>
+      <TransitionLink
         href="/gallery"
         className="rounded-full border border-white/20 px-5 py-3 text-sm text-white transition-colors hover:bg-white/10"
       >
         Gallery
-      </Link>
-      <Link
+      </TransitionLink>
+      <TransitionLink
         href="/#contact"
         className="rounded-full bg-white px-5 py-3 text-sm font-medium text-[#5B21B6] transition-colors hover:bg-white/90"
       >
         Book a call
-      </Link>
+      </TransitionLink>
     </div>
   );
 

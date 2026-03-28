@@ -1,9 +1,9 @@
 "use client";
 
-import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { TransitionLink, usePageTransition } from "./TransitionLink";
 
 const navLinks = [
   { href: "/work", label: "Work" },
@@ -76,6 +76,36 @@ const headerSocials = [
   },
 ];
 
+function NavLinks({ setOpen }: { setOpen: (v: boolean) => void }) {
+  const { navigateTo } = usePageTransition();
+  return (
+    <nav className="space-y-2 text-center">
+      {navLinks.map((link, i) => (
+        <motion.div
+          key={link.href}
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{
+            delay: 0.15 + i * 0.06,
+            duration: 0.5,
+            ease: [0.22, 1, 0.36, 1],
+          }}
+        >
+          <button
+            className="block w-full font-display text-4xl text-white transition-colors duration-300 hover:text-white/80 md:text-5xl lg:text-6xl"
+            onClick={() => {
+              setOpen(false);
+              navigateTo(link.href);
+            }}
+          >
+            {link.label}
+          </button>
+        </motion.div>
+      ))}
+    </nav>
+  );
+}
+
 export function Navbar() {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
@@ -107,12 +137,12 @@ export function Navbar() {
       >
         <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 lg:px-8">
           {/* Logo */}
-          <Link
+          <TransitionLink
             href="/"
             className="relative z-[60] font-display text-xl tracking-[-0.04em] transition-opacity duration-300 hover:opacity-60"
           >
             hauwa<span className="text-accent">.</span>design
-          </Link>
+          </TransitionLink>
 
           {/* Social icons + Hamburger */}
           <div className="relative z-[60] flex items-center gap-5">
@@ -189,28 +219,7 @@ export function Navbar() {
               exit={{ x: "100%" }}
               transition={{ duration: 1.4, ease: [0.25, 0.8, 0.25, 1] }}
             >
-              <nav className="space-y-2 text-center">
-                {navLinks.map((link, i) => (
-                  <motion.div
-                    key={link.href}
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{
-                      delay: 0.15 + i * 0.06,
-                      duration: 0.5,
-                      ease: [0.22, 1, 0.36, 1],
-                    }}
-                  >
-                    <Link
-                      href={link.href}
-                      className="block font-display text-4xl text-white transition-colors duration-300 hover:text-white/80 md:text-5xl lg:text-6xl"
-                      onClick={() => setOpen(false)}
-                    >
-                      {link.label}
-                    </Link>
-                  </motion.div>
-                ))}
-              </nav>
+              <NavLinks setOpen={setOpen} />
 
               {/* Social / secondary links */}
               <motion.div

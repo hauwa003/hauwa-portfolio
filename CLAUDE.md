@@ -14,11 +14,12 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - React 19
 - Tailwind CSS v4 (CSS-based config via `@theme inline` in `src/app/globals.css`, no tailwind.config.js)
 - Framer Motion for animations
+- `@anthropic-ai/sdk` — Claude API for AI chat assistant
 - Deployed on Vercel at hauwa.design
 
 ## Architecture
 
-**Routing:** All pages are statically generated (no API calls, no CMS). Case study pages use `generateStaticParams()` from the projects array.
+**Routing:** Pages are statically generated except `/api/chat` (dynamic). Case study pages use `generateStaticParams()` from the projects array.
 
 **Data layer:** All project data lives in `src/lib/projects.ts` as a static array of `Project` objects. Gallery data in `src/lib/gallery.ts`. Tag colors in `src/lib/tag-colors.ts`. Types in `src/types/index.ts`. To add a new project, add an entry to the projects array — the case study page, sitemap, and nav are all derived from it.
 
@@ -27,7 +28,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 **Sidebar pattern:** Desktop sidebars are fixed-positioned at 360px width with purple background (`bg-[#5B21B6]`). Main content offsets with `lg:ml-[360px]`. Each sidebar page has three components: `*Sidebar.tsx` (desktop), `*MobileHeader.tsx` (mobile), `*Content.tsx` (main content).
 
 **Components:** Organized under `src/components/` by concern:
-- `layout/` — LayoutShell, Navbar, Footer, CustomCursor, page transitions
+- `layout/` — LayoutShell, Navbar, Footer, CustomCursor, TransitionLink, ExitPostcard, page transitions
+- `chat/` — ChatBubble (floating AI assistant, uses Claude API via `/api/chat`)
 - `sections/` — Homepage sections (Hero, SelectedWork, Showreel, Testimonial, DesignPhilosophy, ContactCTA, etc.)
 - `work/` — Case study components (CaseStudyBody, CaseStudySidebar, ProjectCard, ProjectNav)
 - `gallery/` — GalleryGrid with hover effects (zoom, lift, tilt, reveal)
@@ -47,7 +49,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - Border: `#E5E7EB`
 - Surface: `#F9FAFB`
 - Sidebar purple: `#5B21B6` (hardcoded in sidebar components)
-- Testimonial deep purples: `#4C1D95`, `#3B0764`, `#2E1065`
+- Testimonial deep purples: `#4C1D95`, `#3B0764`, `#2E1065`, `#1E1B4B`
 
 ## Key Patterns
 
@@ -61,8 +63,17 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 **Custom cursor:** Hides system cursor on hover devices via `@media (hover: hover) { * { cursor: none !important; } }`. Custom cursor rendered by `CustomCursor` component.
 
+**Page transitions:** `TransitionLink` (drop-in replacement for `next/link`) intercepts navigation, plays a wipe exit animation (dark + accent curtains slide down), then navigates. `TransitionProvider` in LayoutShell provides the transition context. `WipeTransition` handles entrance animations on sidebar pages.
+
+**AI Chat:** Floating chat bubble (`ChatBubble.tsx`) in bottom-right corner, available on all pages. Streams responses from Claude via `/api/chat` route. System prompt built from project data in `src/lib/chat-context.ts`. Requires `ANTHROPIC_API_KEY` in `.env.local`.
+
+**Exit postcard:** `ExitPostcard.tsx` shows a postcard-style popover on exit intent (mouse leaves viewport top on desktop, scroll-up + inactivity on mobile). Shows once per session. Fetches visitor location via ipapi.co. "Keep this" button downloads a canvas-rendered postcard PNG.
+
 ## Path Alias
 `@/*` maps to `./src/*` (configured in tsconfig.json).
+
+## Environment Variables
+- `ANTHROPIC_API_KEY` — Required for the AI chat assistant (in `.env.local`)
 
 ## Images
 All images in `public/images/projects/`. Use `next/image` with `fill` + `sizes` for responsive images. Set `priority` on above-fold hero images.

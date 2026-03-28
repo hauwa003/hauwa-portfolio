@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 240" fill="none">
+  <!-- Stylized cutout illustration of a woman -->
+  <!-- Hair (back) -->
+  <path d="M60 80c0-35 18-55 40-55s40 20 40 55c0 10-2 25-5 40l-70 0c-3-15-5-30-5-40z" fill="#1a1a1a"/>
+  <!-- Hair sides flowing down -->
+  <path d="M58 85c-4 20-6 45-3 70 1 8 3 15 5 20l8-2c-4-12-6-28-5-48 1-14 2-28 5-40h-10z" fill="#1a1a1a"/>
+  <path d="M142 85c4 20 6 45 3 70-1 8-3 15-5 20l-8-2c4-12 6-28 5-48-1-14-2-28-5-40h10z" fill="#1a1a1a"/>
+
+  <!-- Neck -->
+  <rect x="88" y="145" width="24" height="22" rx="4" fill="#8B6914"/>
+
+  <!-- Shoulders / Top -->
+  <path d="M55 175c10-12 25-18 45-18s35 6 45 18c8 10 12 22 14 35H41c2-13 6-25 14-35z" fill="#7C3AED" rx="8"/>
+  <!-- Collar detail -->
+  <path d="M88 157l12 18 12-18" stroke="#6D28D9" stroke-width="2" fill="none" stroke-linecap="round"/>
+
+  <!-- Face -->
+  <ellipse cx="100" cy="110" rx="34" ry="40" fill="#C68B28"/>
+
+  <!-- Hair (front bangs) -->
+  <path d="M66 85c2-30 16-48 34-48s32 18 34 48c0 3-8 8-14 5 2-18-6-35-20-35s-22 17-20 35c-6 3-14-2-14-5z" fill="#1a1a1a"/>
+
+  <!-- Eyes -->
+  <ellipse cx="86" cy="108" rx="5" ry="5.5" fill="#1a1a1a"/>
+  <ellipse cx="114" cy="108" rx="5" ry="5.5" fill="#1a1a1a"/>
+  <!-- Eye highlights -->
+  <circle cx="88" cy="106" r="1.5" fill="white"/>
+  <circle cx="116" cy="106" r="1.5" fill="white"/>
+
+  <!-- Eyebrows -->
+  <path d="M78 98c3-3 7-4 12-3" stroke="#1a1a1a" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+  <path d="M122 98c-3-3-7-4-12-3" stroke="#1a1a1a" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+
+  <!-- Nose -->
+  <path d="M97 118c1 3 3 5 6 5" stroke="#A07520" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+
+  <!-- Smile -->
+  <path d="M88 128c4 5 10 7 16 5" stroke="#1a1a1a" stroke-width="2" stroke-linecap="round" fill="none"/>
+
+  <!-- Earrings -->
+  <circle cx="65" cy="118" r="4" fill="#F59E0B"/>
+  <circle cx="135" cy="118" r="4" fill="#F59E0B"/>
+</svg>

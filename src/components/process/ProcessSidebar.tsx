@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { TransitionLink } from "@/components/layout/TransitionLink";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
@@ -80,24 +80,24 @@ export function ProcessSidebar() {
 
   const bottomNav = (
     <div className="flex items-center gap-2">
-      <Link
+      <TransitionLink
         href="/"
         className="rounded-full border border-white/20 px-5 py-3 text-sm text-white transition-colors hover:bg-white/10"
       >
         Home
-      </Link>
-      <Link
+      </TransitionLink>
+      <TransitionLink
         href="/work"
         className="rounded-full border border-white/20 px-5 py-3 text-sm text-white transition-colors hover:bg-white/10"
       >
         Work
-      </Link>
-      <Link
+      </TransitionLink>
+      <TransitionLink
         href="/#contact"
         className="rounded-full bg-white px-5 py-3 text-sm font-medium text-[#5B21B6] transition-colors hover:bg-white/90"
       >
         Book a call
-      </Link>
+      </TransitionLink>
     </div>
   );
 

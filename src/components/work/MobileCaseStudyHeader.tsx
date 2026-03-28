@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Link from "next/link";
+import { TransitionLink } from "@/components/layout/TransitionLink";
 import { motion } from "framer-motion";
 import type { Project } from "@/types";
 
@@ -25,24 +25,24 @@ export function MobileCaseStudyHeader({
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           {prev ? (
-            <Link
+            <TransitionLink
               href={`/work/${prev.slug}`}
               className="rounded-full border border-border px-4 py-2 text-sm transition-colors hover:bg-surface"
             >
               &larr; Prev
-            </Link>
+            </TransitionLink>
           ) : (
             <span className="rounded-full border border-border px-4 py-2 text-sm text-muted/60">
               &larr; Prev
             </span>
           )}
           {next ? (
-            <Link
+            <TransitionLink
               href={`/work/${next.slug}`}
               className="rounded-full border border-border px-4 py-2 text-sm transition-colors hover:bg-surface"
             >
               Next &rarr;
-            </Link>
+            </TransitionLink>
           ) : (
             <span className="rounded-full border border-border px-4 py-2 text-sm text-muted/60">
               Next &rarr;
