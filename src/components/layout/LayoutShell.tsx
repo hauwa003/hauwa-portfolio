@@ -4,6 +4,10 @@ import { usePathname } from "next/navigation";
 import { Navbar } from "./Navbar";
 import { Footer } from "./Footer";
 import { CustomCursor } from "../ui/CustomCursor";
+import { ChatBubble } from "../chat/ChatBubble";
+import { TransitionProvider } from "./TransitionLink";
+import { ExitPostcard } from "./ExitPostcard";
+
 export function LayoutShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const isCaseStudy = pathname.startsWith("/work/");
@@ -15,11 +19,13 @@ export function LayoutShell({ children }: { children: React.ReactNode }) {
   const hasSidebar = isCaseStudy || isWork || isExplorations || isGallery || isAbout || isProcess;
 
   return (
-    <>
+    <TransitionProvider>
       <CustomCursor />
       {!hasSidebar && <Navbar />}
       <div className="flex-1">{children}</div>
       {!hasSidebar && <Footer />}
-    </>
+      <ChatBubble />
+      <ExitPostcard />
+    </TransitionProvider>
   );
 }

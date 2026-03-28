@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { TransitionLink } from "@/components/layout/TransitionLink";
 
 interface ButtonProps {
   href: string;
@@ -45,8 +45,8 @@ export function Button({
   }
 
   return (
-    <Link href={href} className={classes}>
+    <TransitionLink href={href} className={classes}>
       {inner}
-    </Link>
+    </TransitionLink>
   );
 }

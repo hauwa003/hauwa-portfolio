@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { TransitionLink } from "@/components/layout/TransitionLink";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import type { Project } from "@/types";
@@ -77,13 +77,13 @@ export function CaseStudySidebar({
       {/* Navigation row */}
       <div className="flex items-center gap-0">
         {prev ? (
-          <Link
+          <TransitionLink
             href={`/work/${prev.slug}`}
             className="flex items-center gap-2 rounded-full border border-white/20 px-4 py-3 text-sm text-white transition-colors hover:bg-white/10"
           >
             <span className="text-white/60">&larr;</span>
             <span>Previous</span>
-          </Link>
+          </TransitionLink>
         ) : (
           <span className="flex items-center gap-2 rounded-full border border-white/20 px-4 py-3 text-sm text-white/40">
             <span>&larr;</span>
@@ -100,13 +100,13 @@ export function CaseStudySidebar({
         </div>
 
         {next ? (
-          <Link
+          <TransitionLink
             href={`/work/${next.slug}`}
             className="flex items-center gap-2 rounded-full border border-white/20 px-4 py-3 text-sm text-white transition-colors hover:bg-white/10"
           >
             <span>Next</span>
             <span className="text-white/60">&rarr;</span>
-          </Link>
+          </TransitionLink>
         ) : (
           <span className="flex items-center gap-2 rounded-full border border-white/20 px-4 py-3 text-sm text-white/40">
             <span>Next</span>
@@ -197,24 +197,24 @@ export function CaseStudySidebar({
 
   const bottomNav = (
     <div className="flex items-center gap-2">
-      <Link
+      <TransitionLink
         href="/"
         className="rounded-full border border-white/20 px-5 py-3 text-sm text-white transition-colors hover:bg-white/10"
       >
         Home
-      </Link>
-      <Link
+      </TransitionLink>
+      <TransitionLink
         href="/work"
         className="rounded-full border border-white/20 px-5 py-3 text-sm text-white transition-colors hover:bg-white/10"
       >
         Work
-      </Link>
-      <Link
+      </TransitionLink>
+      <TransitionLink
         href="/#contact"
         className="rounded-full bg-white px-5 py-3 text-sm font-medium text-[#5B21B6] transition-colors hover:bg-white/90"
       >
         Book a call
-      </Link>
+      </TransitionLink>
     </div>
   );
 

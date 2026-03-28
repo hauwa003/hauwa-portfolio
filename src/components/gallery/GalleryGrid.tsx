@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState, useEffect } from "react";
-import Link from "next/link";
+import { TransitionLink } from "@/components/layout/TransitionLink";
 import Image from "next/image";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { galleryItems, type GalleryItem } from "@/lib/gallery";
@@ -107,64 +107,33 @@ function GalleryTile({ tile, index, hydrated }: { tile: GalleryItem; index: numb
 function GallerySidebar({ hydrated }: { hydrated: boolean }) {
   const sidebarContent = (
     <>
-      {/* Gallery metadata */}
-      <div className="space-y-8">
-        <div>
-          <p className="text-sm uppercase tracking-[0.15em] text-white/60">
-            Section
-          </p>
-          <p className="mt-1.5 text-base font-medium text-white">UI Gallery</p>
-        </div>
-
-        <div>
-          <p className="text-sm uppercase tracking-[0.15em] text-white/60">
-            About
-          </p>
-          <p className="mt-1.5 text-base leading-relaxed text-white/80">
-            A curated collection of screens, interfaces, and design details
-            from various projects.
-          </p>
-        </div>
-
-        <div>
-          <p className="text-sm uppercase tracking-[0.15em] text-white/60">
-            Total Pieces
-          </p>
-          <p className="mt-1.5 text-base text-white">{galleryItems.length}</p>
-        </div>
-
-        <div>
-          <p className="text-sm uppercase tracking-[0.15em] text-white/60">
-            Categories
-          </p>
-          <p className="mt-1.5 text-base text-white/80">
-            {[...new Set(galleryItems.map((g) => g.project))].join(", ")}
-          </p>
-        </div>
-      </div>
+      <p className="font-display text-base leading-relaxed text-white/80">
+        A curated collection of screens, interfaces, and design details
+        from various projects.
+      </p>
     </>
   );
 
   const bottomNav = (
     <div className="flex items-center gap-2">
-      <Link
+      <TransitionLink
         href="/"
-        className="rounded-full border border-white/20 px-5 py-3 text-sm text-white transition-colors hover:bg-white/10"
+        className="whitespace-nowrap rounded-full border border-white/20 px-4 py-3 text-sm text-white transition-colors hover:bg-white/10"
       >
         Home
-      </Link>
-      <Link
+      </TransitionLink>
+      <TransitionLink
         href="/explorations"
-        className="rounded-full border border-white/20 px-5 py-3 text-sm text-white transition-colors hover:bg-white/10"
+        className="whitespace-nowrap rounded-full border border-white/20 px-4 py-3 text-sm text-white transition-colors hover:bg-white/10"
       >
         Explore
-      </Link>
-      <Link
+      </TransitionLink>
+      <TransitionLink
         href="/#contact"
-        className="rounded-full bg-white px-5 py-3 text-sm font-medium text-[#5B21B6] transition-colors hover:bg-white/90"
+        className="whitespace-nowrap rounded-full bg-white px-4 py-3 text-sm font-medium text-[#5B21B6] transition-colors hover:bg-white/90"
       >
         Book a call
-      </Link>
+      </TransitionLink>
     </div>
   );
 
